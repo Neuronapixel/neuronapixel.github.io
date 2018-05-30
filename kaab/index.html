@@ -51,7 +51,11 @@
             </a-entity>
         </script>
       </a-assets>
-
+       <a-entity>
+        <a-entity position="0 1 5" template="src: #beacon" data-src="#cubes" ></a-entity>
+        <a-entity position="5 1 0" template="src: #beacon" data-src="#city" ></a-entity>
+        <a-entity position="0 1 -5" template="src: #beacon" data-src="#sechelt" ></a-entity>
+      </a-entity>
       <a-sky id="image-360" src="#city"></a-sky>
        <!-- Camera + cursor. -->
       <a-entity id="mainCamera" position="-5 0 0">
