@@ -20,6 +20,7 @@
     <script src="https://unpkg.com/aframe-event-set-component@3.x.x/dist/aframe-event-set-component.min.js"></script>
     <script src="https://unpkg.com/aframe-animation-component@^3.2.0/dist/aframe-animation-component.min.js"></script>
     <script src="../components/set-image.js"></script>
+    <script src="../components/move-camera.js"></script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -42,7 +43,8 @@
         <script id="beacon" type="text/html">
             <a-entity class="beacon"
               scale="0.5 0.5 0.5" 
-              set-image="on: click; target: #image-360; src: ${src}">
+              set-image="on: click; target: #image-360; src: ${src}"
+              move-camera="on: click;">
               <a-entity 
                 template="src: #spot"
               ></a-entity>
@@ -51,7 +53,7 @@
       </a-assets>
 
        <a-entity>
-        <a-entity position="1 0 0" template="src: #beacon" data-src="#sopt1" ></a-entity>
+        <a-entity position="1 0 0" template="src: #beacon" data-src="#spot1" ></a-entity>
         <a-entity position="5 0 0" template="src: #beacon" data-src="#spot2" ></a-entity>
         <a-entity position="8 0 0" template="src: #beacon" data-src="#spot3" ></a-entity>
       </a-entity>
