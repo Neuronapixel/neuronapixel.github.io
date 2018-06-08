@@ -12,7 +12,11 @@ AFRAME.registerComponent('move-camera', {
   init: function () {
     var data = this.data;
     var el = this.el;
-    console.log(this.data.target);
+    
+
+    el.addEventListener(data.on, function () {
+     console.log(data);
+    });
   }
 
 });
