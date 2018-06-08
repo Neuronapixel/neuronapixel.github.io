@@ -9,13 +9,11 @@
     })(window,document,'script','dataLayer','GTM-56ZCJDF');</script>
     <!-- End Google Tag Manager -->
     <meta charset="utf-8">
-    <title>Neuronapixel</title>
-    <meta name="description" content="Desarrollo Web y creatividad, la multimedia como lenguaje de bastas interpretaciones en la que cada experiencia es un mensaje diferente. 
-    Neuronapixel cree en el valor implícito de la interacción como vehiculo para el transito de las ideas."/>
-    <meta http-equiv="description" content="Desarrollo Web y creatividad, la multimedia como lenguaje de bastas interpretaciones en la que cada experiencia es un mensaje diferente.
-    Neuronapixel cree en el valor implícito de la interacción como vehiculo para el transito de las ideas."/>
-    <meta name="keywords" content="multimedia,creatividad,interactivos,web,programacion,flash,php,javascript,webapps,cdm,click,interactividad,facebook,kinbit,neurona,pixel,inteligencia artificial,inteligencia, luis, venegas, cacho, cultura de monitor"/>
-    <meta name="keywords" http-equiv="multimedia,creatividad,programacion,interactivos,web,flash,php,javascript,webapps,cdm,click,interactividad,facebook,kinbit,neurona,pixel,inteligencia artificial,inteligencia, luis, venegas, cacho, cultura de monitor"/>
+    <title>KAAB</title>
+    <meta name="description" content=""/>
+    <meta http-equiv="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="keywords" http-equiv=""/>
     <script src="https://aframe.io/releases/0.3.2/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-template-component@3.x.x/dist/aframe-template-component.min.js"></script>
     <script src="https://unpkg.com/aframe-layout-component@3.x.x/dist/aframe-layout-component.min.js"></script>
@@ -31,12 +29,12 @@
      <a-scene>
       <a-assets>
 
-        <img id="city" crossorigin="anonymous" src="world/stage1.jpg">
-        <img id="cubes" crossorigin="anonymous" src="world/stage2.jpg">
-        <img id="sechelt" crossorigin="anonymous" src="world/stage3.jpg">
+        <img id="spot1" crossorigin="anonymous" src="world/stage1.jpg">
+        <img id="sopt2" crossorigin="anonymous" src="world/stage2.jpg">
+        <img id="spot3" crossorigin="anonymous" src="world/stage3.jpg">
 
-        <script id="neuron" type="text/html">
-          <a-entity class="neuron"
+        <script id="spot" type="text/html">
+          <a-entity class="spot"
             geometry="primitive: box; width: 1; height: 1; depth: 1"
             material="color:#f00">
           </a-entity>
@@ -46,19 +44,22 @@
               scale="0.5 0.5 0.5" 
               set-image="on: click; target: #image-360; src: ${src}">
               <a-entity 
-                template="src: #neuron"
+                template="src: #spot"
               ></a-entity>
             </a-entity>
         </script>
       </a-assets>
+
        <a-entity>
-        <a-entity position="0 1 5" template="src: #beacon" data-src="#cubes" ></a-entity>
-        <a-entity position="5 1 0" template="src: #beacon" data-src="#city" ></a-entity>
-        <a-entity position="0 1 -5" template="src: #beacon" data-src="#sechelt" ></a-entity>
+        <a-entity position="1 0 0" template="src: #beacon" data-src="#sopt1" ></a-entity>
+        <a-entity position="5 0 0" template="src: #beacon" data-src="#spot2" ></a-entity>
+        <a-entity position="8 0 0" template="src: #beacon" data-src="#spot3" ></a-entity>
       </a-entity>
-      <a-sky id="image-360" src="#city"></a-sky>
+
+      <a-sky id="image-360" src="#spot1"></a-sky>
+
        <!-- Camera + cursor. -->
-      <a-entity id="mainCamera" position="-5 0 0">
+      <a-entity id="mainCamera" position="5 0 0">
         <a-entity camera look-controls position="0 1 0" rotation="0 -90 0">
           <a-cursor id="cursor"
             color="black"
