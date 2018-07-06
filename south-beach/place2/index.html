@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>South Beach</title>
+    <meta name="description" content=""/>
+    <meta http-equiv="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="keywords" http-equiv=""/>
+    <script src="https://aframe.io/releases/0.3.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-template-component@3.x.x/dist/aframe-template-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-layout-component@3.x.x/dist/aframe-layout-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@3.x.x/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component@^3.2.0/dist/aframe-animation-component.min.js"></script>
+    <script src="../components/set-image.js"></script>
+    <script src="../components/move-camera.js"></script>
+  </head>
+  <body>
+    
+     <a-scene>
+
+      <a-assets>
+
+        <img id="spot1" crossorigin="anonymous" src="world/stage1.jpg">
+        <img id="spot2" crossorigin="anonymous" src="world/stage2.jpg">
+        <img id="spot3" crossorigin="anonymous" src="world/stage3.jpg">
+        <img id="glowImg" crossorigin="anonymous" src="../imgs/silueta.png">
+
+         <script id="spot" type="text/html">
+          <a-entity light="type: hemisphere; color: #FFF; intensity: 1" position="0 0 0"></a-entity>
+          <a-entity class="spot" position="0 1 0"
+            geometry="primitive: box; width: 1; height: 2; depth: 1; "
+            material="src: #glowImg; opacity: 0.9;  roughness: 1; metalness: 0;">
+          </a-entity>
+         
+        </script>
+
+        <script id="beacon" type="text/html">
+            <a-entity class="beacon"
+              scale="0.5 0.5 0.5" 
+              set-image="on: click; target: #image-360; src: ${src}"
+              move-camera="on: click; camera: #mainCamera">
+              <a-entity 
+                template="src: #spot"
+              ></a-entity>
+            </a-entity>
+        </script>
+
+      </a-assets>
+
+       <a-entity>
+        <a-entity id="place1" position="0 0 0" template="src: #beacon" data-src="#spot1" ></a-entity>
+        <a-entity id="place2" position="-4 0 0" template="src: #beacon" data-src="#spot2" ></a-entity>
+        <a-entity id="place3" position="-4 0 -2" template="src: #beacon" data-src="#spot3" ></a-entity>
+      </a-entity>
+
+      <a-sky id="image-360" src="#spot1"></a-sky>
+
+       <!-- Camera + cursor. -->
+      <a-entity id="mainCamera" position="0 0 0">
+        <a-entity camera look-controls position="0 1 0" rotation="0 -180 0">
+          <a-cursor id="cursor"
+            color="gray"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+            animation__fusing="property: scale; startEvents: fusing; from: 1.0 1.0 1.0; to: 0.1 0.1 0.1; dur: 1500; easing: easeInBack"
+            event-set__1="_event: mouseenter; color: springgreen"
+            event-set__2="_event: mouseleave; color: gray"
+            raycaster="objects: .beacon">
+          </a-cursor>
+        </a-entity>
+
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
