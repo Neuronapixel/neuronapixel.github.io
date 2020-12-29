@@ -18,6 +18,24 @@ const routes: Array<RouteConfig> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path:"/vr-ama",
+    name:"VRama",
+    component: () =>
+      import(/* webpackChunkName: "vrama" */ "../views/VRama.vue")
+  },
+  {
+    path:"/memoria-virtual",
+    name:"Memoria Virtual",
+    component: () =>
+      import(/* webpackChunkName: "memoriavirtual" */ "../views/MemoriaVirtual.vue")
+  },
+  {
+    path:"/neurona-tornasol",
+    name:"Neurona Tornasol",
+    component: () =>
+      import(/* webpackChunkName: "neuronatornasol" */ "../views/NeuronaTornasol.vue")
   }
 ];
 
