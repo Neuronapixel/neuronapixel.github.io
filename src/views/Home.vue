@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img src="../assets/launchLogo.png" width="180" height="180">
-    <welcome/>
+    <img src="../assets/launchLogo.png" width="180" height="180" />
+    <welcome />
   </div>
 </template>
 
