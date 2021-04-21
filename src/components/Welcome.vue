@@ -6,11 +6,11 @@
       <p>
         Web development, scripting, coding, creativity; multimedia as a language
         of countless interpretations in which each experience is a different
-        message.
+        message
       </p>
       <p>
         Neuronapixel believes in the intrinsic value of interaction as a vehicle
-        for the transit of ideas.
+        for the transit of ideas
       </p>
     </div>
   </div>
