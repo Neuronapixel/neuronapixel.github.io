@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/vr-ama">VR-ama</router-link>
+      <router-link to="/memoria-virtual">Memoria virtual</router-link>
+      <router-link to="/neurona-tornasol">Neurona Tornasol</router-link>
+    </div>
     <router-view />
   </div>
 </template>
