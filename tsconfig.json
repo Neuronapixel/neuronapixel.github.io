@@ -13,8 +13,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env",
-      "jest",
+      "vite/client",
       "vue"
     ],
     "paths": {
@@ -30,11 +29,11 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
+    "tests/**/*.tsx",
     "src/**/*.tsx",
-    "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "src/**/*.vue",
+    "src/**/*.ts"
   ],
   "exclude": [
     "node_modules"
