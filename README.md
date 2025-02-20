@@ -1,29 +1,51 @@
-# neuronapixel.github.io
+# Neuronapixel
 
-## Project setup
-```
+## Overview
+Neuronapixel is a Vue 3 application bootstrapped with Vite. The project features a modern tech stack focusing on modular and maintainable architecture, including:
+
+- **Vue 3** for the reactive framework
+- **Vite** for fast development server and build tooling
+- **Vue Router** for client-side routing
+- **Sass** (via sass-embedded) for flexible, nested CSS
+- **ESLint** for linting and code consistency
+
+## Project Setup
+1. **Install dependencies**:
+```bash
 npm install
 ```
-
-### Compiles and hot-reloads for development
+2. **Start the development server** (includes hot module reloading):
+```bash
+npm run dev
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
+3. **Build for production**:
+```bash
 npm run build
 ```
-
-### Run your unit tests
+4. **Preview the production build**:
+```bash
+npm run serve
 ```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
+5. **Lint and fix files**:
+```bash
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Scripts
+- **npm run dev**: Compiles and starts a local development server using Vite.
+- **npm run build**: Bundles and optimizes the project for production.
+- **npm run serve**: Serves the built project locally to preview production output.
+- **npm run lint**: Lints and fixes code style issues according to ESLint rules.
+
+## Design and Components
+- We follow a **minimalist, scalable design** approach. Keep components self-contained and modular.
+- **File structure**: Separate logic and styling. Each Vue file should handle its own local scope as needed.
+- **Sass** provides advanced styling features, so use nesting and variables responsibly.
+- **Reusability**: Split common UI elements into separate components for easier maintenance and consistency.
+
+## Additional Information
+- We welcome contributions and suggestions. Ensure you run `npm run lint` and `npm run dev` before creating a PR.
+- For more about configuration or customizing further, consult the Vite and Vue documentation.
+
+Happy coding!
+

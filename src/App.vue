@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/vr-ama">VR-ama</router-link>
-    </div>
     <router-view />
   </div>
 </template>
+
+<script setup>
+// You can import reactive, computed, etc. from 'vue' if needed.
+// For this simple component, no additional logic is required.
+</script>
 
 <style lang="scss">
 #app {
@@ -16,18 +16,5 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
