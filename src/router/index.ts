@@ -1,10 +1,12 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
+import VueRouter, { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
+import About from "@/views/About.vue";
+import VRama from "@/views/VRama.vue";
+import MemoriaVirtual from "../views/MemoriaVirtual.vue";
+import NeuronaTornasol from "../views/NeuronaTornasol.vue";
 
-Vue.use(VueRouter);
 
-const routes: Array<RouteConfig> = [
+const routes= [
   {
     path: "/",
     name: "Home",
@@ -13,39 +15,28 @@ const routes: Array<RouteConfig> = [
   {
     path: "/about",
     name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    component:About
   },
   {
     path: "/vr-ama",
     name: "VRama",
-    component: () =>
-      import(/* webpackChunkName: "vrama" */ "../views/VRama.vue")
+    component: VRama
   },
   {
     path: "/memoria-virtual",
     name: "Memoria Virtual",
-    component: () =>
-      import(
-        /* webpackChunkName: "memoriavirtual" */ "../views/MemoriaVirtual.vue"
-      )
+    component: MemoriaVirtual
   },
   {
     path: "/neurona-tornasol",
     name: "Neurona Tornasol",
-    component: () =>
-      import(
-        /* webpackChunkName: "neuronatornasol" */ "../views/NeuronaTornasol.vue"
-      )
+    component: NeuronaTornasol
   }
 ];
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
+const router = createRouter({
+  base: import.meta.env.BASE_URL,
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 });
 
