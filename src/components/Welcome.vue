@@ -16,8 +16,8 @@
   </div>
 </template>
 
-<script lang="ts">
-export default class Welcome {}
+<script setup lang="ts">
+// No additional logic is needed for this static component.
 </script>
 
 <style></style>

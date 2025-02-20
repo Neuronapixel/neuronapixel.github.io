@@ -1,16 +1,17 @@
-import VueRouter, { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 import About from "@/views/About.vue";
 import VRama from "@/views/VRama.vue";
 import MemoriaVirtual from "../views/MemoriaVirtual.vue";
 import NeuronaTornasol from "../views/NeuronaTornasol.vue";
+import { defineComponent } from "vue";
 
 
-const routes= [
+const routes:Array<RouteRecordRaw>= [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: defineComponent(Home)
   },
   {
     path: "/about",
@@ -35,7 +36,6 @@ const routes= [
 ];
 
 const router = createRouter({
-  base: import.meta.env.BASE_URL,
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 });
