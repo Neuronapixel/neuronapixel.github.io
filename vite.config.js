@@ -13,6 +13,11 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: 'jsdom'
+    environment: 'jsdom',
+    coverage: {
+      provider: "v8", 
+      reporter: ['html'],
+      exclude: ['vite.config.js','node_modules/', 'tests/','docs/','public/'] 
+    }
   }
 });
