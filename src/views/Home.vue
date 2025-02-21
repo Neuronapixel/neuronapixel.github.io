@@ -8,10 +8,6 @@
 <script setup>
 import { onMounted } from 'vue';
 import Welcome from "@/components/Welcome.vue";
-
-onMounted(() => {
-  console.log("Home component mounted");
-});
 </script>
 
 <style scoped>
