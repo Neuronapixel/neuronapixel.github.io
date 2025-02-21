@@ -8,10 +8,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script setup>
+defineOptions({
   name: "Navigation"
-};
+})
 </script>
 
 <style lang="scss">
