@@ -1,9 +1,9 @@
-import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 import About from "@/views/About.vue";
 import VRama from "@/views/VRama.vue";
-import MemoriaVirtual from "../views/MemoriaVirtual.vue";
-import NeuronaTornasol from "../views/NeuronaTornasol.vue";
+import MemoriaVirtual from "@/views/MemoriaVirtual.vue";
+import NeuronaTornasol from "@/views/NeuronaTornasol.vue";
 import { defineComponent } from "vue";
 
 
@@ -11,7 +11,7 @@ const routes:Array<RouteRecordRaw>= [
   {
     path: "/",
     name: "Home",
-    component: defineComponent(Home)
+    component: Home
   },
   {
     path: "/about",

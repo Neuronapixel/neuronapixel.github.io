@@ -14,6 +14,7 @@
     "baseUrl": ".",
     "types": [
       "vite/client",
+      "vue"
     ],
     "paths": {
       "@/*": [
@@ -28,6 +29,7 @@
     ]
   },
   "include": [
+    "src/shims-vue.d.ts",
     "tests/**/*.tsx",
     "src/**/*.tsx",
     "tests/**/*.ts",
