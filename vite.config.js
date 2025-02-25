@@ -16,8 +16,9 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       provider: "v8", 
-      reporter: ['html'],
-      exclude: ['vite.config.js','node_modules/', 'tests/','docs/','public/'] 
+      reporters: ['default', 'html'],
+      exclude: ['vite.config.js','node_modules/', 'tests/','docs/','public/'],
+      enabled:true
     }
   }
 });
