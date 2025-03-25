@@ -38,7 +38,7 @@
     "jsdom": "^26.0.0",
     "sass-embedded": "^1.85.0",
     "semantic-release": "^24.2.3",
-    "vite": "^6.1.1",
+    "vite": "^6.2.3",
     "vitest": "^3.0.6",
     "vue-eslint-parser": "^10.1.1"
   },
