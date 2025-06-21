@@ -10,7 +10,7 @@
       </p>
       <p>
         Neuronapixel believes in the intrinsic value of interaction as a vehicle
-        for the transit of ideas
+        for the transit of ideas.
       </p>
     </div>
   </div>
