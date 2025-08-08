@@ -1,0 +1,28 @@
+frontend:
+  - changed-files:
+      - any-glob-to-any-file: ['src/**/*', 'index.html']
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: ['.github/**/*']
+
+config:
+  - changed-files:
+      - any-glob-to-any-file: ['*.config.*', 'tsconfig.json', 'vite.config.*', 'eslint.*']
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file: ['docs/**/*', 'README.md', 'branch-naming.md']
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.test.*', '**/__tests__/**/*']
+
+deps:
+  - changed-files:
+      - any-glob-to-any-file: ['package.json', 'package-lock.json']
+
+release:
+  - changed-files:
+      - any-glob-to-any-file: ['.releaserc.json']
+

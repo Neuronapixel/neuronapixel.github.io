@@ -1,0 +1,26 @@
+name: Chore
+description: Maintenance task, refactor, or tooling update
+labels: [chore]
+assignees: []
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      placeholder: Briefly describe the chore
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why is this needed? What is the scope?
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks
+      description: Checklist of sub-tasks
+      placeholder: |
+        - [ ] Do something
+        - [ ] Do another thing
+

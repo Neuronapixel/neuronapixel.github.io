@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import VRama from "@/views/VRama.vue";
 import MemoriaVirtual from "@/views/MemoriaVirtual.vue";
