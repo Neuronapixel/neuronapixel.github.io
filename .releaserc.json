@@ -1,6 +1,6 @@
 {
   "branches": ["master"],
-  "repositoryUrl": "https://github.com/neuronapixel/neuronapixel.github.io.git",
+  "repositoryUrl": "https://github.com/Neuronapixel/neuronapixel.github.io.git",
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",

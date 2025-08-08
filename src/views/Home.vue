@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
 import Welcome from "@/components/Welcome.vue";
 </script>
 
