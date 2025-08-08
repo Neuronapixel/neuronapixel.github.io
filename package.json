@@ -45,7 +45,7 @@
     "semantic-release": "^24.2.3",
     "vite": "^6.3.4",
     "vitest": "^3.0.6",
-    "vue-eslint-parser": "^10.1.1"
+    "vue-eslint-parser": "^10.2.0"
   },
   "browserslist": [
     "> 1%",
