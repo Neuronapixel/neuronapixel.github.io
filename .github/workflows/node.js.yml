@@ -64,7 +64,10 @@ jobs:
 
   dry-run:
     name: Semantic Release Dry Run
-    if: github.event_name == 'workflow_dispatch' && inputs.dry_run == true
+    # Run on manual trigger OR on PRs targeting master
+    if: |
+      (github.event_name == 'workflow_dispatch' && inputs.dry_run == true) ||
+      (github.event_name == 'pull_request' && github.base_ref == 'master')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
