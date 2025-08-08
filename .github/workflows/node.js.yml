@@ -3,11 +3,27 @@
 
 name: Node.js CI
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run semantic-release in dry-run mode"
+        required: false
+        default: true
+        type: boolean
 
 jobs:
   build:
@@ -16,21 +32,52 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [20.x, 22.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - name: Lint
+      run: npx eslint . --ext .js,.vue,.ts,.tsx
+    - name: Build
+      run: npm run build --if-present
+    - name: Test
+      run: npm test
     - name: Semantic Release
-      if: github.event_name == 'push'
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.node-version == '20.x'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npx semantic-release
+    - name: Semantic Release (dry-run)
+      if: github.event_name == 'workflow_dispatch' && matrix.node-version == '20.x' && inputs.dry_run == true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npx semantic-release --dry-run
+
+  dry-run:
+    name: Semantic Release Dry Run
+    if: github.event_name == 'workflow_dispatch' && inputs.dry_run == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Semantic Release (dry-run)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release --dry-run
