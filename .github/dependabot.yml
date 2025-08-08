@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels:
+      - deps
+      - chore
+    commit-message:
+      prefix: chore
+      include: scope
+    rebase-strategy: auto
+

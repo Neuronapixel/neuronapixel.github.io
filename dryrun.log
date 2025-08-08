@@ -1,0 +1,338 @@
+[8:50:13 PM] [semantic-release] › ℹ  Running semantic-release version 24.2.3
+[8:50:13 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/changelog"
+[8:50:13 PM] [semantic-release] › ✔  Loaded plugin "verifyConditions" from "@semantic-release/git"
+[8:50:13 PM] [semantic-release] › ✔  Loaded plugin "analyzeCommits" from "@semantic-release/commit-analyzer"
+[8:50:13 PM] [semantic-release] › ✔  Loaded plugin "generateNotes" from "@semantic-release/release-notes-generator"
+[8:50:13 PM] [semantic-release] › ✔  Loaded plugin "prepare" from "@semantic-release/changelog"
+[8:50:13 PM] [semantic-release] › ✔  Loaded plugin "prepare" from "@semantic-release/git"
+[8:50:13 PM] [semantic-release] › ✔  Allowed to push to the Git repository
+[8:50:13 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/changelog"
+[8:50:13 PM] [semantic-release] › ✔  Completed step "verifyConditions" of plugin "@semantic-release/changelog"
+[8:50:13 PM] [semantic-release] › ℹ  Start step "verifyConditions" of plugin "@semantic-release/git"
+[8:50:13 PM] [semantic-release] › ✔  Completed step "verifyConditions" of plugin "@semantic-release/git"
+[8:50:13 PM] [semantic-release] › ℹ  No git tag version found on branch development
+[8:50:13 PM] [semantic-release] › ℹ  No previous release found, retrieving all commits
+[8:50:13 PM] [semantic-release] › ℹ  Found 103 commits since last release
+[8:50:13 PM] [semantic-release] › ℹ  Start step "analyzeCommits" of plugin "@semantic-release/commit-analyzer"
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: feat: semantic release notes
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is minor
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: chore: configure repository
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: chore: configure repository for semantic release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix: ignore rules to commit lint
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix: ignore rules to commit lint
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix: typo
+
+fix: typo on presentation
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix: typo on presentation
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: feat: semantic release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is minor
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: docs: update branch naming and release notes
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #34 from Neuronapixel/dependabot/npm_and_yarn/brace-expansion-1.1.12
+
+Bump brace-expansion from 1.1.11 to 1.1.12
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #33 from Neuronapixel/dependabot/npm_and_yarn/vite-6.3.4
+
+Bump vite from 6.1.1 to 6.3.4
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #35 from Neuronapixel/codex/find-and-fix-a-bug-in-the-codebase
+
+Fix entry script reference
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: fix(home): ensure logo resolves via alias
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is patch
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Bump brace-expansion from 1.1.11 to 1.1.12
+
+Bumps [brace-expansion](https://github.com/juliangruber/brace-expansion) from 1.1.11 to 1.1.12.
+- [Release notes](https://github.com/juliangruber/brace-expansion/releases)
+- [Commits](https://github.com/juliangruber/brace-expansion/compare/1.1.11...v1.1.12)
+
+---
+updated-dependencies:
+- dependency-name: brace-expansion
+  dependency-version: 1.1.12
+  dependency-type: indirect
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Bump vite from 6.1.1 to 6.3.4
+
+Bumps [vite](https://github.com/vitejs/vite/tree/HEAD/packages/vite) from 6.1.1 to 6.3.4.
+- [Release notes](https://github.com/vitejs/vite/releases)
+- [Changelog](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md)
+- [Commits](https://github.com/vitejs/vite/commits/v6.3.4/packages/vite)
+
+---
+updated-dependencies:
+- dependency-name: vite
+  dependency-version: 6.3.4
+  dependency-type: direct:development
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: feat: semantic release
+
+Development to master
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is minor
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #27 from Neuronapixel/feat/semantic-release
+
+feat: semantic release configuration
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: feat: semantic release configuration
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The release type for the commit is minor
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #26 from Neuronapixel/development
+
+Development to master
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #25 from Neuronapixel/feat/google-tag-manager
+
+adds GTM code
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: adds GTM code
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #24 from Neuronapixel/development
+
+Development
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #23 from Neuronapixel/feat/favicon
+
+add GTM tags
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: add GTM tags
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #22 from Neuronapixel/development
+
+Development
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #21 from Neuronapixel/feature/vitest-ui
+
+Adds vitest-ui
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Adds vitest-ui
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #20 from Neuronapixel/development
+
+Development to master
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #19 from Neuronapixel/feature/code-coverage
+
+Full coverage to dev
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Full coverage
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #18 from Neuronapixel/development
+
+Development to master
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #17 from Neuronapixel/fix/test
+
+Add test base setup
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Updates github Actions
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Configured tests
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #16 from Neuronapixel/master
+
+master to dev
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge branch 'master' of github.com:Neuronapixel/neuronapixel.github.io
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Update README
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Update CNAME
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Update CNAME
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Update CNAME
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Update CNAME
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Create CNAME
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: updated routes
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Doc folder
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Remove unused dependencies and refactor Welcome component to use script setup
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Build updates
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Updating to vue3
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Removes old Doc folder
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Refactor Out vue-cli
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Remove GCloud deploy
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #9 from Neuronapixel/dependabot/npm_and_yarn/vue-3.0.0
+
+Bump vue from 2.6.12 to 3.0.0
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Bump vue from 2.6.12 to 3.0.0
+
+Bumps [vue](https://github.com/vuejs/core) from 2.6.12 to 3.0.0.
+- [Release notes](https://github.com/vuejs/core/releases)
+- [Changelog](https://github.com/vuejs/core/blob/v3.0.0/CHANGELOG.md)
+- [Commits](https://github.com/vuejs/core/commits/v3.0.0)
+
+---
+updated-dependencies:
+- dependency-name: vue
+  dependency-type: direct:production
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: - Remove menu from Master branch
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: - Adds Navigation component
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: - Menu tags Added
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Include build step
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #6 from Neuronapixel/fix/deploy
+
+Removes deploy from cloudBuild
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Removes deploy from cloudBuild
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #5 from Neuronapixel/fix/deploy
+
+rebuild
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: rebuild
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #4 from Neuronapixel/fix/deploy
+
+Test new build process
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Test new build process
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #3 from Neuronapixel/fix/deploy
+
+Changes start script
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Changes start script
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #2 from Neuronapixel/fix/deploy
+
+Fix node action
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Fix node action
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Merge pull request #1 from Neuronapixel/temporary-website
+
+Initial merge
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Translate Text
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Adds deply action
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Cloud config
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: GCloud integration
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: temporary position page
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: - Lint applied
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Refactor: Break into Views
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Vue configuration
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Remove .DS_Store from everywhere
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Mod gitignore
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: - Add gitignore file
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Create node.js.yml
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Create CNAME
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: New Index file
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: new locations added
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: new sections
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: file rename
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: File presentation
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: south beach added
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Camera move
+
+Component skeleton
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: NEW move camera component
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: new beacon location
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Beacons added
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: new images
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: paths moded
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Components added
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: New image file
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: new image file
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: default values back
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: change file test
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: no  neuronapixel logo
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: new section
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Add experiments
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Fix Links
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Add Vr-Amas
+
+- web vr experiments
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analyzing commit: Initial Commit
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  The commit should not trigger a release
+[8:50:13 PM] [semantic-release] [@semantic-release/commit-analyzer] › ℹ  Analysis of 103 commits complete: minor release
+[8:50:13 PM] [semantic-release] › ✔  Completed step "analyzeCommits" of plugin "@semantic-release/commit-analyzer"
+[8:50:13 PM] [semantic-release] › ℹ  There is no previous release, the next release version is 1.0.0
+[8:50:13 PM] [semantic-release] › ℹ  Start step "generateNotes" of plugin "@semantic-release/release-notes-generator"
+[8:50:14 PM] [semantic-release] › ✔  Completed step "generateNotes" of plugin "@semantic-release/release-notes-generator"
+[8:50:14 PM] [semantic-release] › ✔  Published release 1.0.0 on default channel
+[8:50:14 PM] [semantic-release] › ℹ  Release note for version 1.0.0:
+# 1.0.0 (2025-08-08)
+
+### Bug Fixes
+
+    * home: ensure logo resolves via alias (b8b5f96 (https:/Users/cacho/Developer/neuronapixel.github.io/commit/b8b5f967cec1a804ce0f621f18e530c84acce792))
+    * ignore rules to commit lint (ea4e301 (https:/Users/cacho/Developer/neuronapixel.github.io/commit/ea4e30101be2cacfc0261b8be80cdc2e4a6ccc28))
+    * ignore rules to commit lint (4bc5e7c (https:/Users/cacho/Developer/neuronapixel.github.io/commit/4bc5e7caf27689b5010cf48e180fdaffd37fdbff))
+    * typo (f0e54b7 (https:/Users/cacho/Developer/neuronapixel.github.io/commit/f0e54b719ab0f3e89a16aed2924aeaae11fe414e))
+    * typo on presentation (2d1ec5a (https:/Users/cacho/Developer/neuronapixel.github.io/commit/2d1ec5a20d30b96a356a5484ff67712eb6833ecb))
+
+### Features
+
+    * semantic release (dab530a (https:/Users/cacho/Developer/neuronapixel.github.io/commit/dab530a03b9aebaa2bc9a6e0363fd9829ab189af))
+    * semantic release (9d124f1 (https:/Users/cacho/Developer/neuronapixel.github.io/commit/9d124f125c3ebd655973c3b22d68548727c30004))
+    * semantic release configuration (00840d8 (https:/Users/cacho/Developer/neuronapixel.github.io/commit/00840d814227b767bf78b3a6e4415755eea0dc8c))
+    * semantic release notes (e70d29a (https:/Users/cacho/Developer/neuronapixel.github.io/commit/e70d29a11a46a3bcc5b672f4bec963d811f53c19))
+
