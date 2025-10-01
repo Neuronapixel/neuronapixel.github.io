@@ -6,6 +6,31 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="/favicon.ico">
     <title>Neuronapixel</title>
+    <script type="module">
+      // Google Analytics - only load in production with valid ID
+      if (import.meta.env.PROD && import.meta.env.VITE_GA_ID) {
+        const id = import.meta.env.VITE_GA_ID;
+        
+        // Load Google Analytics script
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+        document.head.appendChild(script);
+
+        // Initialize gtag
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag() {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag("js", new Date());
+        window.gtag("config", id, {
+          // Enhanced privacy and performance settings
+          anonymize_ip: true,
+          allow_google_signals: false,
+          allow_ad_personalization_signals: false
+        });
+      }
+    </script>
   </head>
   <body>
     <noscript>
