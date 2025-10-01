@@ -48,6 +48,8 @@ jobs:
     - name: Lint
       run: npx eslint . --ext .js,.vue,.ts,.tsx
     - name: Build
+      env:
+        VITE_GA_ID: ${{ secrets.VITE_GA_ID }}
       run: npm run build --if-present
     - name: Test
       run: npm test
