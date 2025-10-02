@@ -18,8 +18,9 @@ npm install
 ```bash
 npm run dev
 ```
-3. **Build for production**:
+3. **Build for production** (set `VITE_GA_ID` before building if you want analytics enabled):
 ```bash
+# Optional: cp .env.production.example .env.production and edit the value
 npm run build
 ```
 4. **Preview the production build**:
@@ -59,4 +60,3 @@ To preview release notes without publishing a release, run:
 npm run release -- --dry-run
 ```
 Semantic-release will output the upcoming changes so you can review them locally.
-

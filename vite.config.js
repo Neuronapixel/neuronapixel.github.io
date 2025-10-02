@@ -10,16 +10,16 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'docs'
+    outDir: "docs",
   },
   test: {
     globals: true,
-    environment: 'jsdom',
+    environment: "jsdom",
     coverage: {
-      provider: "v8", 
-      reporters: ['default', 'html'],
-      exclude: ['vite.config.js','node_modules/', 'tests/','docs/','public/'],
-      enabled:true
-    }
-  }
+      provider: "v8",
+      reporters: ["default", "html"],
+      exclude: ["vite.config.js", "node_modules/", "tests/", "docs/", "public/"],
+      enabled: true,
+    },
+  },
 });
