@@ -15,7 +15,7 @@
         <a-entity
           id="desktop-camera"
           camera
-          position="0 1.6 0"
+          position="0 1 0"
           look-controls="pointerLockEnabled: false"
           wasd-controls="enabled: false"
         ></a-entity>
@@ -26,17 +26,17 @@
 
         <a-box
           id="xr-model"
-          position="-1 0.75 -3"
-          rotation="0 45 0"
-          depth="1.4"
-          height="1.4"
-          width="1.4"
+          position="0 0.5 -4"
+          rotation="0 0 0"
+          depth="1"
+          height="1"
+          width="1"
           mixin="primary-material"
         >
           <a-animation attribute="rotation" dur="12000" easing="linear" repeat="indefinite" to="0 405 0"></a-animation>
         </a-box>
 
-        <a-plane rotation="-90 0 0" width="8" height="8" color="#ffffff" shadow="receive: true"></a-plane>
+        <a-plane rotation="-90 0 0" position='0 0 -4' width="8" height="8" color="#ffffff" shadow="receive: true"></a-plane>
         <a-sky color="#fff"></a-sky>
       </a-scene>
     </section>
@@ -83,7 +83,7 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 
 .xr-experience {
   width: 100%;
@@ -95,7 +95,7 @@ onUnmounted(() => {
 
 .viewport {
   width: 100%;
-  height: 100vh;
+  height: 75vh;
   overflow: hidden;
   position: relative;
 }
