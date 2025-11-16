@@ -1,17 +1,22 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import Home from "@/views/Home.vue";
+import LegacyHome from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import VRama from "@/views/VRama.vue";
 import MemoriaVirtual from "@/views/MemoriaVirtual.vue";
 import NeuronaTornasol from "@/views/NeuronaTornasol.vue";
-import { defineComponent } from "vue";
+import XRVersionTwo from "@/views/XRVersionTwo.vue";
 
 
 const routes:Array<RouteRecordRaw>= [
   {
     path: "/",
+    name: "XRHome",
+    component: XRVersionTwo
+  },
+  {
+    path: "/classic",
     name: "Home",
-    component: Home
+    component: LegacyHome
   },
   {
     path: "/about",
