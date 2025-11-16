@@ -32,6 +32,27 @@ npm run serve
 npm run lint
 ```
 
+## Local HTTPS Preview
+WebXR-capable browsers on mobile generally require HTTPS even for local development. We recommend [mkcert](https://github.com/FiloSottile/mkcert) to generate trusted certificates:
+
+```bash
+brew install mkcert               # one-time
+mkcert -install                   # trusts mkcert's local CA on macOS
+mkdir -p certs
+mkcert -key-file certs/dev-key.pem -cert-file certs/dev-cert.pem \
+  localhost 127.0.0.1 192.168.x.x
+```
+
+Replace `192.168.x.x` with your machine’s LAN IP. Before running the dev server, export the certificate paths:
+
+```bash
+export VITE_DEV_SSL_KEY="$PWD/certs/dev-key.pem"
+export VITE_DEV_SSL_CERT="$PWD/certs/dev-cert.pem"
+npm run dev
+```
+
+Install/trust the generated certificate on any mobile device that will access the dev server (iOS: Settings ▸ General ▸ About ▸ Certificate Trust Settings).
+
 ## Scripts
 - **npm run dev**: Compiles and starts a local development server using Vite.
 - **npm run build**: Bundles and optimizes the project for production.
