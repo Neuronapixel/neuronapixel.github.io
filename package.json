@@ -48,7 +48,7 @@
     "sass-embedded": "^1.93.3",
     "semantic-release": "^25.0.2",
     "vite": "^7.1.12",
-    "vitest": "^4.0.6",
+    "vitest": "^4.0.16",
     "vue-eslint-parser": "^10.2.0",
     "vue-tsc": "^3.0.7"
   },
