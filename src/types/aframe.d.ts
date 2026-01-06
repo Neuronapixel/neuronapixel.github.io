@@ -1,12 +1,12 @@
 export {};
 
 declare global {
-  const AFRAME: any;
+  const AFRAME: unknown;
   interface Window {
     AFRAME: typeof AFRAME;
   }
   namespace AFrame {
-    type Scene = any;
-    type Entity = any;
+    type Scene = unknown;
+    type Entity = unknown;
   }
 }
