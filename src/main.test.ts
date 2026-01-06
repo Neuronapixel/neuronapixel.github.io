@@ -13,7 +13,7 @@ describe('Main entry file', () => {
 
     // Now, get the element with id "app".
     const appContainer = document.getElementById('app');
-    
+
     // Verify that the app container exists.
     expect(appContainer).toBeTruthy();
 

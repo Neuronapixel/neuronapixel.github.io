@@ -2,9 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="column" />
-      <h3 style="text-align:center;">
-        Neuronapixel
-      </h3>
+      <h3 style="text-align: center">Neuronapixel</h3>
       <p>
         Web development, scripting, coding, creativity; multimedia as a language
         of countless interpretations in which each experience is a different

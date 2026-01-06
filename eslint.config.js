@@ -4,9 +4,16 @@ import vueEslintParser from 'vue-eslint-parser';
 import typescriptEslintParser from '@typescript-eslint/parser';
 import vuePlugin from 'eslint-plugin-vue';
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
+import prettierConfig from '@vue/eslint-config-prettier';
 
 const tsFiles = ['**/*.{ts,tsx,cts,mts}'];
 const vueFiles = ['**/*.vue'];
+const typeAwareParserOptions = {
+  tsconfigRootDir: process.cwd(),
+  projectService: {
+    defaultProject: 'tsconfig.eslint.json',
+  },
+};
 const vitestGlobals = {
   describe: 'readonly',
   it: 'readonly',
@@ -18,12 +25,23 @@ const vitestGlobals = {
   afterEach: 'readonly',
 };
 
-const tsConfigs = typescriptEslintPlugin.configs['flat/recommended'].map((config) => ({
+const tsConfigs = typescriptEslintPlugin.configs[
+  'flat/recommended-type-checked'
+].map((config) => ({
   ...config,
   files: config.files ?? tsFiles,
+  languageOptions: {
+    ...config.languageOptions,
+    parserOptions: {
+      ...config.languageOptions?.parserOptions,
+      ...typeAwareParserOptions,
+    },
+  },
 }));
 
-const tsVueConfigs = typescriptEslintPlugin.configs['flat/recommended'].map((config) => ({
+const tsVueConfigs = typescriptEslintPlugin.configs[
+  'flat/recommended-type-checked'
+].map((config) => ({
   ...config,
   files: vueFiles,
   languageOptions: {
@@ -35,6 +53,7 @@ const tsVueConfigs = typescriptEslintPlugin.configs['flat/recommended'].map((con
       ecmaVersion: 'latest',
       sourceType: 'module',
       extraFileExtensions: ['.vue'],
+      ...typeAwareParserOptions,
     },
   },
 }));
@@ -56,7 +75,11 @@ export default [
     },
   },
   {
-    files: ['**/*.{config,conf}.{js,ts,cjs,mjs}', 'vite.config.js', 'eslint.config.js'],
+    files: [
+      '**/*.{config,conf}.{js,ts,cjs,mjs}',
+      'vite.config.js',
+      'eslint.config.js',
+    ],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -73,6 +96,18 @@ export default [
         ...globals.node,
         ...vitestGlobals,
       },
+    },
+  },
+  prettierConfig,
+  {
+    rules: {
+      'prettier/prettier': [
+        'warn',
+        {
+          singleQuote: true,
+          semi: true,
+        },
+      ],
     },
   },
 ];
