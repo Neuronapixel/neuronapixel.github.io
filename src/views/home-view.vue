@@ -1,12 +1,16 @@
 <template>
   <div class="home">
     <img src="@/assets/launchLogo.png" width="180" height="180" />
-    <Welcome />
+    <WelcomePanel />
   </div>
 </template>
 
 <script setup>
-import Welcome from "@/components/Welcome.vue";
+import WelcomePanel from '@/components/welcome-panel.vue';
+
+defineOptions({
+  name: 'HomeView',
+});
 </script>
 
 <style scoped>
