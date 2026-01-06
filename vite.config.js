@@ -50,7 +50,6 @@ export default defineConfig({
         'docs/',
         'public/',
       ],
-      enabled: true,
     },
   },
 });

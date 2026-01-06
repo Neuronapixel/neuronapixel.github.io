@@ -5,7 +5,7 @@
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -30,9 +30,7 @@
   },
   "include": [
     "src/shims-vue.d.ts",
-    "tests/**/*.tsx",
     "src/**/*.tsx",
-    "tests/**/*.ts",
     "src/**/*.vue",
     "src/**/*.ts"
   ],

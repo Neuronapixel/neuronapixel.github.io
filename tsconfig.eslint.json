@@ -8,8 +8,6 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "src/**/*.d.ts",
-    "tests/**/*.ts",
-    "tests/**/*.tsx",
     "src/**/*.test.ts",
     "src/**/*.test.tsx"
   ]
