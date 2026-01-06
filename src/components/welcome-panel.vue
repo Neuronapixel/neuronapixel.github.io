@@ -1,8 +1,10 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="column"></div>
-      <h3 style="text-align:center;">Neuronapixel</h3>
+      <div class="column" />
+      <h3 style="text-align:center;">
+        Neuronapixel
+      </h3>
       <p>
         Web development, scripting, coding, creativity; multimedia as a language
         of countless interpretations in which each experience is a different
@@ -17,7 +19,9 @@
 </template>
 
 <script setup lang="ts">
-// No additional logic is needed for this static component.
+defineOptions({
+  name: 'WelcomePanel',
+});
 </script>
 
 <style></style>

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import LegacyHome from "@/views/Home.vue";
-import About from "@/views/About.vue";
+import LegacyHome from '@/views/home-view.vue';
+import About from '@/views/about-view.vue';
 import VRama from "@/views/VRama.vue";
 import MemoriaVirtual from "@/views/MemoriaVirtual.vue";
 import NeuronaTornasol from "@/views/NeuronaTornasol.vue";

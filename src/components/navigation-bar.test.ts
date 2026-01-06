@@ -1,7 +1,7 @@
 // Navigation.spec.ts
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import NavigationBar from '@/components/NavigationBar.vue'
+import NavigationBar from '@/components/navigation-bar.vue'
 
 // Create an explicit stub for router-link that renders an anchor element
 const RouterLinkStub = {

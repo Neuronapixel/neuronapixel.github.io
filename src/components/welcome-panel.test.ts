@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import Welcome from './Welcome.vue'
+import WelcomePanel from './welcome-panel.vue'
 
 
-describe('Welcome.vue', () => {
+describe('WelcomePanel.vue', () => {
   it('renders without exploding', () => {
-    const wrapper = mount(Welcome)
+    const wrapper = mount(WelcomePanel)
     expect(wrapper.text()).toContain(`Neuronapixel`)
   })
 })

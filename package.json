@@ -11,7 +11,8 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "eslint --ext .js,.vue,.ts,.tsx --fix src",
+    "lint": "eslint . --ext .js,.cjs,.mjs,.vue,.ts,.tsx",
+    "lint:fix": "npm run lint -- --fix",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
@@ -21,13 +22,13 @@
   "dependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/test-utils": "^2.4.6",
-    "aframe-watcher": "^1.4.0",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
+    "@eslint/js": "^9.39.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
@@ -40,13 +41,17 @@
     "@vue/eslint-config-prettier": "^10.2.0",
     "eslint": "^9.39.0",
     "eslint-plugin-vue": "^10.5.1",
+    "globals": "^14.0.0",
     "husky": "^9.1.7",
     "jsdom": "^27.1.0",
     "sass-embedded": "^1.93.3",
-    "semantic-release": "^25.0.1",
+    "semantic-release": "^25.0.2",
     "vite": "^7.1.12",
     "vitest": "^4.0.6",
     "vue-eslint-parser": "^10.2.0"
+  },
+  "overrides": {
+    "js-yaml": "^4.1.1"
   },
   "browserslist": [
     "> 1%",
