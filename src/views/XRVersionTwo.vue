@@ -97,30 +97,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
-
-const isMobile = ref(false);
-const isIOS = ref(false);
-
 const inspectorAttribute = import.meta.env.DEV ? '' : null;
-
-const isIOSDevice = () =>
-  typeof navigator !== 'undefined' &&
-  /iP(hone|ad|od)/i.test(navigator.userAgent);
-
-const updateViewport = () => {
-  isMobile.value = window.innerWidth <= 900;
-};
-
-onMounted(() => {
-  isIOS.value = isIOSDevice();
-  updateViewport();
-  window.addEventListener('resize', updateViewport);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateViewport);
-});
 </script>
 
 <style scoped>
