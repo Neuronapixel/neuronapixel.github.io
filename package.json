@@ -15,10 +15,16 @@
     "lint:fix": "npm run lint -- --fix",
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest",
+    "test:run": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
+    "check": "npm run lint && npm run typecheck && npm run test:run",
     "prepare": "husky",
     "release": "semantic-release"
+  },
+  "engines": {
+    "node": ">=22.14.0 <23",
+    "npm": ">=11 <12"
   },
   "dependencies": {
     "vue": "^3.5.22",

@@ -1,0 +1,16 @@
+{
+  "name": "Neuronapixel",
+  "short_name": "Neuronapixel",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff2f2f",
+  "description": "Interactive web, XR, and multimedia experiences by Neuronapixel.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import VRama from '@/views/VRama.vue';
 import MemoriaVirtual from '@/views/MemoriaVirtual.vue';
 import NeuronaTornasol from '@/views/NeuronaTornasol.vue';
 import XRVersionTwo from '@/views/XRVersionTwo.vue';
+import NotFoundView from '@/views/not-found-view.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/neurona-tornasol',
     name: 'Neurona Tornasol',
     component: NeuronaTornasol,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFoundView,
   },
 ];
 

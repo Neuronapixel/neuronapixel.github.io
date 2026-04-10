@@ -35,7 +35,7 @@ export default defineConfig({
     https: httpsOptions,
   },
   build: {
-    outDir: 'docs',
+    outDir: 'dist',
   },
   test: {
     globals: true,
@@ -47,7 +47,7 @@ export default defineConfig({
         'vite.config.js',
         'node_modules/',
         'tests/',
-        'docs/',
+        'dist/',
         'public/',
       ],
     },
