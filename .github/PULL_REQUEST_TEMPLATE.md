@@ -1,5 +1,6 @@
 ## Summary
 - What does this PR change?
+- Linked issue or context
 
 ## Type
 - [ ] feat
@@ -15,7 +16,6 @@
 
 ## Checklist
 - [ ] Tests cover changes
-- [ ] Lint passes locally (`npx eslint .`)
+- [ ] Local checks pass (`npm run check`)
 - [ ] Build succeeds locally (`npm run build`)
 - [ ] Updated docs if needed
-

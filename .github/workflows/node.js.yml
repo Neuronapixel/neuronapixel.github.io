@@ -1,89 +1,99 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-
 on:
   push:
-    branches: [ "master" ]
+    branches: ['master']
   pull_request:
-    branches: [ "master" ]
+    branches: ['master']
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Run semantic-release in dry-run mode"
+        description: 'Run semantic-release in dry-run mode'
         required: false
         default: true
         type: boolean
 
+permissions:
+  contents: read
+
 jobs:
-  build:
-
+  validate:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - name: Lint
-      run: npx eslint . --ext .js,.vue,.ts,.tsx
-    - name: Build
-      env:
-        NODE_ENV: production
-        VITE_GA_ID: ${{ secrets.VITE_GA_ID }}
-      run: npm run build --if-present
-    - name: Test
-      run: npm test
-    - name: Semantic Release
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.node-version == '22.x'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npx semantic-release
-    - name: Semantic Release (dry-run)
-      if: github.event_name == 'workflow_dispatch' && matrix.node-version == '22.x' && inputs.dry_run == true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npx semantic-release --dry-run
-
-  dry-run:
-    name: Semantic Release Dry Run
-    # Run on manual trigger OR on PRs targeting master
-    if: |
-      (github.event_name == 'workflow_dispatch' && inputs.dry_run == true) ||
-      (github.event_name == 'pull_request' && github.base_ref == 'master')
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
-          cache: 'npm'
+          cache: npm
+
       - name: Install dependencies
         run: npm ci
-      - name: Semantic Release (dry-run)
+
+      - name: Verify quality gates
+        run: npm run check
+
+      - name: Build production bundle
+        env:
+          VITE_GTM_ID: ${{ vars.VITE_GTM_ID }}
+        run: npm run build
+
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release --dry-run
+        run: npm run release
+
+  release-dry-run:
+    if: |
+      (github.event_name == 'workflow_dispatch' && inputs.dry_run == true) ||
+      (github.event_name == 'pull_request' && github.base_ref == 'master')
+    needs: validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Preview semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run release -- --dry-run
