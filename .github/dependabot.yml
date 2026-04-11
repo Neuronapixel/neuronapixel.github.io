@@ -13,3 +13,7 @@ updates:
       prefix: chore
       include: scope
     rebase-strategy: auto
+    ignore:
+      - dependency-name: vite
+        update-types:
+          - version-update:semver-major
