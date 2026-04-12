@@ -38,6 +38,17 @@ Status verified locally on April 12, 2026:
 
 The router uses `createWebHashHistory()`, which keeps direct GitHub Pages hosting simple without additional server-side rewrite rules.
 
+## Agentic Development
+
+This repository uses a layered, vendor-neutral `AGENTS.md` workflow so humans and AI agents can route work consistently without bypassing the existing delivery setup.
+
+- [`AGENTS.md`](./AGENTS.md): project oversight, cross-cutting guardrails, and delivery policy
+- [`src/AGENTS.md`](./src/AGENTS.md): staff SWE guide for application code
+- [`.github/AGENTS.md`](./.github/AGENTS.md): DevOps guide for CI, release, and GitHub automation
+- [`.agentic/`](./.agentic/): workflow docs, task brief, handoff template, and delivery checklist
+
+The workflow is intentionally built around the current GitHub Pages deployment, GitHub Actions validation, commitlint, and semantic-release flow instead of introducing parallel processes.
+
 ## Current Routes
 
 - `/`: `XRVersionTwo.vue`, the current WebXR landing experience
