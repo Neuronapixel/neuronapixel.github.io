@@ -1,56 +1,117 @@
 # Neuronapixel
 
-## Overview
-Neuronapixel is a Vue 3 application bootstrapped with Vite. The project features a modern tech stack focusing on modular and maintainable architecture, including:
+Neuronapixel is a Vue 3 + Vite site for interactive web, XR, and multimedia experiments. The current default landing route is an A-Frame-powered WebXR scene, with additional legacy and project-specific pages exposed through Vue Router.
 
-- **Vue 3** for the reactive framework
-- **Vite** for fast development server and build tooling
-- **Vue Router** for client-side routing
-- **Sass** (via sass-embedded) for flexible, nested CSS
-- **ESLint** for linting and code consistency
+## Current Status
 
-## Project Setup
-1. **Install dependencies**:
-```bash
-npm install
-```
-2. **Copy the example environment file**:
-```bash
-cp .env.example .env.local
-```
-3. **Start the development server** (includes hot module reloading):
-```bash
-npm run dev
-```
-4. **Run the local quality gate**:
-```bash
-npm run check
-```
-5. **Build for production**:
-```bash
-npm run build
-```
-6. **Preview the production build**:
-```bash
-npm run serve
-```
-7. **Lint and fix files**:
-```bash
-npm run lint:fix
-```
+Status verified locally on April 12, 2026:
 
-## Local HTTPS Preview
-WebXR-capable browsers on mobile generally require HTTPS even for local development. We recommend [mkcert](https://github.com/FiloSottile/mkcert) to generate trusted certificates:
+- `npm run check` passes
+- `npm run build` passes
+- Production output is generated into `dist/`
+- GitHub Pages deploys from GitHub Actions on pushes to `master`
+
+## Tech Stack
+
+- Vue 3
+- Vite 8
+- TypeScript
+- Vue Router 5
+- Vitest + `@vue/test-utils`
+- ESLint
+- Sass via `sass-embedded`
+- A-Frame and `aframe-extras`, loaded from CDN in [`index.html`](./index.html)
+
+## Runtime Requirements
+
+- Node.js `>=24.14.1 <25`
+- npm `>=11 <12`
+
+## Application Structure
+
+- [`src/main.ts`](./src/main.ts): app bootstrap and Google Tag Manager injection
+- [`src/router/index.ts`](./src/router/index.ts): hash-based router configuration
+- [`src/views/`](./src/views): route-level views, including the XR landing page
+- [`src/components/`](./src/components): shared UI components
+- [`src/utils/injectTagManager.ts`](./src/utils/injectTagManager.ts): optional GTM script injection
+- [`public/`](./public): static files such as `CNAME`, manifest, sitemap, and OG assets
+
+The router uses `createWebHashHistory()`, which keeps direct GitHub Pages hosting simple without additional server-side rewrite rules.
+
+## Agentic Development
+
+This repository uses a layered, vendor-neutral `AGENTS.md` workflow so humans and AI agents can route work consistently without bypassing the existing delivery setup.
+
+- [`AGENTS.md`](./AGENTS.md): project oversight, cross-cutting guardrails, and delivery policy
+- [`src/AGENTS.md`](./src/AGENTS.md): staff SWE guide for application code
+- [`.github/AGENTS.md`](./.github/AGENTS.md): DevOps guide for CI, release, and GitHub automation
+- [`.agentic/`](./.agentic/): workflow docs, task brief, handoff template, and delivery checklist
+
+The workflow is intentionally built around the current GitHub Pages deployment, GitHub Actions validation, commitlint, and semantic-release flow instead of introducing parallel processes.
+
+## Current Routes
+
+- `/`: `XRVersionTwo.vue`, the current WebXR landing experience
+- `/classic`: legacy home view
+- `/about`: about page
+- `/vr-ama`: VR AMA page
+- `/memoria-virtual`: Memoria Virtual page
+- `/neurona-tornasol`: Neurona Tornasol page
+- `/:pathMatch(.*)*`: not found page
+
+## Getting Started
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Copy the example environment file:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Run the local quality gate:
+
+   ```bash
+   npm run check
+   ```
+
+5. Build for production:
+
+   ```bash
+   npm run build
+   ```
+
+6. Preview the production build:
+
+   ```bash
+   npm run serve
+   ```
+
+## Local HTTPS for XR Testing
+
+Mobile browsers typically require HTTPS for WebXR-related testing. The Vite config supports optional local certificates through environment variables.
+
+Recommended setup with [mkcert](https://github.com/FiloSottile/mkcert):
 
 ```bash
-brew install mkcert               # one-time
-mkcert -install                   # trusts mkcert's local CA on macOS
+brew install mkcert
+mkcert -install
 mkdir -p certs
 mkcert -key-file certs/dev-key.pem -cert-file certs/dev-cert.pem \
   localhost 127.0.0.1 192.168.x.x
 ```
 
-Replace `192.168.x.x` with your machine’s LAN IP. Before running the dev server, export the certificate paths:
+Replace `192.168.x.x` with your machine's LAN IP, then export:
 
 ```bash
 export VITE_DEV_SSL_KEY="$PWD/certs/dev-key.pem"
@@ -58,45 +119,55 @@ export VITE_DEV_SSL_CERT="$PWD/certs/dev-cert.pem"
 npm run dev
 ```
 
-Install/trust the generated certificate on any mobile device that will access the dev server (iOS: Settings ▸ General ▸ About ▸ Certificate Trust Settings).
+If both files exist, Vite serves locally over HTTPS on port `5173`.
 
 ## Environment Variables
-- `VITE_GTM_ID`: optional Google Tag Manager container ID. Leave empty to disable analytics script injection.
-- `VITE_DEV_SSL_KEY`: optional local HTTPS key path for Vite.
-- `VITE_DEV_SSL_CERT`: optional local HTTPS certificate path for Vite.
 
-## Scripts
-- **npm run dev**: Compiles and starts a local development server using Vite.
-- **npm run build**: Bundles and optimizes the project into `dist/`.
-- **npm run serve**: Serves the built project locally to preview production output.
-- **npm run lint**: Lints the repository.
-- **npm run lint:fix**: Applies ESLint auto-fixes where possible.
-- **npm run typecheck**: Runs Vue and TypeScript static checks.
-- **npm run test:run**: Executes Vitest once for CI and hooks.
-- **npm run check**: Runs lint, typecheck, and tests as the baseline local gate.
+- `VITE_GTM_ID`: optional Google Tag Manager container ID
+- `VITE_DEV_SSL_KEY`: optional path to the local HTTPS key
+- `VITE_DEV_SSL_CERT`: optional path to the local HTTPS certificate
 
-## Design and Components
-- We follow a **minimalist, scalable design** approach. Keep components self-contained and modular.
-- **File structure**: Separate logic and styling. Each Vue file should handle its own local scope as needed.
-- **Sass** provides advanced styling features, so use nesting and variables responsibly.
-- **Reusability**: Split common UI elements into separate components for easier maintenance and consistency.
+Example values live in [`.env.example`](./.env.example).
 
-## Additional Information
-- We welcome contributions and suggestions. Ensure you run `npm run check` before creating a PR.
-- For more about configuration or customizing further, consult the Vite and Vue documentation.
+## Available Scripts
 
-## Branch Naming
-Refer to [branch-naming.md](./branch-naming.md) for the conventions used when creating branches. Branches generated by the Codex agent should include the `codex/` prefix.
+- `npm run dev`: start the Vite dev server
+- `npm run build`: create the production bundle in `dist/`
+- `npm run serve`: preview the built site locally
+- `npm run lint`: run ESLint
+- `npm run lint:fix`: run ESLint with auto-fix
+- `npm run typecheck`: run `vue-tsc --noEmit`
+- `npm run test`: start Vitest in watch mode
+- `npm run test:run`: run Vitest once
+- `npm run test:ui`: open the Vitest UI
+- `npm run test:coverage`: generate coverage with the V8 provider
+- `npm run check`: run lint, typecheck, and tests
+- `npm run release`: run semantic-release
+
+## Testing and CI
+
+- Unit tests currently cover the app bootstrap, router, GTM injector, and shared components
+- CI runs `npm run check` and `npm run build` on pushes and pull requests targeting `master`
+- On pushes to `master`, semantic-release runs after validation
+- Pull requests and manual dry runs also execute `npm run release -- --dry-run`
 
 ## Deployment
-- CI validates `lint`, `typecheck`, tests, and a production build on every PR targeting `master`.
-- GitHub Pages deployment is handled by `.github/workflows/pages.yml` and publishes the generated `dist/` artifact.
-- Configure the repository Pages source to **GitHub Actions** and keep the `public/CNAME` file committed for the custom domain.
 
-## Preview Release Notes
-To preview release notes without publishing a release, run:
+- GitHub Pages deployment is defined in [`.github/workflows/pages.yml`](./.github/workflows/pages.yml)
+- The workflow builds the site and uploads `dist/` as the Pages artifact
+- Keep the repository Pages source set to `GitHub Actions`
+- `public/CNAME` is committed for the custom domain
+
+The repository also contains a checked-in [`docs/`](./docs) build snapshot, but the active deployment workflow publishes the freshly built `dist/` artifact.
+
+## Branch Naming
+
+Refer to [`branch-naming.md`](./branch-naming.md) for branch naming conventions. Codex-created branches should use the `codex/` prefix.
+
+## Release Preview
+
+To inspect the next semantic-release output without publishing:
 
 ```bash
 npm run release -- --dry-run
 ```
-Semantic-release will output the upcoming changes so you can review them locally.
