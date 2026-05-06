@@ -31,18 +31,18 @@
     "vue-router": "^5.0.6"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.5.0",
+    "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.0",
     "@vitejs/plugin-vue": "^6.0.6",
-    "@vue/test-utils": "^2.4.6",
+    "@vue/test-utils": "^2.4.10",
     "@eslint/js": "^10.0.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^12.0.6",
     "@semantic-release/release-notes-generator": "^14.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.59.0",
-    "@typescript-eslint/parser": "^8.58.2",
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.2",
     "@vitest/coverage-v8": "^4.1.4",
     "@vitest/ui": "^4.1.4",
     "@vue/eslint-config-prettier": "^10.2.0",
@@ -56,7 +56,7 @@
     "vite": "^8.0.10",
     "vitest": "^4.1.5",
     "vue-eslint-parser": "^10.4.0",
-    "vue-tsc": "^3.2.6"
+    "vue-tsc": "^3.2.8"
   },
   "overrides": {
     "js-yaml": "^4.1.1"
