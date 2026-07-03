@@ -27,7 +27,7 @@
     "npm": ">=11 <12"
   },
   "dependencies": {
-    "vue": "^3.5.35",
+    "vue": "^3.5.39",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
@@ -39,14 +39,14 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^12.0.8",
+    "@semantic-release/github": "^12.0.9",
     "@semantic-release/release-notes-generator": "^14.1.1",
-    "@typescript-eslint/eslint-plugin": "^8.60.0",
+    "@typescript-eslint/eslint-plugin": "^8.62.1",
     "@typescript-eslint/parser": "^8.62.0",
     "@vitest/coverage-v8": "^4.1.4",
     "@vitest/ui": "^4.1.7",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "eslint": "^10.5.0",
+    "eslint": "^10.6.0",
     "eslint-plugin-vue": "^10.9.2",
     "globals": "^17.7.0",
     "husky": "^9.1.7",
@@ -56,7 +56,7 @@
     "vite": "^8.1.0",
     "vitest": "^4.1.9",
     "vue-eslint-parser": "^10.4.1",
-    "vue-tsc": "^3.3.2"
+    "vue-tsc": "^3.3.6"
   },
   "overrides": {
     "js-yaml": "^4.1.1"
