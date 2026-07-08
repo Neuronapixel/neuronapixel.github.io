@@ -56,7 +56,7 @@
     "vite": "^8.1.0",
     "vitest": "^4.1.9",
     "vue-eslint-parser": "^10.4.1",
-    "vue-tsc": "^3.3.6"
+    "vue-tsc": "^3.3.7"
   },
   "overrides": {
     "js-yaml": "^4.1.1"
