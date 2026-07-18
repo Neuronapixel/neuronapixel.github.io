@@ -21,13 +21,14 @@
             geometry="primitive: box; depth: 1; height: 1; width: 1"
           />
         </a-assets>
-        <a-entity id="rig" position="1 1.35 9">
+        <a-entity id="rig" position="0 0 0">
           <a-entity
             id="camera"
-            camera="fov:65"
-            rotation="0 0 0"
-            look-controls="enabled: true; pointerLockEnabled: true"
-            wasd-controls="enabled: true; fly: true"
+            camera="fov: 50"
+            rotation="-10 0 0"
+            position="1 -0.5 21"
+            look-controls="pointerLockEnabled: true"
+            wasd-controls="fly: true"
           />
         </a-entity>
 
@@ -83,43 +84,50 @@
           <a-entity position="2 2 2" mixin="cube secondary-material" />
         </a-entity>
 
-        <a-entity class="copy-table" position="1 -0.5 0.35">
+        <a-entity class="copy-table" position="1 -4.075 0.75">
           <a-box
-            width="6.8"
-            height="1.8"
-            depth="1.2"
+            width="9"
+            height="9"
+            depth="9"
             material="color: #ffffff; emissive: #ffffff; emissiveIntensity: 0.25; roughness: 0.5"
           />
           <a-text
-            position="0 0.35 0.64"
-            value="Neuronapixel"
+            class="copy-heading"
+            position="0 2.6 4.51"
+            value="neuronapixel"
             align="center"
             anchor="center"
             baseline="center"
             color="#1f2233"
-            width="4.3"
+            font="roboto"
+            width="7.5"
+            wrap-count="20"
             shader="msdf"
           />
           <a-text
-            position="0 -0.1 0.64"
+            class="copy-paragraph"
+            position="0 0.45 4.51"
             value="Web development, scripting, coding, creativity; multimedia as a language of countless interpretations in which each experience is a different message"
             align="center"
             anchor="center"
             baseline="center"
             color="#1f2233"
-            width="5.9"
-            wrap-count="76"
+            font="roboto"
+            width="7.2"
+            wrap-count="44"
             shader="msdf"
           />
           <a-text
-            position="0 -0.58 0.64"
-            value="Neuronapixel believes in the intrinsic value of interaction as a vehicle for the transit of ideas."
+            class="copy-paragraph"
+            position="0 -2.55 4.51"
+            value="neuronapixel believes in the intrinsic value of interaction as a vehicle for the transit of ideas."
             align="center"
             anchor="center"
             baseline="center"
             color="#1f2233"
-            width="5.2"
-            wrap-count="68"
+            font="roboto"
+            width="7.2"
+            wrap-count="44"
             shader="msdf"
           />
         </a-entity>
