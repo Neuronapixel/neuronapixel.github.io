@@ -2,6 +2,7 @@
   <div class="xr-experience">
     <section class="viewport desktop">
       <a-scene
+        ref="sceneRef"
         embedded
         vr-mode-ui="enabled: false"
         renderer="antialias: true; colorManagement: true"
@@ -15,6 +16,10 @@
           <a-mixin
             id="secondary-material"
             material="color: #ffffff; roughness: 0.4; emissive: #ffffff; emissiveIntensity: 0.4"
+          />
+          <a-mixin
+            id="animated-white-material"
+            material="color: #ffffff; roughness: 0.4; emissive: #ffffff; emissiveIntensity: 0.4; opacity: 0; transparent: true"
           />
           <a-mixin
             id="cube"
@@ -132,14 +137,194 @@
           />
         </a-entity>
 
-        <a-sky color="#fff" />
+        <a-entity
+          v-for="(cloud, cloudIndex) in clouds"
+          :key="cloud.id"
+          class="day-cloud"
+          :data-cloud-index="cloudIndex"
+          :position="`-24 ${cloud.y} ${cloud.z}`"
+          visible="false"
+        >
+          <a-entity
+            v-for="cubeDefinition in cloud.cubes"
+            :key="`${cloud.id}-${cubeDefinition.position}`"
+            class="day-cloud-cube"
+            mixin="cube animated-white-material"
+            :position="cubeDefinition.position"
+            :scale="cubeDefinition.scale"
+          />
+        </a-entity>
+
+        <a-entity
+          v-for="(star, starIndex) in stars"
+          :key="star.position"
+          class="night-star"
+          mixin="cube animated-white-material"
+          :data-star-index="starIndex"
+          :position="star.position"
+          visible="false"
+        />
+
+        <a-sky id="day-night-sky" color="#fff" />
       </a-scene>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { getDayNightFrame } from '@/utils/dayNightCycle';
+
+interface MaterialComponent {
+  material?: {
+    opacity: number;
+    transparent: boolean;
+  };
+}
+
+interface SceneEntity extends HTMLElement {
+  components?: {
+    material?: MaterialComponent;
+  };
+  hasLoaded?: boolean;
+  object3D?: {
+    position: {
+      x: number;
+    };
+    visible: boolean;
+  };
+}
+
+interface CubeDefinition {
+  position: string;
+  scale: '1 1 1' | '2 2 2';
+}
+
 const inspectorAttribute = import.meta.env.DEV ? '' : null;
+const sceneRef = ref<SceneEntity | null>(null);
+let animationFrameId: number | null = null;
+let cycleStartedAt = 0;
+
+const clouds: Array<{
+  cubes: CubeDefinition[];
+  id: string;
+  y: number;
+  z: number;
+}> = [
+  {
+    id: 'cloud-one',
+    y: 6,
+    z: -14,
+    cubes: [
+      { position: '-3 0 0', scale: '1 1 1' },
+      { position: '-2 0 0', scale: '2 2 2' },
+      { position: '0 0 0', scale: '2 2 2' },
+      { position: '2 0 0', scale: '2 2 2' },
+      { position: '4 0 0', scale: '1 1 1' },
+      { position: '0 2 0', scale: '2 2 2' },
+    ],
+  },
+  {
+    id: 'cloud-two',
+    y: 4,
+    z: -16,
+    cubes: [
+      { position: '-4 0 0', scale: '1 1 1' },
+      { position: '-3 0 0', scale: '2 2 2' },
+      { position: '-1 0 0', scale: '2 2 2' },
+      { position: '1 0 0', scale: '2 2 2' },
+      { position: '3 0 0', scale: '1 1 1' },
+      { position: '-1 2 0', scale: '2 2 2' },
+      { position: '1 2 0', scale: '1 1 1' },
+    ],
+  },
+];
+
+const stars = [
+  { position: '-20 9 -28' },
+  { position: '-16 5 -32' },
+  { position: '-12 11 -26' },
+  { position: '-8 4 -30' },
+  { position: '-4 8 -34' },
+  { position: '0 12 -29' },
+  { position: '4 6 -33' },
+  { position: '8 10 -27' },
+  { position: '12 4 -35' },
+  { position: '16 8 -31' },
+  { position: '20 12 -36' },
+  { position: '22 5 -30' },
+];
+
+const setEntityOpacity = (entity: SceneEntity, opacity: number) => {
+  if (entity.object3D) {
+    entity.object3D.visible = opacity > 0.01;
+  }
+
+  const material = entity.components?.material?.material;
+  if (material) {
+    material.opacity = opacity;
+    material.transparent = opacity < 1;
+  }
+};
+
+const updateScene = (timestamp: number) => {
+  const scene = sceneRef.value;
+  if (!scene) {
+    return;
+  }
+
+  const frame = getDayNightFrame(timestamp - cycleStartedAt, stars.length);
+  scene
+    .querySelector<HTMLElement>('#day-night-sky')
+    ?.setAttribute('color', frame.skyColor);
+
+  scene.querySelectorAll<SceneEntity>('.day-cloud').forEach((cloud, index) => {
+    const opacity = frame.cloudOpacities[index] ?? 0;
+    if (cloud.object3D) {
+      cloud.object3D.position.x = -24 + (frame.cloudProgress[index] ?? 0) * 48;
+      cloud.object3D.visible = opacity > 0.01;
+    }
+    cloud.querySelectorAll<SceneEntity>('.day-cloud-cube').forEach((cube) => {
+      setEntityOpacity(cube, opacity);
+    });
+  });
+
+  scene.querySelectorAll<SceneEntity>('.night-star').forEach((star, index) => {
+    setEntityOpacity(star, frame.starOpacities[index] ?? 0);
+  });
+
+  animationFrameId = window.requestAnimationFrame(updateScene);
+};
+
+const startCycle = () => {
+  if (animationFrameId !== null) {
+    return;
+  }
+
+  cycleStartedAt = performance.now();
+  animationFrameId = window.requestAnimationFrame(updateScene);
+};
+
+onMounted(() => {
+  const scene = sceneRef.value;
+  if (!scene) {
+    return;
+  }
+
+  if (scene.hasLoaded) {
+    startCycle();
+  } else {
+    scene.addEventListener('loaded', startCycle, { once: true });
+  }
+});
+
+onBeforeUnmount(() => {
+  sceneRef.value?.removeEventListener('loaded', startCycle);
+
+  if (animationFrameId !== null) {
+    window.cancelAnimationFrame(animationFrameId);
+  }
+});
 </script>
 
 <style scoped>
