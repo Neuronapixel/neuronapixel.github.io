@@ -142,7 +142,7 @@
           :key="cloud.id"
           class="day-cloud"
           :data-cloud-index="cloudIndex"
-          :position="`-24 ${cloud.y} ${cloud.z}`"
+          :position="`${cloud.startX} ${cloud.startY} ${cloud.z}`"
           visible="false"
         >
           <a-entity
@@ -190,6 +190,7 @@ interface SceneEntity extends HTMLElement {
   object3D?: {
     position: {
       x: number;
+      y: number;
     };
     visible: boolean;
   };
@@ -207,14 +208,20 @@ let cycleStartedAt = 0;
 
 const clouds: Array<{
   cubes: CubeDefinition[];
+  endX: number;
+  endY: number;
   id: string;
-  y: number;
+  startX: number;
+  startY: number;
   z: number;
 }> = [
   {
     id: 'cloud-one',
-    y: 6,
-    z: -14,
+    startX: -28,
+    startY: 10,
+    endX: 26,
+    endY: 8,
+    z: -18,
     cubes: [
       { position: '-3 0 0', scale: '1 1 1' },
       { position: '-2 0 0', scale: '2 2 2' },
@@ -226,8 +233,11 @@ const clouds: Array<{
   },
   {
     id: 'cloud-two',
-    y: 4,
-    z: -16,
+    startX: 26,
+    startY: 4,
+    endX: -24,
+    endY: 7,
+    z: -14,
     cubes: [
       { position: '-4 0 0', scale: '1 1 1' },
       { position: '-3 0 0', scale: '2 2 2' },
@@ -238,21 +248,322 @@ const clouds: Array<{
       { position: '1 2 0', scale: '1 1 1' },
     ],
   },
+  {
+    id: 'cloud-three',
+    startX: -26,
+    startY: 8,
+    endX: 20,
+    endY: 4,
+    z: -22,
+    cubes: [
+      { position: '-4 0 0', scale: '1 1 1' },
+      { position: '-3 0 0', scale: '2 2 2' },
+      { position: '-1 0 0', scale: '2 2 2' },
+      { position: '1 0 0', scale: '1 1 1' },
+      { position: '-1 2 0', scale: '2 2 2' },
+    ],
+  },
+  {
+    id: 'cloud-four',
+    startX: 22,
+    startY: 12,
+    endX: -26,
+    endY: 9,
+    z: -30,
+    cubes: [
+      { position: '-2 0 0', scale: '1 1 1' },
+      { position: '-1 0 0', scale: '2 2 2' },
+      { position: '1 0 0', scale: '2 2 2' },
+      { position: '3 0 0', scale: '1 1 1' },
+      { position: '1 2 0', scale: '1 1 1' },
+    ],
+  },
+  {
+    id: 'cloud-five',
+    startX: -20,
+    startY: 6,
+    endX: 22,
+    endY: 11,
+    z: -26,
+    cubes: [
+      { position: '-3 0 0', scale: '2 2 2' },
+      { position: '-1 0 0', scale: '2 2 2' },
+      { position: '1 0 0', scale: '2 2 2' },
+      { position: '3 0 0', scale: '2 2 2' },
+      { position: '-1 2 0', scale: '1 1 1' },
+      { position: '1 2 0', scale: '2 2 2' },
+    ],
+  },
+  {
+    id: 'cloud-six',
+    startX: 24,
+    startY: 3,
+    endX: -18,
+    endY: 6,
+    z: -18,
+    cubes: [
+      { position: '-2 0 0', scale: '1 1 1' },
+      { position: '-1 0 0', scale: '1 1 1' },
+      { position: '0 0 0', scale: '2 2 2' },
+      { position: '2 0 0', scale: '2 2 2' },
+      { position: '4 0 0', scale: '1 1 1' },
+      { position: '2 2 0', scale: '1 1 1' },
+    ],
+  },
+  {
+    id: 'cloud-seven',
+    startX: -32,
+    startY: 3,
+    endX: 30,
+    endY: 9,
+    z: -34,
+    cubes: [
+      { position: '-3 0 0', scale: '1 1 1' },
+      { position: '-2 0 0', scale: '2 2 2' },
+      { position: '0 0 0', scale: '2 2 2' },
+      { position: '2 0 0', scale: '1 1 1' },
+      { position: '0 2 0', scale: '1 1 1' },
+    ],
+  },
+  {
+    id: 'cloud-eight',
+    startX: 30,
+    startY: 14,
+    endX: -30,
+    endY: 11,
+    z: -24,
+    cubes: [
+      { position: '-4 0 0', scale: '1 1 1' },
+      { position: '-3 0 0', scale: '2 2 2' },
+      { position: '-1 0 0', scale: '2 2 2' },
+      { position: '1 0 0', scale: '2 2 2' },
+      { position: '3 0 0', scale: '1 1 1' },
+      { position: '-1 2 0', scale: '1 1 1' },
+    ],
+  },
+  {
+    id: 'cloud-nine',
+    startX: -24,
+    startY: 12,
+    endX: 28,
+    endY: 5,
+    z: -16,
+    cubes: [
+      { position: '-2 0 0', scale: '2 2 2' },
+      { position: '0 0 0', scale: '2 2 2' },
+      { position: '2 0 0', scale: '2 2 2' },
+      { position: '4 0 0', scale: '1 1 1' },
+      { position: '0 2 0', scale: '2 2 2' },
+      { position: '2 2 0', scale: '1 1 1' },
+    ],
+  },
+  {
+    id: 'cloud-ten',
+    startX: 18,
+    startY: 7,
+    endX: -28,
+    endY: 13,
+    z: -38,
+    cubes: [
+      { position: '-3 0 0', scale: '1 1 1' },
+      { position: '-2 0 0', scale: '1 1 1' },
+      { position: '-1 0 0', scale: '2 2 2' },
+      { position: '1 0 0', scale: '2 2 2' },
+      { position: '3 0 0', scale: '1 1 1' },
+      { position: '1 2 0', scale: '2 2 2' },
+    ],
+  },
+  {
+    id: 'cloud-eleven',
+    startX: -28,
+    startY: 8,
+    endX: 24,
+    endY: 14,
+    z: 34,
+    cubes: [
+      { position: '-3 0 0', scale: '1 1 1' },
+      { position: '-2 0 0', scale: '2 2 2' },
+      { position: '0 0 0', scale: '2 2 2' },
+      { position: '2 0 0', scale: '1 1 1' },
+      { position: '0 2 0', scale: '2 2 2' },
+    ],
+  },
+  {
+    id: 'cloud-twelve',
+    startX: 26,
+    startY: 16,
+    endX: -30,
+    endY: 12,
+    z: 44,
+    cubes: [
+      { position: '-4 0 0', scale: '1 1 1' },
+      { position: '-3 0 0', scale: '2 2 2' },
+      { position: '-1 0 0', scale: '2 2 2' },
+      { position: '1 0 0', scale: '2 2 2' },
+      { position: '3 0 0', scale: '1 1 1' },
+      { position: '-1 2 0', scale: '1 1 1' },
+    ],
+  },
+  {
+    id: 'cloud-thirteen',
+    startX: -20,
+    startY: 24,
+    endX: 20,
+    endY: 20,
+    z: 28,
+    cubes: [
+      { position: '-2 0 0', scale: '2 2 2' },
+      { position: '0 0 0', scale: '2 2 2' },
+      { position: '2 0 0', scale: '2 2 2' },
+      { position: '0 2 0', scale: '1 1 1' },
+      { position: '2 2 0', scale: '1 1 1' },
+    ],
+  },
+  {
+    id: 'cloud-fourteen',
+    startX: 22,
+    startY: 28,
+    endX: -22,
+    endY: 22,
+    z: 40,
+    cubes: [
+      { position: '-3 0 0', scale: '1 1 1' },
+      { position: '-2 0 0', scale: '2 2 2' },
+      { position: '0 0 0', scale: '2 2 2' },
+      { position: '2 0 0', scale: '2 2 2' },
+      { position: '4 0 0', scale: '1 1 1' },
+      { position: '0 2 0', scale: '1 1 1' },
+    ],
+  },
+  {
+    id: 'cloud-fifteen',
+    startX: -26,
+    startY: 30,
+    endX: 26,
+    endY: 24,
+    z: 12,
+    cubes: [
+      { position: '-3 0 0', scale: '1 1 1' },
+      { position: '-2 0 0', scale: '2 2 2' },
+      { position: '0 0 0', scale: '2 2 2' },
+      { position: '2 0 0', scale: '1 1 1' },
+      { position: '0 2 0', scale: '2 2 2' },
+    ],
+  },
+  {
+    id: 'cloud-sixteen',
+    startX: 24,
+    startY: 22,
+    endX: -24,
+    endY: 28,
+    z: 20,
+    cubes: [
+      { position: '-4 0 0', scale: '1 1 1' },
+      { position: '-3 0 0', scale: '2 2 2' },
+      { position: '-1 0 0', scale: '2 2 2' },
+      { position: '1 0 0', scale: '2 2 2' },
+      { position: '3 0 0', scale: '1 1 1' },
+      { position: '-1 2 0', scale: '2 2 2' },
+    ],
+  },
+  {
+    id: 'cloud-seventeen',
+    startX: -30,
+    startY: 6,
+    endX: 22,
+    endY: 12,
+    z: 52,
+    cubes: [
+      { position: '-2 0 0', scale: '1 1 1' },
+      { position: '-1 0 0', scale: '2 2 2' },
+      { position: '1 0 0', scale: '2 2 2' },
+      { position: '3 0 0', scale: '1 1 1' },
+      { position: '1 2 0', scale: '1 1 1' },
+    ],
+  },
+  {
+    id: 'cloud-eighteen',
+    startX: 18,
+    startY: 34,
+    endX: -26,
+    endY: 30,
+    z: 18,
+    cubes: [
+      { position: '-3 0 0', scale: '1 1 1' },
+      { position: '-2 0 0', scale: '2 2 2' },
+      { position: '0 0 0', scale: '2 2 2' },
+      { position: '2 0 0', scale: '2 2 2' },
+      { position: '4 0 0', scale: '1 1 1' },
+      { position: '0 2 0', scale: '1 1 1' },
+    ],
+  },
 ];
 
 const stars = [
-  { position: '-20 9 -28' },
-  { position: '-16 5 -32' },
-  { position: '-12 11 -26' },
-  { position: '-8 4 -30' },
-  { position: '-4 8 -34' },
-  { position: '0 12 -29' },
-  { position: '4 6 -33' },
-  { position: '8 10 -27' },
-  { position: '12 4 -35' },
-  { position: '16 8 -31' },
-  { position: '20 12 -36' },
-  { position: '22 5 -30' },
+  { position: '-30 7 -32' },
+  { position: '-26 15 -36' },
+  { position: '-22 23 -28' },
+  { position: '-18 9 -42' },
+  { position: '-14 19 -34' },
+  { position: '-10 27 -38' },
+  { position: '-6 13 -30' },
+  { position: '-2 21 -44' },
+  { position: '2 6 -35' },
+  { position: '6 17 -28' },
+  { position: '10 25 -40' },
+  { position: '14 11 -32' },
+  { position: '18 20 -36' },
+  { position: '22 28 -30' },
+  { position: '26 8 -42' },
+  { position: '30 16 -34' },
+  { position: '-28 29 -46' },
+  { position: '-20 4 -48' },
+  { position: '-12 31 -26' },
+  { position: '-4 10 -50' },
+  { position: '4 29 -24' },
+  { position: '12 5 -46' },
+  { position: '20 31 -44' },
+  { position: '28 12 -50' },
+  { position: '-28 8 48' },
+  { position: '-24 18 56' },
+  { position: '-20 28 44' },
+  { position: '-14 12 60' },
+  { position: '-8 24 50' },
+  { position: '-2 6 54' },
+  { position: '4 16 46' },
+  { position: '10 30 58' },
+  { position: '16 10 52' },
+  { position: '22 22 42' },
+  { position: '28 14 60' },
+  { position: '-26 32 40' },
+  { position: '-16 4 46' },
+  { position: '-6 34 62' },
+  { position: '8 8 64' },
+  { position: '24 30 50' },
+  { position: '-42 8 -10' },
+  { position: '-46 18 0' },
+  { position: '-40 28 12' },
+  { position: '-48 12 24' },
+  { position: '-44 24 38' },
+  { position: '-50 32 50' },
+  { position: '42 6 -14' },
+  { position: '46 20 -2' },
+  { position: '40 30 10' },
+  { position: '48 10 22' },
+  { position: '44 26 36' },
+  { position: '50 16 52' },
+  { position: '-24 38 -18' },
+  { position: '-16 44 -4' },
+  { position: '-8 36 10' },
+  { position: '0 46 18' },
+  { position: '8 38 30' },
+  { position: '16 44 42' },
+  { position: '24 36 54' },
+  { position: '-28 48 34' },
+  { position: '-18 40 58' },
+  { position: '-6 50 48' },
+  { position: '12 42 2' },
+  { position: '28 46 20' },
 ];
 
 const setEntityOpacity = (entity: SceneEntity, opacity: number) => {
@@ -279,9 +590,16 @@ const updateScene = (timestamp: number) => {
     ?.setAttribute('color', frame.skyColor);
 
   scene.querySelectorAll<SceneEntity>('.day-cloud').forEach((cloud, index) => {
+    const cloudDefinition = clouds[index];
     const opacity = frame.cloudOpacities[index] ?? 0;
-    if (cloud.object3D) {
-      cloud.object3D.position.x = -24 + (frame.cloudProgress[index] ?? 0) * 48;
+    if (cloud.object3D && cloudDefinition) {
+      const progress = frame.cloudProgress[index] ?? 0;
+      cloud.object3D.position.x =
+        cloudDefinition.startX +
+        (cloudDefinition.endX - cloudDefinition.startX) * progress;
+      cloud.object3D.position.y =
+        cloudDefinition.startY +
+        (cloudDefinition.endY - cloudDefinition.startY) * progress;
       cloud.object3D.visible = opacity > 0.01;
     }
     cloud.querySelectorAll<SceneEntity>('.day-cloud-cube').forEach((cube) => {

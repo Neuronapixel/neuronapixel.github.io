@@ -1,9 +1,9 @@
-export const DAY_NIGHT_CYCLE_DURATION_MS = 12 * 60 * 1000;
+export const DAY_NIGHT_CYCLE_DURATION_MS = 3 * 60 * 1000;
 
-const DAY_END_MS = 4 * 60 * 1000;
-const DUSK_END_MS = 6 * 60 * 1000;
-const NIGHT_END_MS = 10 * 60 * 1000;
-const CLOUD_FADE_MS = 8 * 1000;
+const DAY_END_MS = 60 * 1000;
+const DUSK_END_MS = 90 * 1000;
+const NIGHT_END_MS = 150 * 1000;
+const CLOUD_FADE_MS = 3 * 1000;
 
 export interface CloudPass {
   endMs: number;
@@ -19,8 +19,24 @@ export interface DayNightFrame {
 }
 
 export const CLOUD_PASSES: CloudPass[] = [
-  { startMs: 45 * 1000, endMs: 105 * 1000 },
-  { startMs: 150 * 1000, endMs: 225 * 1000 },
+  { startMs: 4 * 1000, endMs: 28 * 1000 },
+  { startMs: 9 * 1000, endMs: 38 * 1000 },
+  { startMs: 18 * 1000, endMs: 49 * 1000 },
+  { startMs: 26 * 1000, endMs: 59 * 1000 },
+  { startMs: 3 * 1000, endMs: 20 * 1000 },
+  { startMs: 35 * 1000, endMs: 60 * 1000 },
+  { startMs: 5 * 1000, endMs: 33 * 1000 },
+  { startMs: 14 * 1000, endMs: 45 * 1000 },
+  { startMs: 24 * 1000, endMs: 55 * 1000 },
+  { startMs: 31 * 1000, endMs: 60 * 1000 },
+  { startMs: 7 * 1000, endMs: 44 * 1000 },
+  { startMs: 16 * 1000, endMs: 57 * 1000 },
+  { startMs: 10 * 1000, endMs: 36 * 1000 },
+  { startMs: 22 * 1000, endMs: 60 * 1000 },
+  { startMs: 4 * 1000, endMs: 50 * 1000 },
+  { startMs: 28 * 1000, endMs: 59 * 1000 },
+  { startMs: 12 * 1000, endMs: 54 * 1000 },
+  { startMs: 6 * 1000, endMs: 40 * 1000 },
 ];
 
 const clamp = (value: number, minimum = 0, maximum = 1) =>
@@ -89,9 +105,9 @@ const getStarOpacity = (
     0.5 +
     0.5 *
       Math.sin((cycleElapsedMs / pulseDurationMs) * Math.PI * 2 + phaseOffset);
-  const glimpse = pulse > 0.42 ? (pulse - 0.42) / 0.58 : 0;
+  const twinkle = 0.35 + pulse * 0.65;
 
-  return clamp(glimpse * (1 - skyLuminance));
+  return clamp(twinkle * (1 - skyLuminance));
 };
 
 export const getDayNightFrame = (
