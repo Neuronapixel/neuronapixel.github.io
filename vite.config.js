@@ -38,6 +38,8 @@ export default defineConfig({
     outDir: 'dist',
   },
   test: {
+    // Keep nested worktree checkouts out of this application's test run.
+    include: ['src/**/*.test.ts'],
     globals: true,
     environment: 'jsdom',
     coverage: {

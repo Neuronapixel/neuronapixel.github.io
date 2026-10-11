@@ -8,37 +8,53 @@ import {
 describe('getDayNightFrame', () => {
   it('starts and ends a full 3-minute cycle in daylight', () => {
     expect(DAY_NIGHT_CYCLE_DURATION_MS).toBe(3 * 60 * 1000);
-    expect(getDayNightFrame(0, 3).skyColor).toBe('#ffffff');
+    expect(getDayNightFrame(0, 3).skyColor).toBe('#a6d0ed');
     expect(getDayNightFrame(DAY_NIGHT_CYCLE_DURATION_MS, 3).skyColor).toBe(
-      '#ffffff',
+      '#a6d0ed',
     );
   });
 
-  it('fades evenly through dusk and dawn', () => {
-    expect(getDayNightFrame(75 * 1000, 0).skyColor).toBe('#808080');
-    expect(getDayNightFrame(165 * 1000, 0).skyColor).toBe('#808080');
+  it('passes through a muted twilight at dusk and dawn', () => {
+    expect(getDayNightFrame(75 * 1000, 0).skyColor).toBe('#6f709d');
+    expect(getDayNightFrame(165 * 1000, 0).skyColor).toBe('#6f709d');
   });
 
-  it('holds a black sky through the night', () => {
-    expect(getDayNightFrame(120 * 1000, 4).skyColor).toBe('#000000');
+  it('holds a deep blue sky through the night', () => {
+    expect(getDayNightFrame(120 * 1000, 4).skyColor).toBe('#090f23');
   });
 
-  it('shows clouds only inside their occasional daylight passes', () => {
-    const firstPassMidpoint =
-      (CLOUD_PASSES[0].startMs + CLOUD_PASSES[0].endMs) / 2;
-    const hiddenClouds = Array(CLOUD_PASSES.length).fill(0);
-
-    expect(getDayNightFrame(1 * 1000, 0).cloudOpacities).toEqual(hiddenClouds);
-    expect(getDayNightFrame(firstPassMidpoint, 0).cloudOpacities[0]).toBe(1);
-    expect(getDayNightFrame(90 * 1000, 0).cloudOpacities).toEqual(hiddenClouds);
+  it('keeps every cloud visible and drifting through the night', () => {
+    const dusk = getDayNightFrame(90_000, 0);
+    const night = getDayNightFrame(120_000, 0);
+    expect(night.cloudOpacities).toHaveLength(CLOUD_PASSES.length);
+    expect(night.cloudOpacities.every((opacity) => opacity > 0.5)).toBe(true);
+    expect(night.cloudProgress).not.toEqual(dusk.cloudProgress);
+    expect(night.cloudColor).not.toBe(getDayNightFrame(0, 0).cloudColor);
   });
 
-  it('overlaps cloud passes so clusters can scatter across the sky', () => {
-    const activeClouds = getDayNightFrame(20 * 1000, 0).cloudOpacities.filter(
-      (opacity) => opacity > 0,
-    );
-
-    expect(activeClouds.length).toBeGreaterThanOrEqual(10);
+  it('fades stars throughout twilight without jumping at night boundaries', () => {
+    expect(
+      getDayNightFrame(75_000, 8).starOpacities.every((opacity) => opacity > 0),
+    ).toBe(true);
+    expect(
+      getDayNightFrame(165_000, 8).starOpacities.every(
+        (opacity) => opacity > 0,
+      ),
+    ).toBe(true);
+    for (const boundary of [60_000, 90_000, 150_000, 180_000]) {
+      const before = getDayNightFrame(boundary - 1, 8);
+      const after = getDayNightFrame(boundary + 1, 8);
+      after.starOpacities.forEach((opacity, index) => {
+        expect(Math.abs(opacity - before.starOpacities[index])).toBeLessThan(
+          0.001,
+        );
+      });
+      after.cloudProgress.forEach((progress, index) => {
+        expect(Math.abs(progress - before.cloudProgress[index])).toBeLessThan(
+          0.001,
+        );
+      });
+    }
   });
 
   it('keeps stars hidden during the day and fills the night with stars', () => {

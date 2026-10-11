@@ -30,8 +30,8 @@
           <a-entity
             id="camera"
             camera="fov: 50"
-            rotation="-10 0 0"
-            position="1 -0.5 21"
+            rotation="0 0 0"
+            position="0 0 9.034"
             look-controls="pointerLockEnabled: true"
             wasd-controls="fly: true"
           />
@@ -48,93 +48,50 @@
         <a-entity light="type: ambient; intensity: 0.35" />
 
         <a-entity
+          id="logo"
           class="logo-mark"
-          position="0.25 0.8 0"
+          position="0 0 0"
+          rotation="12 -22 0"
+          animation="property: position; from: 0 -0.12 0; to: 0 0.12 0; dur: 6000; dir: alternate; loop: true; easing: easeInOutSine"
           scale="0.75 0.75 0.75"
         >
-          <a-entity position="0 0 0" mixin="cube primary-material" />
-          <a-entity position="1 0 0" mixin="cube secondary-material" />
-          <a-entity position="2 0 0" mixin="cube primary-material" />
+          <a-entity position="-1 -1 -1">
+            <a-entity position="0 0 0" mixin="cube primary-material" />
+            <a-entity position="1 0 0" mixin="cube secondary-material" />
+            <a-entity position="2 0 0" mixin="cube primary-material" />
 
-          <a-entity position="0 1 0" mixin="cube primary-material" />
-          <a-entity position="1 1 0" mixin="cube secondary-material" />
-          <a-entity position="2 1 0" mixin="cube primary-material" />
+            <a-entity position="0 1 0" mixin="cube primary-material" />
+            <a-entity position="1 1 0" mixin="cube secondary-material" />
+            <a-entity position="2 1 0" mixin="cube primary-material" />
 
-          <a-entity position="0 2 0" mixin="cube primary-material" />
-          <a-entity position="1 2 0" mixin="cube primary-material" />
-          <a-entity position="2 2 0" mixin="cube secondary-material" />
+            <a-entity position="0 2 0" mixin="cube primary-material" />
+            <a-entity position="1 2 0" mixin="cube primary-material" />
+            <a-entity position="2 2 0" mixin="cube secondary-material" />
 
-          <a-entity position="0 0 1" mixin="cube primary-material" />
-          <a-entity position="1 0 1" mixin="cube secondary-material" />
-          <a-entity position="2 0 1" mixin="cube primary-material" />
+            <a-entity position="0 0 1" mixin="cube primary-material" />
+            <a-entity position="1 0 1" mixin="cube secondary-material" />
+            <a-entity position="2 0 1" mixin="cube primary-material" />
 
-          <a-entity position="0 1 1" mixin="cube primary-material" />
-          <a-entity position="1 1 1" mixin="cube secondary-material" />
-          <a-entity position="2 1 1" mixin="cube primary-material" />
+            <a-entity position="0 1 1" mixin="cube primary-material" />
+            <a-entity position="1 1 1" mixin="cube secondary-material" />
+            <a-entity position="2 1 1" mixin="cube primary-material" />
 
-          <a-entity position="0 2 1" mixin="cube primary-material" />
-          <a-entity position="1 2 1" mixin="cube primary-material" />
-          <a-entity position="2 2 1" mixin="cube secondary-material" />
+            <a-entity position="0 2 1" mixin="cube primary-material" />
+            <a-entity position="1 2 1" mixin="cube primary-material" />
+            <a-entity position="2 2 1" mixin="cube secondary-material" />
 
-          <a-entity position="0 0 2" mixin="cube primary-material" />
-          <a-entity position="1 0 2" mixin="cube secondary-material" />
-          <a-entity position="2 0 2" mixin="cube primary-material" />
+            <a-entity position="0 0 2" mixin="cube primary-material" />
+            <a-entity position="1 0 2" mixin="cube secondary-material" />
+            <a-entity position="2 0 2" mixin="cube primary-material" />
 
-          <a-entity position="0 1 2" mixin="cube primary-material" />
-          <a-entity position="1 1 2" mixin="cube secondary-material" />
-          <a-entity position="2 1 2" mixin="cube primary-material" />
+            <a-entity position="0 1 2" mixin="cube primary-material" />
+            <a-entity position="1 1 2" mixin="cube secondary-material" />
+            <a-entity position="2 1 2" mixin="cube primary-material" />
 
-          <a-entity position="0 2 2" mixin="cube primary-material" />
-          <a-entity position="1 2 2" mixin="cube primary-material" />
-          <a-entity position="2 2 2" mixin="cube secondary-material" />
-        </a-entity>
-
-        <a-entity class="copy-table" position="1 -4.075 0.75">
-          <a-box
-            width="9"
-            height="9"
-            depth="9"
-            material="color: #ffffff; emissive: #ffffff; emissiveIntensity: 0.25; roughness: 0.5"
-          />
-          <a-text
-            class="copy-heading"
-            position="0 2.6 4.51"
-            value="neuronapixel"
-            align="center"
-            anchor="center"
-            baseline="center"
-            color="#1f2233"
-            font="roboto"
-            width="7.5"
-            wrap-count="20"
-            shader="msdf"
-          />
-          <a-text
-            class="copy-paragraph"
-            position="0 0.45 4.51"
-            value="Web development, scripting, coding, creativity; multimedia as a language of countless interpretations in which each experience is a different message"
-            align="center"
-            anchor="center"
-            baseline="center"
-            color="#1f2233"
-            font="roboto"
-            width="7.2"
-            wrap-count="44"
-            shader="msdf"
-          />
-          <a-text
-            class="copy-paragraph"
-            position="0 -2.55 4.51"
-            value="neuronapixel believes in the intrinsic value of interaction as a vehicle for the transit of ideas."
-            align="center"
-            anchor="center"
-            baseline="center"
-            color="#1f2233"
-            font="roboto"
-            width="7.2"
-            wrap-count="44"
-            shader="msdf"
-          />
+            <a-entity position="0 2 2" mixin="cube primary-material" />
+            <a-entity position="1 2 2" mixin="cube primary-material" />
+            <a-entity position="2 2 2" mixin="cube secondary-material" />
+          </a-entity>
         </a-entity>
 
         <a-entity
@@ -142,7 +99,9 @@
           :key="cloud.id"
           class="day-cloud"
           :data-cloud-index="cloudIndex"
-          :position="`${cloud.startX} ${cloud.startY} ${cloud.z}`"
+          :position="`${cloud.x} ${cloud.y} ${cloud.z}`"
+          :scale="`${cloud.scale} ${cloud.scale} ${cloud.scale}`"
+          :rotation="`0 ${cloud.rotation} 0`"
           visible="false"
         >
           <a-entity
@@ -150,6 +109,7 @@
             :key="`${cloud.id}-${cubeDefinition.position}`"
             class="day-cloud-cube"
             mixin="cube animated-white-material"
+            material="emissiveIntensity: 0.12"
             :position="cubeDefinition.position"
             :scale="cubeDefinition.scale"
           />
@@ -159,13 +119,26 @@
           v-for="(star, starIndex) in stars"
           :key="star.position"
           class="night-star"
-          mixin="cube animated-white-material"
           :data-star-index="starIndex"
           :position="star.position"
           visible="false"
-        />
+        >
+          <a-sphere
+            class="star-core"
+            radius="0.065"
+            material="shader: flat; color: #e7efff; transparent: true; opacity: 0; depthWrite: false"
+          />
+          <a-image
+            class="star-glow"
+            src="/star-glow.svg"
+            width="0.8"
+            height="0.8"
+            :rotation="star.rotation"
+            material="shader: flat; transparent: true; opacity: 0; depthWrite: false; blending: additive; side: double"
+          />
+        </a-entity>
 
-        <a-sky id="day-night-sky" color="#fff" />
+        <a-sky id="day-night-sky" color="#a6d0ed" />
       </a-scene>
     </section>
   </div>
@@ -174,11 +147,13 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { getDayNightFrame } from '@/utils/dayNightCycle';
+import { createCloudField, getCloudPlacement } from '@/utils/cloudField';
 
 interface MaterialComponent {
   material?: {
     opacity: number;
     transparent: boolean;
+    color?: { set: (color: string) => void };
   };
 }
 
@@ -191,6 +166,7 @@ interface SceneEntity extends HTMLElement {
     position: {
       x: number;
       y: number;
+      z: number;
     };
     visible: boolean;
   };
@@ -206,298 +182,60 @@ const sceneRef = ref<SceneEntity | null>(null);
 let animationFrameId: number | null = null;
 let cycleStartedAt = 0;
 
-const clouds: Array<{
-  cubes: CubeDefinition[];
-  endX: number;
-  endY: number;
-  id: string;
-  startX: number;
-  startY: number;
-  z: number;
-}> = [
-  {
-    id: 'cloud-one',
-    startX: -28,
-    startY: 10,
-    endX: 26,
-    endY: 8,
-    z: -18,
-    cubes: [
-      { position: '-3 0 0', scale: '1 1 1' },
-      { position: '-2 0 0', scale: '2 2 2' },
-      { position: '0 0 0', scale: '2 2 2' },
-      { position: '2 0 0', scale: '2 2 2' },
-      { position: '4 0 0', scale: '1 1 1' },
-      { position: '0 2 0', scale: '2 2 2' },
-    ],
-  },
-  {
-    id: 'cloud-two',
-    startX: 26,
-    startY: 4,
-    endX: -24,
-    endY: 7,
-    z: -14,
-    cubes: [
-      { position: '-4 0 0', scale: '1 1 1' },
-      { position: '-3 0 0', scale: '2 2 2' },
-      { position: '-1 0 0', scale: '2 2 2' },
-      { position: '1 0 0', scale: '2 2 2' },
-      { position: '3 0 0', scale: '1 1 1' },
-      { position: '-1 2 0', scale: '2 2 2' },
-      { position: '1 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-three',
-    startX: -26,
-    startY: 8,
-    endX: 20,
-    endY: 4,
-    z: -22,
-    cubes: [
-      { position: '-4 0 0', scale: '1 1 1' },
-      { position: '-3 0 0', scale: '2 2 2' },
-      { position: '-1 0 0', scale: '2 2 2' },
-      { position: '1 0 0', scale: '1 1 1' },
-      { position: '-1 2 0', scale: '2 2 2' },
-    ],
-  },
-  {
-    id: 'cloud-four',
-    startX: 22,
-    startY: 12,
-    endX: -26,
-    endY: 9,
-    z: -30,
-    cubes: [
-      { position: '-2 0 0', scale: '1 1 1' },
-      { position: '-1 0 0', scale: '2 2 2' },
-      { position: '1 0 0', scale: '2 2 2' },
-      { position: '3 0 0', scale: '1 1 1' },
-      { position: '1 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-five',
-    startX: -20,
-    startY: 6,
-    endX: 22,
-    endY: 11,
-    z: -26,
-    cubes: [
-      { position: '-3 0 0', scale: '2 2 2' },
-      { position: '-1 0 0', scale: '2 2 2' },
-      { position: '1 0 0', scale: '2 2 2' },
-      { position: '3 0 0', scale: '2 2 2' },
-      { position: '-1 2 0', scale: '1 1 1' },
-      { position: '1 2 0', scale: '2 2 2' },
-    ],
-  },
-  {
-    id: 'cloud-six',
-    startX: 24,
-    startY: 3,
-    endX: -18,
-    endY: 6,
-    z: -18,
-    cubes: [
-      { position: '-2 0 0', scale: '1 1 1' },
-      { position: '-1 0 0', scale: '1 1 1' },
-      { position: '0 0 0', scale: '2 2 2' },
-      { position: '2 0 0', scale: '2 2 2' },
-      { position: '4 0 0', scale: '1 1 1' },
-      { position: '2 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-seven',
-    startX: -32,
-    startY: 3,
-    endX: 30,
-    endY: 9,
-    z: -34,
-    cubes: [
-      { position: '-3 0 0', scale: '1 1 1' },
-      { position: '-2 0 0', scale: '2 2 2' },
-      { position: '0 0 0', scale: '2 2 2' },
-      { position: '2 0 0', scale: '1 1 1' },
-      { position: '0 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-eight',
-    startX: 30,
-    startY: 14,
-    endX: -30,
-    endY: 11,
-    z: -24,
-    cubes: [
-      { position: '-4 0 0', scale: '1 1 1' },
-      { position: '-3 0 0', scale: '2 2 2' },
-      { position: '-1 0 0', scale: '2 2 2' },
-      { position: '1 0 0', scale: '2 2 2' },
-      { position: '3 0 0', scale: '1 1 1' },
-      { position: '-1 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-nine',
-    startX: -24,
-    startY: 12,
-    endX: 28,
-    endY: 5,
-    z: -16,
-    cubes: [
-      { position: '-2 0 0', scale: '2 2 2' },
-      { position: '0 0 0', scale: '2 2 2' },
-      { position: '2 0 0', scale: '2 2 2' },
-      { position: '4 0 0', scale: '1 1 1' },
-      { position: '0 2 0', scale: '2 2 2' },
-      { position: '2 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-ten',
-    startX: 18,
-    startY: 7,
-    endX: -28,
-    endY: 13,
-    z: -38,
-    cubes: [
-      { position: '-3 0 0', scale: '1 1 1' },
-      { position: '-2 0 0', scale: '1 1 1' },
-      { position: '-1 0 0', scale: '2 2 2' },
-      { position: '1 0 0', scale: '2 2 2' },
-      { position: '3 0 0', scale: '1 1 1' },
-      { position: '1 2 0', scale: '2 2 2' },
-    ],
-  },
-  {
-    id: 'cloud-eleven',
-    startX: -28,
-    startY: 8,
-    endX: 24,
-    endY: 14,
-    z: 34,
-    cubes: [
-      { position: '-3 0 0', scale: '1 1 1' },
-      { position: '-2 0 0', scale: '2 2 2' },
-      { position: '0 0 0', scale: '2 2 2' },
-      { position: '2 0 0', scale: '1 1 1' },
-      { position: '0 2 0', scale: '2 2 2' },
-    ],
-  },
-  {
-    id: 'cloud-twelve',
-    startX: 26,
-    startY: 16,
-    endX: -30,
-    endY: 12,
-    z: 44,
-    cubes: [
-      { position: '-4 0 0', scale: '1 1 1' },
-      { position: '-3 0 0', scale: '2 2 2' },
-      { position: '-1 0 0', scale: '2 2 2' },
-      { position: '1 0 0', scale: '2 2 2' },
-      { position: '3 0 0', scale: '1 1 1' },
-      { position: '-1 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-thirteen',
-    startX: -20,
-    startY: 24,
-    endX: 20,
-    endY: 20,
-    z: 28,
-    cubes: [
-      { position: '-2 0 0', scale: '2 2 2' },
-      { position: '0 0 0', scale: '2 2 2' },
-      { position: '2 0 0', scale: '2 2 2' },
-      { position: '0 2 0', scale: '1 1 1' },
-      { position: '2 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-fourteen',
-    startX: 22,
-    startY: 28,
-    endX: -22,
-    endY: 22,
-    z: 40,
-    cubes: [
-      { position: '-3 0 0', scale: '1 1 1' },
-      { position: '-2 0 0', scale: '2 2 2' },
-      { position: '0 0 0', scale: '2 2 2' },
-      { position: '2 0 0', scale: '2 2 2' },
-      { position: '4 0 0', scale: '1 1 1' },
-      { position: '0 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-fifteen',
-    startX: -26,
-    startY: 30,
-    endX: 26,
-    endY: 24,
-    z: 12,
-    cubes: [
-      { position: '-3 0 0', scale: '1 1 1' },
-      { position: '-2 0 0', scale: '2 2 2' },
-      { position: '0 0 0', scale: '2 2 2' },
-      { position: '2 0 0', scale: '1 1 1' },
-      { position: '0 2 0', scale: '2 2 2' },
-    ],
-  },
-  {
-    id: 'cloud-sixteen',
-    startX: 24,
-    startY: 22,
-    endX: -24,
-    endY: 28,
-    z: 20,
-    cubes: [
-      { position: '-4 0 0', scale: '1 1 1' },
-      { position: '-3 0 0', scale: '2 2 2' },
-      { position: '-1 0 0', scale: '2 2 2' },
-      { position: '1 0 0', scale: '2 2 2' },
-      { position: '3 0 0', scale: '1 1 1' },
-      { position: '-1 2 0', scale: '2 2 2' },
-    ],
-  },
-  {
-    id: 'cloud-seventeen',
-    startX: -30,
-    startY: 6,
-    endX: 22,
-    endY: 12,
-    z: 52,
-    cubes: [
-      { position: '-2 0 0', scale: '1 1 1' },
-      { position: '-1 0 0', scale: '2 2 2' },
-      { position: '1 0 0', scale: '2 2 2' },
-      { position: '3 0 0', scale: '1 1 1' },
-      { position: '1 2 0', scale: '1 1 1' },
-    ],
-  },
-  {
-    id: 'cloud-eighteen',
-    startX: 18,
-    startY: 34,
-    endX: -26,
-    endY: 30,
-    z: 18,
-    cubes: [
-      { position: '-3 0 0', scale: '1 1 1' },
-      { position: '-2 0 0', scale: '2 2 2' },
-      { position: '0 0 0', scale: '2 2 2' },
-      { position: '2 0 0', scale: '2 2 2' },
-      { position: '4 0 0', scale: '1 1 1' },
-      { position: '0 2 0', scale: '1 1 1' },
-    ],
-  },
+const cloudShapes: CubeDefinition[][] = [
+  [
+    { position: '-3 0 0', scale: '1 1 1' },
+    { position: '-2 0 0', scale: '2 2 2' },
+    { position: '0 0 0', scale: '2 2 2' },
+    { position: '2 0 0', scale: '2 2 2' },
+    { position: '4 0 0', scale: '1 1 1' },
+    { position: '0 2 0', scale: '2 2 2' },
+  ],
+  [
+    { position: '-4 0 0', scale: '1 1 1' },
+    { position: '-3 0 0', scale: '2 2 2' },
+    { position: '-1 0 0', scale: '2 2 2' },
+    { position: '1 0 0', scale: '2 2 2' },
+    { position: '3 0 0', scale: '1 1 1' },
+    { position: '-1 2 0', scale: '2 2 2' },
+    { position: '1 2 0', scale: '1 1 1' },
+  ],
+  [
+    { position: '-4 0 0', scale: '1 1 1' },
+    { position: '-3 0 0', scale: '2 2 2' },
+    { position: '-1 0 0', scale: '2 2 2' },
+    { position: '1 0 0', scale: '1 1 1' },
+    { position: '-1 2 0', scale: '2 2 2' },
+  ],
+  [
+    { position: '-2 0 0', scale: '1 1 1' },
+    { position: '-1 0 0', scale: '2 2 2' },
+    { position: '1 0 0', scale: '2 2 2' },
+    { position: '3 0 0', scale: '1 1 1' },
+    { position: '1 2 0', scale: '1 1 1' },
+  ],
+  [
+    { position: '-3 0 0', scale: '2 2 2' },
+    { position: '-1 0 0', scale: '2 2 2' },
+    { position: '1 0 0', scale: '2 2 2' },
+    { position: '3 0 0', scale: '2 2 2' },
+    { position: '-1 2 0', scale: '1 1 1' },
+    { position: '1 2 0', scale: '2 2 2' },
+  ],
+  [
+    { position: '-2 0 0', scale: '1 1 1' },
+    { position: '-1 0 0', scale: '1 1 1' },
+    { position: '0 0 0', scale: '2 2 2' },
+    { position: '2 0 0', scale: '2 2 2' },
+    { position: '4 0 0', scale: '1 1 1' },
+    { position: '2 2 0', scale: '1 1 1' },
+  ],
 ];
+
+const clouds = createCloudField().map((cloud, index) => ({
+  ...cloud,
+  cubes: cloudShapes[index % cloudShapes.length],
+}));
 
 const stars = [
   { position: '-30 7 -32' },
@@ -564,7 +302,13 @@ const stars = [
   { position: '-6 50 48' },
   { position: '12 42 2' },
   { position: '28 46 20' },
-];
+].flatMap((star) => {
+  const [x, y, z] = star.position.split(' ').map(Number);
+  return [y, -y].map((height) => ({
+    position: `${x} ${height} ${z}`,
+    rotation: `${(Math.atan2(height, Math.hypot(x, 12 - z)) * 180) / Math.PI} ${(Math.atan2(-x, 12 - z) * 180) / Math.PI} 0`,
+  }));
+});
 
 const setEntityOpacity = (entity: SceneEntity, opacity: number) => {
   if (entity.object3D) {
@@ -584,41 +328,69 @@ const updateScene = (timestamp: number) => {
     return;
   }
 
-  const frame = getDayNightFrame(timestamp - cycleStartedAt, stars.length);
-  scene
-    .querySelector<HTMLElement>('#day-night-sky')
-    ?.setAttribute('color', frame.skyColor);
+  const elapsedMs = timestamp - cycleStartedAt;
+  const frame = getDayNightFrame(elapsedMs, stars.length);
+  const viewer = cameraEntity?.object3D?.position ?? { x: 0, y: 0, z: 9.034 };
+  skyEntity?.setAttribute('color', frame.skyColor);
+  if (skyEntity?.object3D) {
+    Object.assign(skyEntity.object3D.position, viewer);
+  }
 
-  scene.querySelectorAll<SceneEntity>('.day-cloud').forEach((cloud, index) => {
-    const cloudDefinition = clouds[index];
-    const opacity = frame.cloudOpacities[index] ?? 0;
-    if (cloud.object3D && cloudDefinition) {
-      const progress = frame.cloudProgress[index] ?? 0;
-      cloud.object3D.position.x =
-        cloudDefinition.startX +
-        (cloudDefinition.endX - cloudDefinition.startX) * progress;
-      cloud.object3D.position.y =
-        cloudDefinition.startY +
-        (cloudDefinition.endY - cloudDefinition.startY) * progress;
-      cloud.object3D.visible = opacity > 0.01;
+  cloudEntities.forEach(({ entity, cubes }, index) => {
+    const placement = getCloudPlacement(clouds[index], viewer, elapsedMs);
+    const opacity = placement.opacity * 0.86;
+    if (entity.object3D) {
+      Object.assign(entity.object3D.position, {
+        x: placement.x,
+        y: placement.y,
+        z: placement.z,
+      });
+      entity.object3D.visible = opacity > 0.01;
     }
-    cloud.querySelectorAll<SceneEntity>('.day-cloud-cube').forEach((cube) => {
+    if (opacity <= 0.01) return;
+    cubes.forEach((cube) => {
       setEntityOpacity(cube, opacity);
+      cube.components?.material?.material?.color?.set(frame.cloudColor);
     });
   });
 
   scene.querySelectorAll<SceneEntity>('.night-star').forEach((star, index) => {
-    setEntityOpacity(star, frame.starOpacities[index] ?? 0);
+    const opacity = frame.starOpacities[index] ?? 0;
+    if (star.object3D) star.object3D.visible = opacity > 0.001;
+    star
+      .querySelectorAll<SceneEntity>('.star-core, .star-glow')
+      .forEach((part) => {
+        setEntityOpacity(
+          part,
+          opacity * (part.classList.contains('star-glow') ? 0.45 : 1),
+        );
+      });
   });
 
   animationFrameId = window.requestAnimationFrame(updateScene);
 };
+
+let cameraEntity: SceneEntity | null = null;
+let skyEntity: SceneEntity | null = null;
+let cloudEntities: Array<{ entity: SceneEntity; cubes: SceneEntity[] }> = [];
 
 const startCycle = () => {
   if (animationFrameId !== null) {
     return;
   }
 
+  cameraEntity = sceneRef.value?.querySelector<SceneEntity>('#camera') ?? null;
+  skyEntity =
+    sceneRef.value?.querySelector<SceneEntity>('#day-night-sky') ?? null;
+  cloudEntities = Array.from(
+    sceneRef.value?.querySelectorAll<SceneEntity>('.day-cloud') ?? [],
+    (entity) => ({
+      entity,
+      cubes: Array.from(
+        entity.querySelectorAll<SceneEntity>('.day-cloud-cube'),
+      ),
+    }),
+  );
   cycleStartedAt = performance.now();
   animationFrameId = window.requestAnimationFrame(updateScene);
 };

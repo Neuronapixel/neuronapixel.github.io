@@ -3,7 +3,6 @@ export const DAY_NIGHT_CYCLE_DURATION_MS = 3 * 60 * 1000;
 const DAY_END_MS = 60 * 1000;
 const DUSK_END_MS = 90 * 1000;
 const NIGHT_END_MS = 150 * 1000;
-const CLOUD_FADE_MS = 3 * 1000;
 
 export interface CloudPass {
   endMs: number;
@@ -15,6 +14,7 @@ export interface DayNightFrame {
   cloudProgress: number[];
   cycleElapsedMs: number;
   skyColor: string;
+  cloudColor: string;
   starOpacities: number[];
 }
 
@@ -46,68 +46,54 @@ const wrapCycleTime = (elapsedMs: number) =>
   ((elapsedMs % DAY_NIGHT_CYCLE_DURATION_MS) + DAY_NIGHT_CYCLE_DURATION_MS) %
   DAY_NIGHT_CYCLE_DURATION_MS;
 
-const getSkyLuminance = (cycleElapsedMs: number) => {
-  if (cycleElapsedMs < DAY_END_MS) {
-    return 1;
-  }
+const smoothstep = (value: number) => {
+  const t = clamp(value);
+  return t * t * (3 - 2 * t);
+};
 
-  if (cycleElapsedMs < DUSK_END_MS) {
-    return 1 - (cycleElapsedMs - DAY_END_MS) / (DUSK_END_MS - DAY_END_MS);
+const getSkyLuminance = (time: number) => {
+  if (time < DAY_END_MS) return 1;
+  if (time < DUSK_END_MS) {
+    return 1 - smoothstep((time - DAY_END_MS) / (DUSK_END_MS - DAY_END_MS));
   }
-
-  if (cycleElapsedMs < NIGHT_END_MS) {
-    return 0;
-  }
-
-  return (
-    (cycleElapsedMs - NIGHT_END_MS) /
-    (DAY_NIGHT_CYCLE_DURATION_MS - NIGHT_END_MS)
+  if (time < NIGHT_END_MS) return 0;
+  return smoothstep(
+    (time - NIGHT_END_MS) / (DAY_NIGHT_CYCLE_DURATION_MS - NIGHT_END_MS),
   );
 };
 
-const luminanceToHex = (luminance: number) => {
-  const channel = Math.round(clamp(luminance) * 255)
-    .toString(16)
-    .padStart(2, '0');
+const mixColor = (from: number[], to: number[], amount: number) =>
+  `#${from
+    .map((channel, index) =>
+      Math.round(channel + (to[index] - channel) * amount)
+        .toString(16)
+        .padStart(2, '0'),
+    )
+    .join('')}`;
 
-  return `#${channel}${channel}${channel}`;
+const getSkyColor = (daylight: number) => {
+  const night = [9, 15, 35];
+  const twilight = [111, 112, 157];
+  const day = [166, 208, 237];
+  return daylight < 0.5
+    ? mixColor(night, twilight, smoothstep(daylight * 2))
+    : mixColor(twilight, day, smoothstep((daylight - 0.5) * 2));
 };
 
-const getCloudState = (cycleElapsedMs: number, pass: CloudPass) => {
-  if (cycleElapsedMs < pass.startMs || cycleElapsedMs > pass.endMs) {
-    return { opacity: 0, progress: 0 };
-  }
-
-  const duration = pass.endMs - pass.startMs;
-  const elapsed = cycleElapsedMs - pass.startMs;
-  const progress = clamp(elapsed / duration);
-  const fadeIn = clamp(elapsed / CLOUD_FADE_MS);
-  const fadeOut = clamp((pass.endMs - cycleElapsedMs) / CLOUD_FADE_MS);
-
-  return {
-    opacity: Math.min(fadeIn, fadeOut),
-    progress,
-  };
+const getCloudState = (time: number, pass: CloudPass) => {
+  // A continuous orbit-like drift avoids disappearing or teleporting at night.
+  const phase =
+    (time / DAY_NIGHT_CYCLE_DURATION_MS + pass.startMs / DAY_END_MS) *
+    Math.PI *
+    2;
+  return { opacity: 0.86, progress: (1 - Math.cos(phase)) / 2 };
 };
 
-const getStarOpacity = (
-  cycleElapsedMs: number,
-  starIndex: number,
-  skyLuminance: number,
-) => {
-  if (cycleElapsedMs < DUSK_END_MS || cycleElapsedMs > NIGHT_END_MS) {
-    return 0;
-  }
-
-  const pulseDurationMs = 4700 + (starIndex % 4) * 1100;
-  const phaseOffset = starIndex * 1.71;
-  const pulse =
-    0.5 +
-    0.5 *
-      Math.sin((cycleElapsedMs / pulseDurationMs) * Math.PI * 2 + phaseOffset);
-  const twinkle = 0.35 + pulse * 0.65;
-
-  return clamp(twinkle * (1 - skyLuminance));
+const getStarOpacity = (time: number, index: number, daylight: number) => {
+  const phase =
+    (time / DAY_NIGHT_CYCLE_DURATION_MS) * Math.PI * 2 * (24 + (index % 4));
+  const twinkle = 0.82 + 0.18 * Math.sin(phase + index * 1.71);
+  return twinkle * smoothstep(1 - daylight);
 };
 
 export const getDayNightFrame = (
@@ -122,7 +108,8 @@ export const getDayNightFrame = (
 
   return {
     cycleElapsedMs,
-    skyColor: luminanceToHex(skyLuminance),
+    skyColor: getSkyColor(skyLuminance),
+    cloudColor: mixColor([50, 62, 91], [245, 248, 255], skyLuminance),
     cloudOpacities: cloudStates.map(({ opacity }) => opacity),
     cloudProgress: cloudStates.map(({ progress }) => progress),
     starOpacities: Array.from({ length: starCount }, (_, index) =>
