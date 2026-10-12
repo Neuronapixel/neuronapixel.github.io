@@ -2,6 +2,7 @@
 node_modules
 /dist
 /coverage
+/.codex-worktrees/
 
 # local env files
 .env*
