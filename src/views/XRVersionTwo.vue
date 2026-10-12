@@ -115,27 +115,29 @@
           />
         </a-entity>
 
-        <a-entity
-          v-for="(star, starIndex) in stars"
-          :key="star.position"
-          class="night-star"
-          :data-star-index="starIndex"
-          :position="star.position"
-          visible="false"
-        >
-          <a-sphere
-            class="star-core"
-            radius="0.065"
-            material="shader: flat; color: #e7efff; transparent: true; opacity: 0; depthWrite: false"
-          />
-          <a-image
-            class="star-glow"
-            src="/star-glow.svg"
-            width="0.8"
-            height="0.8"
-            :rotation="star.rotation"
-            material="shader: flat; transparent: true; opacity: 0; depthWrite: false; blending: additive; side: double"
-          />
+        <a-entity id="night-stars" position="0 0 9.034">
+          <a-entity
+            v-for="(star, starIndex) in stars"
+            :key="star.position"
+            class="night-star"
+            :data-star-index="starIndex"
+            :position="star.position"
+            visible="false"
+          >
+            <a-sphere
+              class="star-core"
+              radius="0.065"
+              material="shader: flat; color: #e7efff; transparent: true; opacity: 0; depthWrite: false"
+            />
+            <a-image
+              class="star-glow"
+              src="/star-glow.svg"
+              width="0.8"
+              height="0.8"
+              :rotation="star.rotation"
+              material="shader: flat; transparent: true; opacity: 0; depthWrite: false; blending: additive; side: double"
+            />
+          </a-entity>
         </a-entity>
 
         <a-sky id="day-night-sky" color="#a6d0ed" />
@@ -305,8 +307,8 @@ const stars = [
 ].flatMap((star) => {
   const [x, y, z] = star.position.split(' ').map(Number);
   return [y, -y].map((height) => ({
-    position: `${x} ${height} ${z}`,
-    rotation: `${(Math.atan2(height, Math.hypot(x, 12 - z)) * 180) / Math.PI} ${(Math.atan2(-x, 12 - z) * 180) / Math.PI} 0`,
+    position: `${x} ${height} ${z - 9.034}`,
+    rotation: `${(Math.atan2(height, Math.hypot(x, 9.034 - z)) * 180) / Math.PI} ${(Math.atan2(-x, 9.034 - z) * 180) / Math.PI} 0`,
   }));
 });
 
@@ -334,6 +336,10 @@ const updateScene = (timestamp: number) => {
   skyEntity?.setAttribute('color', frame.skyColor);
   if (skyEntity?.object3D) {
     Object.assign(skyEntity.object3D.position, viewer);
+  }
+
+  if (starFieldEntity?.object3D) {
+    Object.assign(starFieldEntity.object3D.position, viewer);
   }
 
   cloudEntities.forEach(({ entity, cubes }, index) => {
@@ -372,6 +378,7 @@ const updateScene = (timestamp: number) => {
 
 let cameraEntity: SceneEntity | null = null;
 let skyEntity: SceneEntity | null = null;
+let starFieldEntity: SceneEntity | null = null;
 let cloudEntities: Array<{ entity: SceneEntity; cubes: SceneEntity[] }> = [];
 
 const startCycle = () => {
@@ -382,6 +389,8 @@ const startCycle = () => {
   cameraEntity = sceneRef.value?.querySelector<SceneEntity>('#camera') ?? null;
   skyEntity =
     sceneRef.value?.querySelector<SceneEntity>('#day-night-sky') ?? null;
+  starFieldEntity =
+    sceneRef.value?.querySelector<SceneEntity>('#night-stars') ?? null;
   cloudEntities = Array.from(
     sceneRef.value?.querySelectorAll<SceneEntity>('.day-cloud') ?? [],
     (entity) => ({
@@ -424,10 +433,6 @@ onBeforeUnmount(() => {
   width: 100%;
   min-height: 100%;
   margin: 0;
-}
-
-:global(body) {
-  overflow: hidden;
 }
 
 .xr-experience {

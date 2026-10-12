@@ -25,7 +25,7 @@ describe('XRVersionTwo', () => {
     wrapper.unmount();
   });
 
-  it('updates the sky and cloud coverage around the flying camera', async () => {
+  it('keeps the sky, clouds, and nighttime stars around the flying camera', async () => {
     const requestFrame = vi
       .spyOn(window, 'requestAnimationFrame')
       .mockReturnValue(1);
@@ -36,6 +36,15 @@ describe('XRVersionTwo', () => {
     });
     const sky = { position: { x: 0, y: 0, z: 0 } };
     Object.assign(wrapper.find('#day-night-sky').element, { object3D: sky });
+    const starField = { position: { x: 0, y: 0, z: 9.034 } };
+    Object.assign(wrapper.find('#night-stars').element, {
+      object3D: starField,
+    });
+    const stars = wrapper.findAll('.night-star').map((star) => {
+      const object3D = { visible: false };
+      Object.assign(star.element, { object3D });
+      return { object3D, localPosition: star.attributes('position') };
+    });
     const clouds = wrapper.findAll('.day-cloud').map((cloud) => {
       const object3D = { position: { x: 0, y: 0, z: 0 }, visible: false };
       Object.assign(cloud.element, { object3D });
@@ -46,6 +55,7 @@ describe('XRVersionTwo', () => {
     requestFrame.mock.calls[0][0](performance.now() + 100);
 
     expect(sky.position).toEqual(viewer);
+    expect(starField.position).toEqual(viewer);
     const visible = clouds.filter((cloud) => cloud.visible);
     for (const axis of ['x', 'y', 'z'] as const) {
       expect(visible.some((cloud) => cloud.position[axis] < viewer[axis])).toBe(
@@ -55,6 +65,14 @@ describe('XRVersionTwo', () => {
         true,
       );
     }
+    const secondViewer = { x: -4000, y: 2100, z: -3600 };
+    Object.assign(viewer, secondViewer);
+    requestFrame.mock.calls[1][0](performance.now() + 110_000);
+    expect(starField.position).toEqual(secondViewer);
+    expect(stars.every(({ object3D }) => object3D.visible)).toBe(true);
+    wrapper.findAll('.night-star').forEach((star, index) => {
+      expect(star.attributes('position')).toBe(stars[index].localPosition);
+    });
     wrapper.unmount();
   });
 });
