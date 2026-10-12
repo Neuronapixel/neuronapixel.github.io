@@ -6,6 +6,7 @@ import {
 
 // Use the Three.js runtime shipped with A-Frame, avoiding a second WebGL runtime.
 interface CloudMatrix {
+  elements: ArrayLike<number>;
   multiplyMatrices: (a: CloudMatrix, b: CloudMatrix) => void;
   clone: () => CloudMatrix;
 }
@@ -62,9 +63,13 @@ interface CloudThree {
   ) => CloudMesh;
   Object3D: new () => CloudTransform;
   Matrix4: new () => CloudMatrix;
+  Vector3: new (x: number, y: number, z: number) => SkyPosition;
 }
 
 interface CloudHost {
+  sceneEl?: {
+    camera?: { getWorldDirection: (target: SkyPosition) => SkyPosition };
+  };
   setObject3D?: (name: string, object: unknown) => void;
   removeObject3D?: (name: string) => void;
 }
@@ -190,14 +195,22 @@ export const createCloudRenderer = (host: CloudHost): CloudRenderer | null => {
   mesh.frustumCulled = false;
   mesh.instanceMatrix.setUsage(three.DynamicDrawUsage);
   host.setObject3D('mesh', mesh);
-  const matrix = new three.Matrix4();
+  const viewDirection = new three.Vector3(0, 0, -1);
+  // Reuse instance matrices and sorting storage between frames.
+  const instances = Array.from({ length: capacity }, () => ({
+    matrix: new three.Matrix4(),
+    opacity: 0,
+    depth: 0,
+  }));
+  const visibleInstances: (typeof instances)[number][] = [];
 
   return {
     update(viewer, elapsedMs, color) {
       // Keep GPU coordinates close to the camera even after long-distance flight.
       mesh.position.set(viewer.x, viewer.y, viewer.z);
       material.color.set(color);
-      let instance = 0;
+      host.sceneEl?.camera?.getWorldDirection(viewDirection);
+      visibleInstances.length = 0;
       clouds.forEach((cloud, index) => {
         const placement = getCloudPlacement(cloud, viewer, elapsedMs);
         const opacity = placement.opacity * 0.86;
@@ -211,13 +224,25 @@ export const createCloudRenderer = (host: CloudHost): CloudRenderer | null => {
         transform.rotation.y = (cloud.rotation * Math.PI) / 180;
         transform.updateMatrix();
         for (const cube of cubeMatrices[index % cubeMatrices.length]) {
-          matrix.multiplyMatrices(transform.matrix, cube);
-          mesh.setMatrixAt(instance, matrix);
-          opacities[instance] = opacity;
-          instance++;
+          const instance = instances[visibleInstances.length];
+          instance.matrix.multiplyMatrices(transform.matrix, cube);
+          const elements = instance.matrix.elements;
+          instance.depth =
+            elements[12] * viewDirection.x +
+            elements[13] * viewDirection.y +
+            elements[14] * viewDirection.z;
+          instance.opacity = opacity;
+          visibleInstances.push(instance);
         }
       });
-      mesh.count = instance;
+      // Three.js sorts the mesh as a whole, not its transparent instances.
+      // Sort individual cubes by camera-space depth, keeping their fades paired.
+      visibleInstances.sort((a, b) => b.depth - a.depth);
+      visibleInstances.forEach((instance, index) => {
+        mesh.setMatrixAt(index, instance.matrix);
+        opacities[index] = instance.opacity;
+      });
+      mesh.count = visibleInstances.length;
       mesh.instanceMatrix.needsUpdate = true;
       opacityAttribute.needsUpdate = true;
     },
