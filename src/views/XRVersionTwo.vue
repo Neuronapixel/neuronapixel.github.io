@@ -18,10 +18,6 @@
             material="color: #ffffff; roughness: 0.4; emissive: #ffffff; emissiveIntensity: 0.4"
           />
           <a-mixin
-            id="animated-white-material"
-            material="color: #ffffff; roughness: 0.4; emissive: #ffffff; emissiveIntensity: 0.4; opacity: 0; transparent: true"
-          />
-          <a-mixin
             id="cube"
             geometry="primitive: box; depth: 1; height: 1; width: 1"
           />
@@ -94,26 +90,7 @@
           </a-entity>
         </a-entity>
 
-        <a-entity
-          v-for="(cloud, cloudIndex) in clouds"
-          :key="cloud.id"
-          class="day-cloud"
-          :data-cloud-index="cloudIndex"
-          :position="`${cloud.x} ${cloud.y} ${cloud.z}`"
-          :scale="`${cloud.scale} ${cloud.scale} ${cloud.scale}`"
-          :rotation="`0 ${cloud.rotation} 0`"
-          visible="false"
-        >
-          <a-entity
-            v-for="cubeDefinition in cloud.cubes"
-            :key="`${cloud.id}-${cubeDefinition.position}`"
-            class="day-cloud-cube"
-            mixin="cube animated-white-material"
-            material="emissiveIntensity: 0.12"
-            :position="cubeDefinition.position"
-            :scale="cubeDefinition.scale"
-          />
-        </a-entity>
+        <a-entity id="cloud-field" />
 
         <a-entity id="night-stars" position="0 0 9.034">
           <a-entity
@@ -149,7 +126,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { getDayNightFrame } from '@/utils/dayNightCycle';
-import { createCloudField, getCloudPlacement } from '@/utils/cloudField';
+import { createCloudRenderer, type CloudRenderer } from '@/utils/cloudRenderer';
 
 interface MaterialComponent {
   material?: {
@@ -164,6 +141,8 @@ interface SceneEntity extends HTMLElement {
     material?: MaterialComponent;
   };
   hasLoaded?: boolean;
+  setObject3D?: (name: string, object: unknown) => void;
+  removeObject3D?: (name: string) => void;
   object3D?: {
     position: {
       x: number;
@@ -174,70 +153,10 @@ interface SceneEntity extends HTMLElement {
   };
 }
 
-interface CubeDefinition {
-  position: string;
-  scale: '1 1 1' | '2 2 2';
-}
-
 const inspectorAttribute = import.meta.env.DEV ? '' : null;
 const sceneRef = ref<SceneEntity | null>(null);
 let animationFrameId: number | null = null;
 let cycleStartedAt = 0;
-
-const cloudShapes: CubeDefinition[][] = [
-  [
-    { position: '-3 0 0', scale: '1 1 1' },
-    { position: '-2 0 0', scale: '2 2 2' },
-    { position: '0 0 0', scale: '2 2 2' },
-    { position: '2 0 0', scale: '2 2 2' },
-    { position: '4 0 0', scale: '1 1 1' },
-    { position: '0 2 0', scale: '2 2 2' },
-  ],
-  [
-    { position: '-4 0 0', scale: '1 1 1' },
-    { position: '-3 0 0', scale: '2 2 2' },
-    { position: '-1 0 0', scale: '2 2 2' },
-    { position: '1 0 0', scale: '2 2 2' },
-    { position: '3 0 0', scale: '1 1 1' },
-    { position: '-1 2 0', scale: '2 2 2' },
-    { position: '1 2 0', scale: '1 1 1' },
-  ],
-  [
-    { position: '-4 0 0', scale: '1 1 1' },
-    { position: '-3 0 0', scale: '2 2 2' },
-    { position: '-1 0 0', scale: '2 2 2' },
-    { position: '1 0 0', scale: '1 1 1' },
-    { position: '-1 2 0', scale: '2 2 2' },
-  ],
-  [
-    { position: '-2 0 0', scale: '1 1 1' },
-    { position: '-1 0 0', scale: '2 2 2' },
-    { position: '1 0 0', scale: '2 2 2' },
-    { position: '3 0 0', scale: '1 1 1' },
-    { position: '1 2 0', scale: '1 1 1' },
-  ],
-  [
-    { position: '-3 0 0', scale: '2 2 2' },
-    { position: '-1 0 0', scale: '2 2 2' },
-    { position: '1 0 0', scale: '2 2 2' },
-    { position: '3 0 0', scale: '2 2 2' },
-    { position: '-1 2 0', scale: '1 1 1' },
-    { position: '1 2 0', scale: '2 2 2' },
-  ],
-  [
-    { position: '-2 0 0', scale: '1 1 1' },
-    { position: '-1 0 0', scale: '1 1 1' },
-    { position: '0 0 0', scale: '2 2 2' },
-    { position: '2 0 0', scale: '2 2 2' },
-    { position: '4 0 0', scale: '1 1 1' },
-    { position: '2 2 0', scale: '1 1 1' },
-  ],
-];
-
-const clouds = createCloudField().map((cloud, index) => ({
-  ...cloud,
-  cubes: cloudShapes[index % cloudShapes.length],
-}));
 
 const stars = [
   { position: '-30 7 -32' },
@@ -342,23 +261,7 @@ const updateScene = (timestamp: number) => {
     Object.assign(starFieldEntity.object3D.position, viewer);
   }
 
-  cloudEntities.forEach(({ entity, cubes }, index) => {
-    const placement = getCloudPlacement(clouds[index], viewer, elapsedMs);
-    const opacity = placement.opacity * 0.86;
-    if (entity.object3D) {
-      Object.assign(entity.object3D.position, {
-        x: placement.x,
-        y: placement.y,
-        z: placement.z,
-      });
-      entity.object3D.visible = opacity > 0.01;
-    }
-    if (opacity <= 0.01) return;
-    cubes.forEach((cube) => {
-      setEntityOpacity(cube, opacity);
-      cube.components?.material?.material?.color?.set(frame.cloudColor);
-    });
-  });
+  cloudRenderer?.update(viewer, elapsedMs, frame.cloudColor);
 
   scene.querySelectorAll<SceneEntity>('.night-star').forEach((star, index) => {
     const opacity = frame.starOpacities[index] ?? 0;
@@ -379,7 +282,7 @@ const updateScene = (timestamp: number) => {
 let cameraEntity: SceneEntity | null = null;
 let skyEntity: SceneEntity | null = null;
 let starFieldEntity: SceneEntity | null = null;
-let cloudEntities: Array<{ entity: SceneEntity; cubes: SceneEntity[] }> = [];
+let cloudRenderer: CloudRenderer | null = null;
 
 const startCycle = () => {
   if (animationFrameId !== null) {
@@ -391,15 +294,8 @@ const startCycle = () => {
     sceneRef.value?.querySelector<SceneEntity>('#day-night-sky') ?? null;
   starFieldEntity =
     sceneRef.value?.querySelector<SceneEntity>('#night-stars') ?? null;
-  cloudEntities = Array.from(
-    sceneRef.value?.querySelectorAll<SceneEntity>('.day-cloud') ?? [],
-    (entity) => ({
-      entity,
-      cubes: Array.from(
-        entity.querySelectorAll<SceneEntity>('.day-cloud-cube'),
-      ),
-    }),
-  );
+  const cloudField = sceneRef.value?.querySelector<SceneEntity>('#cloud-field');
+  if (cloudField) cloudRenderer = createCloudRenderer(cloudField);
   cycleStartedAt = performance.now();
   animationFrameId = window.requestAnimationFrame(updateScene);
 };
@@ -419,6 +315,8 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   sceneRef.value?.removeEventListener('loaded', startCycle);
+  cloudRenderer?.dispose();
+  cloudRenderer = null;
 
   if (animationFrameId !== null) {
     window.cancelAnimationFrame(animationFrameId);

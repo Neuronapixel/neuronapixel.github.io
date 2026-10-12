@@ -1,9 +1,15 @@
 import { mount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import XRVersionTwo from './XRVersionTwo.vue';
+import { createCloudRenderer } from '@/utils/cloudRenderer';
+
+vi.mock('@/utils/cloudRenderer', () => ({ createCloudRenderer: vi.fn() }));
 
 describe('XRVersionTwo', () => {
-  afterEach(() => vi.restoreAllMocks());
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.clearAllMocks();
+  });
 
   it('renders the complete floating logo without its former pedestal and keeps flight controls', () => {
     const wrapper = mount(XRVersionTwo);
@@ -45,10 +51,11 @@ describe('XRVersionTwo', () => {
       Object.assign(star.element, { object3D });
       return { object3D, localPosition: star.attributes('position') };
     });
-    const clouds = wrapper.findAll('.day-cloud').map((cloud) => {
-      const object3D = { position: { x: 0, y: 0, z: 0 }, visible: false };
-      Object.assign(cloud.element, { object3D });
-      return object3D;
+    const updateClouds = vi.fn();
+    const disposeClouds = vi.fn();
+    vi.mocked(createCloudRenderer).mockReturnValue({
+      update: updateClouds,
+      dispose: disposeClouds,
     });
 
     await wrapper.find('a-scene').trigger('loaded');
@@ -56,23 +63,26 @@ describe('XRVersionTwo', () => {
 
     expect(sky.position).toEqual(viewer);
     expect(starField.position).toEqual(viewer);
-    const visible = clouds.filter((cloud) => cloud.visible);
-    for (const axis of ['x', 'y', 'z'] as const) {
-      expect(visible.some((cloud) => cloud.position[axis] < viewer[axis])).toBe(
-        true,
-      );
-      expect(visible.some((cloud) => cloud.position[axis] > viewer[axis])).toBe(
-        true,
-      );
-    }
+    expect(updateClouds).toHaveBeenLastCalledWith(
+      viewer,
+      expect.any(Number),
+      '#f5f8ff',
+    );
+    expect(wrapper.findAll('.day-cloud-cube')).toHaveLength(0);
     const secondViewer = { x: -4000, y: 2100, z: -3600 };
     Object.assign(viewer, secondViewer);
     requestFrame.mock.calls[1][0](performance.now() + 110_000);
     expect(starField.position).toEqual(secondViewer);
+    expect(updateClouds).toHaveBeenLastCalledWith(
+      secondViewer,
+      expect.any(Number),
+      '#323e5b',
+    );
     expect(stars.every(({ object3D }) => object3D.visible)).toBe(true);
     wrapper.findAll('.night-star').forEach((star, index) => {
       expect(star.attributes('position')).toBe(stars[index].localPosition);
     });
     wrapper.unmount();
+    expect(disposeClouds).toHaveBeenCalledOnce();
   });
 });
