@@ -42,6 +42,7 @@ interface CloudMaterial {
 
 interface CloudMesh extends CloudTransform {
   count: number;
+  renderOrder: number;
   frustumCulled: boolean;
   instanceMatrix: CloudAttribute;
   setMatrixAt: (index: number, matrix: CloudMatrix) => void;
@@ -191,6 +192,9 @@ export const createCloudRenderer = (host: CloudHost): CloudRenderer | null => {
   };
   const mesh = new three.InstancedMesh(geometry, material, capacity);
   mesh.count = 0;
+  // A-Frame otherwise draws transparent objects in scene-tree order. Composite
+  // clouds over the background stars (renderOrder 0) without writing depth.
+  mesh.renderOrder = 1;
   // Wrapped instances move every frame; a cached bounding sphere would be stale.
   mesh.frustumCulled = false;
   mesh.instanceMatrix.setUsage(three.DynamicDrawUsage);

@@ -58,6 +58,7 @@ const createRuntime = () => {
   }
   class Mesh extends Transform {
     count = 0;
+    renderOrder = 0;
     instanceMatrix = new Attribute(new Float32Array());
     matrices: Matrix[] = [];
     setMatrixAt(index: number, matrix: Matrix) {
@@ -107,6 +108,17 @@ const createRuntime = () => {
 
 describe('cloud renderer depth ordering', () => {
   afterEach(() => vi.unstubAllGlobals());
+
+  it('composites clouds after the background stars regardless of scene-tree order', () => {
+    const { mesh, renderer } = createRuntime();
+    const starCore = { renderOrder: 0 };
+    const starGlow = { renderOrder: 0 };
+    // A-Frame 1.5's default transparent sort compares renderOrder within a group.
+    const transparentObjects = [mesh, starCore, starGlow];
+    transparentObjects.sort((a, b) => a.renderOrder - b.renderOrder);
+    expect(transparentObjects).toEqual([starCore, starGlow, mesh]);
+    renderer.dispose();
+  });
 
   it('reorders cubes with camera rotation and keeps their fades paired', () => {
     const { direction, mesh, renderer, opacity } = createRuntime();
