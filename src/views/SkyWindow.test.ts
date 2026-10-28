@@ -61,7 +61,10 @@ describe('sky window preview', () => {
     expect(wrapper.find('[role="status"]').text()).toContain(
       'Movement tracking is unavailable',
     );
-    expect(wrapper.get('button').attributes('disabled')).toBeDefined();
+    expect(wrapper.find('button').exists()).toBe(false);
+    expect(wrapper.get('.quick-look-link').attributes('download')).toBe(
+      'neuronapixel-logo.usdz',
+    );
     expect(wrapper.get('.explore-link').attributes('href')).toBe('#/');
     expect(wrapper.findAll('a-scene')).toHaveLength(1);
     expect(wrapper.findAll('.logo-cube')).toHaveLength(27);
@@ -74,6 +77,24 @@ describe('sky window preview', () => {
     expect(
       wrapper.get('#sky-logo-placement > a-entity').attributes('scale'),
     ).toBe('0.1 0.1 0.1');
+    wrapper.unmount();
+  });
+  it('offers native logo AR even when immersive WebXR is unavailable', async () => {
+    support(false);
+    vi.spyOn(DOMTokenList.prototype, 'supports').mockImplementation(
+      (token) => token === 'ar',
+    );
+    const wrapper = mount(SkyWindow);
+    await flushPromises();
+    expect(wrapper.get('.quick-look-link').attributes('rel')).toBe('ar');
+    expect(wrapper.get('.quick-look-link').attributes('aria-label')).toBe(
+      'View in your space',
+    );
+    expect(wrapper.get('#sky-status').text()).toContain(
+      'Bring a little Neuronapixel',
+    );
+    expect(wrapper.find('button').exists()).toBe(false);
+    expect(wrapper.get('.explore-link').attributes('href')).toBe('#/');
     wrapper.unmount();
   });
   it('enables explicit entry only after scene readiness and exposes retry after denial', async () => {

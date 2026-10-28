@@ -31,3 +31,11 @@ Adds only `/#/ar`; existing published paths and delivery automation remain uncha
 
 ## Risks / Open Questions
 Real tracking quality and camera coverage require a compatible physical device. Proposed size/distance are initial tuning defaults. A walking demonstration cannot be established by mocks or a desktop browser.
+
+
+## Approved Apple AR Quick Look Addition — October 27, 2026
+Add a native iPhone/iPad option to the existing sky route. Export the exact logo as a 30 cm USDZ with a gentle 12-second rotation. Safari opens its native viewer to place the logo over the real room; this is a separate experience from the opaque virtual sky. Preserve the existing WebXR path and original landing.
+
+Use `relList.supports('ar')` to show “View in your space” where supported, with the required single image child inside the AR link. Elsewhere offer a usable USDZ download and Safari guidance. Hide the disabled immersive-WebXR entry on unsupported browsers. Serve the model with `model/vnd.usdz+zip` in development and production preview; verify deployed static-host headers after delivery.
+
+Validation: Apple `usdchecker --arkit --strict`, native model rendering, HTTP MIME/range checks, component/route regression tests, desktop/mobile UI and download checks. A physical iPhone must confirm native viewer entry, placement, scale, rotation, walking and return to the website. No dependency, certificate, analytics or release-pipeline changes are needed for this addition.

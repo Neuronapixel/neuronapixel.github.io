@@ -15,7 +15,7 @@ Implemented `/#/ar` as a separate handheld sky experience. Shared logo geometry 
 - Router, colocated tests and this task's brief/handoff.
 
 ## Validation
-- `npm run check`: passed, 41 tests across 16 files; Node 24.14.1 / npm 11.11.0.
+- `npm run check`: passed, 45 tests across 17 files; Node 24.14.1 / npm 11.11.0.
 - `npm run build`: passed without warnings.
 - `git diff --check`: passed.
 - Independent comparison against the original landing confirmed the exact original 27 positions and primary/secondary material assignments.
@@ -69,5 +69,18 @@ Restart from the repository root with `VITE_DEV_SSL_KEY="$PWD/certs/dev-key.pem"
 
 An unsupported-runtime preview crash was fixed: the fallback renderer did not expose `getReferenceSpace`. Pose reading now requires an active session/frame and guards the optional reference-space API; a regression test covers this runtime.
 
+## Apple AR Quick Look Addition — October 27, 2026
+- Added `ar-quick-look.vue` to `SkyWindow.vue`. Feature detection uses `relList.supports('ar')`. Supported browsers get “View in your space” with a `rel="ar"` link containing exactly one image; other browsers get a USDZ download and Safari guidance.
+- The native path displays the logo over the real room. It preserves the separate sky/WebXR experience and does not claim to transfer the live sky/day-night scene into Quick Look. Unsupported WebXR browsers no longer show a disabled Enter button.
+- `public/models/neuronapixel-logo.usdz` is a self-contained 4,207-byte binary USD package: 27 cubes matching the component positions and colours, Y-up/metres, a 30 cm unrotated cube with its base at Y=0, and a 12-second rotation. The native URL disables scaling. The accompanying PNG was rendered from that model with Apple's Metal renderer.
+- Editable source and regeneration instructions: `src/assets/models/neuronapixel-logo.usda`, `src/assets/models/README.md`; `python3 scripts/generate-logo-usdz.py --thumbnail` was verified. It requires macOS USD tools, with no project dependency/build-pipeline changes.
+- `usdchecker --arkit --strict` returned Success; package inspection confirmed an uncompressed, 64-byte-aligned, single USDC layer. The packaged model and thumbnail rendered successfully. Apple's packaging/checker tools emitted duplicate schema-registration diagnostics before reporting successful validation.
+- Added a small Vite middleware hook for `Content-Type: model/vnd.usdz+zip` in development and production preview. Verified HTTP 200 for both and HTTP 206 with a 64-byte range in development. Vite retains ownership of static-file serving. No GitHub Actions changes were made; inspect the deployed GitHub Pages asset header after delivery.
+- `npm run check` passed 45 tests across 17 files; `npm run build` passed. New coverage includes native feature detection, the exact AR link/image contract, no download attribute on the native link, missing/throwing capability probes, download fallback and native UI when WebXR is unavailable.
+- Browser plugin not available: QA used cached Playwright/Chromium at 1280×800 and 390×844. Page identity/content, absence of framework overlays, native-button layout, loaded thumbnail, no horizontal overflow, one scene and 27 cubes passed. A real browser click downloaded the USDZ; its bytes matched the validated asset. No application console errors; the existing A-Frame/Three.js lighting deprecation warning remains.
+- Screenshots: `/private/tmp/neuronapixel-quick-look-qa/desktop.png` and `/private/tmp/neuronapixel-quick-look-qa/iphone-ui.png`. The iPhone-sized screenshot simulates the native `rel` capability for UI validation only. It is not a screenshot of Apple's native viewer.
+- Physical iPhone validation remains pending: open the HTTPS route in Safari, tap View in your space, place the logo, verify size/rotation, walk around it, then close the viewer and confirm return to the sky. Record iOS/device versions and any native-viewer issues. No deployment or push was performed.
+- Primary references: https://webkit.org/blog/8421/viewing-augmented-reality-assets-in-safari-for-ios/ and https://openusd.org/release/spec_usdz.html .
+
 ## Next Recommended Step
-Complete trusted-HTTPS physical-device acceptance on a browser with immersive WebXR AR support, record walking away from and around the logo, then deliver through the existing PR and GitHub Pages workflow.
+On a physical iPhone, open `https://192.168.1.233:5173/#/ar` in Safari and tap **View in your space**. Complete native placement/rotation/walking/return checks and record the result. The original immersive-WebXR sky checklist remains a separate acceptance path for compatible devices. Review and deliver through the existing PR and GitHub Pages workflow.

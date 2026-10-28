@@ -12,9 +12,15 @@
           <p class="eyebrow">A window into a hidden world</p>
           <h1>Take the sky with you.</h1>
           <p id="sky-status" role="status" aria-live="polite">
-            {{ status.message }}
+            {{
+              quickLookSupported && status.state === 'unsupported'
+                ? 'Bring a little Neuronapixel into your world.'
+                : status.message
+            }}
           </p>
+          <ArQuickLook @support="quickLookSupported = $event" />
           <button
+            v-if="status.state !== 'unsupported'"
             :disabled="!canEnter"
             aria-describedby="sky-status"
             @click="controller?.enter()"
@@ -89,6 +95,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import LogoMark from '@/components/logo-mark.vue';
+import ArQuickLook from '@/components/ar-quick-look.vue';
 import SkyEnvironment from '@/components/sky-environment.vue';
 import {
   createRoomArSession,
@@ -100,6 +107,7 @@ import type { SceneEntity, SkyScene } from '@/utils/skyScene';
 const inspectorAttribute = import.meta.env.DEV ? '' : null;
 const sceneRef = ref<SkyScene | null>(null);
 const logoRef = ref<SceneEntity | null>(null);
+const quickLookSupported = ref(false);
 const status = ref<ArStatus>({
   state: 'checking',
   message: 'Checking movement tracking…',

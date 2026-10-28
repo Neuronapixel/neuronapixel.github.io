@@ -1,0 +1,523 @@
+#usda 1.0
+(
+    defaultPrim = "Neuronapixel"
+    metersPerUnit = 1
+    upAxis = "Y"
+    startTimeCode = 0
+    endTimeCode = 360
+    timeCodesPerSecond = 30
+    framesPerSecond = 30
+    documentation = "Neuronapixel: 27 red and white cubes, 30 cm wide, with a 12-second rotation. Generated from logo-mark.vue."
+)
+
+def Xform "Neuronapixel" (
+    kind = "component"
+)
+{
+    double3 xformOp:translate = (0, 0.15, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate"]
+    def Scope "Materials"
+    {
+
+        def Material "Primary"
+        {
+            token outputs:surface.connect = </Neuronapixel/Materials/Primary/Surface.outputs:surface>
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1.00000000, 0.02842604, 0.02842604)
+                color3f inputs:emissiveColor = (0, 0, 0)
+                float inputs:metallic = 0.05
+                float inputs:roughness = 0.4
+                float inputs:opacity = 1
+                token outputs:surface
+            }
+        }
+
+        def Material "Secondary"
+        {
+            token outputs:surface.connect = </Neuronapixel/Materials/Secondary/Surface.outputs:surface>
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1.00000000, 1.00000000, 1.00000000)
+                color3f inputs:emissiveColor = (0.4, 0.4, 0.4)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.4
+                float inputs:opacity = 1
+                token outputs:surface
+            }
+        }
+    }
+    def Xform "Logo"
+    {
+        float xformOp:rotateY = -22
+        float xformOp:rotateY.timeSamples = {
+            0: -22,
+            90: 68,
+            180: 158,
+            270: 248,
+            360: 338,
+        }
+        uniform token[] xformOpOrder = ["xformOp:rotateY"]
+
+        def Mesh "Cube_0_0_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, -0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_0_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, -0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_0_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, -0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_1_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.00, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_1_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.00, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_1_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.00, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_2_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_2_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_2_2_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_0_0_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, -0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_0_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, -0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_0_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, -0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_1_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.00, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_1_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.00, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_1_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.00, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_2_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_2_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_2_2_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_0_0_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, -0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_0_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, -0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_0_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, -0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_1_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.00, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_1_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.00, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_1_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.00, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_2_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_2_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_2_2_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+    }
+}
