@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import XRVersionTwo from './XRVersionTwo.vue';
+import type { SceneBehavior, SkyScene } from '@/utils/skyScene';
 import { createCloudRenderer } from '@/utils/cloudRenderer';
 
 vi.mock('@/utils/cloudRenderer', () => ({ createCloudRenderer: vi.fn() }));
@@ -14,11 +15,7 @@ describe('XRVersionTwo', () => {
   it('renders the complete floating logo without its former pedestal and keeps flight controls', () => {
     const wrapper = mount(XRVersionTwo);
     const logo = wrapper.find('#logo');
-    expect(
-      logo.findAll(
-        '[mixin="cube primary-material"], [mixin="cube secondary-material"]',
-      ),
-    ).toHaveLength(27);
+    expect(logo.findAll('.logo-cube')).toHaveLength(27);
     expect(logo.attributes('position')).toBe('0 0 0');
     expect(logo.attributes('animation')).toContain('loop: true');
     expect(wrapper.find('.copy-table').exists()).toBe(false);
@@ -32,10 +29,14 @@ describe('XRVersionTwo', () => {
   });
 
   it('keeps the sky, clouds, and nighttime stars around the flying camera', async () => {
-    const requestFrame = vi
-      .spyOn(window, 'requestAnimationFrame')
-      .mockReturnValue(1);
+    const clock = vi.spyOn(performance, 'now').mockReturnValue(0);
     const wrapper = mount(XRVersionTwo);
+    const behaviors: SceneBehavior[] = [];
+    const scene = wrapper.find('a-scene').element as SkyScene;
+    scene.addBehavior = vi.fn((behavior: SceneBehavior) => {
+      behaviors.push(behavior);
+    });
+    scene.removeBehavior = vi.fn();
     const viewer = { x: 1500, y: -720, z: 2300 };
     Object.assign(wrapper.find('#camera').element, {
       object3D: { position: viewer },
@@ -59,7 +60,8 @@ describe('XRVersionTwo', () => {
     });
 
     await wrapper.find('a-scene').trigger('loaded');
-    requestFrame.mock.calls[0][0](performance.now() + 100);
+    clock.mockReturnValue(100);
+    behaviors[0].tick();
 
     expect(sky.position).toEqual(viewer);
     expect(starField.position).toEqual(viewer);
@@ -71,7 +73,8 @@ describe('XRVersionTwo', () => {
     expect(wrapper.findAll('.day-cloud-cube')).toHaveLength(0);
     const secondViewer = { x: -4000, y: 2100, z: -3600 };
     Object.assign(viewer, secondViewer);
-    requestFrame.mock.calls[1][0](performance.now() + 110_000);
+    clock.mockReturnValue(110_000);
+    behaviors[0].tick();
     expect(starField.position).toEqual(secondViewer);
     expect(updateClouds).toHaveBeenLastCalledWith(
       secondViewer,
@@ -84,5 +87,6 @@ describe('XRVersionTwo', () => {
     });
     wrapper.unmount();
     expect(disposeClouds).toHaveBeenCalledOnce();
+    expect(scene.removeBehavior).toHaveBeenCalledWith(behaviors[0]);
   });
 });

@@ -4,6 +4,7 @@ import router from './index';
 describe('router', () => {
   it('keeps the core public routes available', () => {
     expect(router.resolve('/').name).toBe('XRHome');
+    expect(router.resolve('/ar').name).toBe('SkyWindow');
     expect(router.resolve('/classic').name).toBe('Home');
     expect(router.resolve('/about').name).toBe('About');
   });
