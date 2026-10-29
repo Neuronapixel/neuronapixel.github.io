@@ -89,7 +89,9 @@ describe('room AR lifecycle', () => {
       const f = fixture(capabilities);
       await settle();
       expect(f.status().state).toBe('unsupported');
-      expect(f.status().message).toContain('You can still explore the sky');
+      expect(['unsupported', 'insecure', 'checkFailed']).toContain(
+        f.status().messageKey,
+      );
       f.controller.enter();
       expect(f.scene.enterAR).not.toHaveBeenCalled();
       f.controller.dispose();
@@ -120,7 +122,7 @@ describe('room AR lifecycle', () => {
     };
     f.setPose(vertical);
     f.tick();
-    expect(f.status().message).toBe('Look ahead to place the logo.');
+    expect(f.status().messageKey).toBe('lookAhead');
     f.setPose(tracked(2));
     f.tick();
     expect(f.status().state).toBe('placed');
@@ -152,7 +154,7 @@ describe('room AR lifecycle', () => {
     f.reference.dispatchEvent(new Event('reset'));
     expect(f.session.end).toHaveBeenCalledOnce();
     expect(f.status().state).toBe('error');
-    expect(f.status().message).toContain('Enter the sky again');
+    expect(f.status().messageKey).toBe('reset');
     f.controller.dispose();
   });
   it('restores preview after denial and permits a successful retry', async () => {

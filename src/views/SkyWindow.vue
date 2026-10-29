@@ -1,21 +1,30 @@
 <template>
-  <main class="sky-window">
+  <main class="sky-window" :lang="locale">
     <section
       id="sky-controls"
       class="sky-controls"
-      :class="{ immersive: active }"
-      aria-label="Sky controls"
+      :aria-label="t('ar.controls')"
     >
       <template v-if="!active">
-        <a class="back-link" href="#/">Neuronapixel ↗</a>
+        <div class="top-bar">
+          <a class="back-link" href="#/">{{ t('ar.brand') }}</a>
+          <select
+            v-model="locale"
+            :aria-label="t('ar.language')"
+            class="language-select"
+          >
+            <option value="en" lang="en">{{ t('ar.english') }}</option>
+            <option value="es" lang="es">{{ t('ar.spanish') }}</option>
+          </select>
+        </div>
         <div class="invitation">
-          <p class="eyebrow">A window into a hidden world</p>
-          <h1>Take the sky with you.</h1>
+          <p class="eyebrow">{{ t('ar.eyebrow') }}</p>
+          <h1>{{ t('ar.title') }}</h1>
           <p id="sky-status" role="status" aria-live="polite">
             {{
               quickLookSupported && status.state === 'unsupported'
-                ? 'Bring a little Neuronapixel into your world.'
-                : status.message
+                ? t('ar.invitation')
+                : statusMessage
             }}
           </p>
           <ArQuickLook @support="quickLookSupported = $event" />
@@ -25,19 +34,19 @@
             aria-describedby="sky-status"
             @click="controller?.enter()"
           >
-            {{ status.state === 'error' ? 'Try again' : 'Enter the sky' }}
+            {{ t(status.state === 'error' ? 'ar.retry' : 'ar.enter') }}
           </button>
           <a
             v-if="status.state === 'unsupported'"
             class="explore-link"
             href="#/"
-            >Explore the original sky</a
+            >{{ t('ar.explore') }}</a
           >
         </div>
       </template>
       <div v-else-if="status.overlay" class="session-controls">
-        <p role="status" aria-live="polite">{{ status.message }}</p>
-        <button @click="controller?.exit()">Exit sky</button>
+        <p role="status" aria-live="polite">{{ statusMessage }}</p>
+        <button @click="controller?.exit()">{{ t('ar.exit') }}</button>
       </div>
     </section>
     <a-scene
@@ -65,7 +74,7 @@
             material="shader: flat"
           />
           <a-text
-            :value="status.message"
+            :value="statusMessage"
             align="center"
             width="0.9"
             position="0 0 0.005"
@@ -93,7 +102,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { saveLocale } from '@/i18n';
 import LogoMark from '@/components/logo-mark.vue';
 import ArQuickLook from '@/components/ar-quick-look.vue';
 import SkyEnvironment from '@/components/sky-environment.vue';
@@ -104,15 +115,18 @@ import {
 } from '@/utils/roomArSession';
 import type { SceneEntity, SkyScene } from '@/utils/skyScene';
 
+const { t, locale } = useI18n();
+watch(locale, saveLocale);
 const inspectorAttribute = import.meta.env.DEV ? '' : null;
 const sceneRef = ref<SkyScene | null>(null);
 const logoRef = ref<SceneEntity | null>(null);
 const quickLookSupported = ref(false);
 const status = ref<ArStatus>({
   state: 'checking',
-  message: 'Checking movement tracking…',
+  messageKey: 'checking',
   overlay: false,
 });
+const statusMessage = computed(() => t(`arStatus.${status.value.messageKey}`));
 const active = computed(() =>
   ['starting', 'tracking', 'placed'].includes(status.value.state),
 );
@@ -155,23 +169,29 @@ a-scene {
   z-index: 2;
   color: #1f2233;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.55),
-    transparent 18%,
-    transparent 55%,
-    rgba(255, 255, 255, 0.85)
-  );
   padding: max(28px, env(safe-area-inset-top))
     max(28px, env(safe-area-inset-right));
   box-sizing: border-box;
 }
-.sky-controls.immersive {
-  background: transparent;
-}
 .sky-controls a,
-.sky-controls button {
+.sky-controls button,
+.sky-controls select {
   pointer-events: auto;
+}
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.language-select {
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 20px;
+  padding: 8px 12px;
 }
 .back-link {
   color: inherit;
@@ -217,7 +237,8 @@ button:disabled {
   cursor: default;
 }
 button:focus-visible,
-a:focus-visible {
+a:focus-visible,
+select:focus-visible {
   outline: 3px solid #ff2f2f;
   outline-offset: 5px;
 }

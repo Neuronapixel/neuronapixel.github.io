@@ -15,8 +15,8 @@
     <p id="quick-look-description">
       {{
         supported
-          ? 'Place the logo in your room, then walk around it.'
-          : 'Open in Safari on iPhone or iPad to view the logo in your space.'
+          ? t('quickLook.supportedDescription')
+          : t('quickLook.unsupportedDescription')
       }}
     </p>
   </div>
@@ -24,12 +24,12 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const emit = defineEmits<{ support: [supported: boolean] }>();
 const supported = ref(false);
-const label = computed(() =>
-  supported.value ? 'View in your space' : 'Download 3D logo',
-);
+const label = computed(() => t('quickLook.action'));
 const modelUrl = computed(
   () =>
     '/models/neuronapixel-logo.usdz' +

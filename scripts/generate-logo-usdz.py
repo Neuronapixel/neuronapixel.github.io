@@ -59,15 +59,16 @@ header = '''#usda 1.0
     endTimeCode = 360
     timeCodesPerSecond = 30
     framesPerSecond = 30
-    documentation = "Neuronapixel: 27 red and white cubes, 30 cm wide, with a 12-second rotation. Generated from logo-mark.vue."
+    documentation = "Neuronapixel: 27 red and white cubes, 15 cm wide, with a 12-second rotation. Generated from logo-mark.vue."
 )
 
 def Xform "Neuronapixel" (
     kind = "component"
 )
 {
-    double3 xformOp:translate = (0, 0.15, 0)
-    uniform token[] xformOpOrder = ["xformOp:translate"]
+    double3 xformOp:translate = (0, 0.075, 0)
+    double3 xformOp:scale = (0.5, 0.5, 0.5)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
     def Scope "Materials"
     {
 '''

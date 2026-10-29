@@ -1,3 +1,4 @@
+import type { ArMessageKey } from '@/i18n';
 import { getArPlacement } from './arPlacement';
 import {
   readViewerPose,
@@ -16,16 +17,13 @@ export type ArState =
   | 'error';
 export interface ArStatus {
   state: ArState;
-  message: string;
+  messageKey: ArMessageKey;
   overlay: boolean;
 }
 export interface ArCapabilities {
   secure: boolean;
   xr?: { isSessionSupported: (mode: string) => Promise<boolean> };
 }
-
-export const AR_FALLBACK =
-  'Movement tracking is unavailable in this browser. You can still explore the sky.';
 
 export const createRoomArSession = (
   scene: SkyScene,
@@ -35,7 +33,7 @@ export const createRoomArSession = (
 ) => {
   let status: ArStatus = {
     state: 'checking',
-    message: 'Checking movement tracking…',
+    messageKey: 'checking',
     overlay: false,
   };
   let disposed = false;
@@ -47,15 +45,19 @@ export const createRoomArSession = (
   let placed = false;
   let attached = false;
   let requesting = false;
-  const publish = (state: ArState, message: string, overlay = false) => {
+  const publish = (
+    state: ArState,
+    messageKey: ArMessageKey,
+    overlay = false,
+  ) => {
     if (disposed) return;
     if (
       status.state === state &&
-      status.message === message &&
+      status.messageKey === messageKey &&
       status.overlay === overlay
     )
       return;
-    status = { state, message, overlay };
+    status = { state, messageKey, overlay };
     onChange(status);
   };
   const showLogo = (visible: boolean) => {
@@ -76,43 +78,26 @@ export const createRoomArSession = (
     detachReference();
     if (disposed) return;
     preview();
-    publish(
-      reset ? 'error' : 'ready',
-      reset
-        ? 'Tracking origin changed. Enter the sky again to place the logo.'
-        : 'Move your device to explore a hidden sky.',
-    );
+    publish(reset ? 'error' : 'ready', reset ? 'reset' : 'ready');
   };
   const end = () => {
     if (!owned) return;
     void owned.end().catch(() => {
-      publish(
-        status.state,
-        'Use your browser’s XR exit control to return to the preview.',
-        status.overlay,
-      );
+      publish(status.state, 'exitFailed', status.overlay);
     });
   };
   const onReset = () => {
     reset = true;
     placed = false;
     showLogo(false);
-    publish(
-      'tracking',
-      'Tracking origin changed. Returning to the preview…',
-      status.overlay,
-    );
+    publish('tracking', 'resetting', status.overlay);
     end();
   };
   const onEnter = () => {
     if (disposed || !requesting || owned || !scene.xrSession) return;
     owned = scene.xrSession;
     owned.addEventListener('end', onEnd);
-    publish(
-      'tracking',
-      'Move your device gently to find tracking.',
-      !!owned.domOverlayState,
-    );
+    publish('tracking', 'tracking', !!owned.domOverlayState);
   };
   const behavior = {
     el: scene,
@@ -129,24 +114,16 @@ export const createRoomArSession = (
       }
       const pose = readViewerPose(scene);
       if (!pose || pose.emulatedPosition) {
-        publish(
-          placed ? 'placed' : 'tracking',
-          'Tracking paused. Move your device gently.',
-          status.overlay,
-        );
+        publish(placed ? 'placed' : 'tracking', 'paused', status.overlay);
         return;
       }
       if (placed) {
-        publish(
-          'placed',
-          'Walk around the logo. Use the browser’s XR control to exit.',
-          status.overlay,
-        );
+        publish('placed', 'placed', status.overlay);
         return;
       }
       const position = getArPlacement(pose);
       if (!position) {
-        publish('tracking', 'Look ahead to place the logo.', status.overlay);
+        publish('tracking', 'lookAhead', status.overlay);
         return;
       }
       logo.setAttribute(
@@ -155,11 +132,7 @@ export const createRoomArSession = (
       );
       showLogo(true);
       placed = true;
-      publish(
-        'placed',
-        'Walk around the logo. Use the browser’s XR control to exit.',
-        status.overlay,
-      );
+      publish('placed', 'placed', status.overlay);
     },
   };
   const ready = () => {
@@ -169,20 +142,14 @@ export const createRoomArSession = (
       scene.addBehavior?.(behavior);
       attached = true;
     }
-    if (supported && status.state === 'checking')
-      publish('ready', 'Move your device to explore a hidden sky.');
+    if (supported && status.state === 'checking') publish('ready', 'ready');
   };
   scene.addEventListener('loaded', ready);
   scene.addEventListener('enter-vr', onEnter);
   if (loaded) ready();
   onChange(status);
   if (!capabilities.secure || !capabilities.xr) {
-    publish(
-      'unsupported',
-      capabilities.secure
-        ? AR_FALLBACK
-        : `${AR_FALLBACK} Open this page over HTTPS to enable tracking.`,
-    );
+    publish('unsupported', capabilities.secure ? 'unsupported' : 'insecure');
   } else {
     const xr = capabilities.xr;
     void Promise.resolve()
@@ -190,17 +157,11 @@ export const createRoomArSession = (
       .then((available) => {
         if (disposed) return;
         supported = available;
-        if (!available) publish('unsupported', AR_FALLBACK);
-        else if (loaded)
-          publish('ready', 'Move your device to explore a hidden sky.');
-        else publish('checking', 'Preparing the sky…');
+        if (!available) publish('unsupported', 'unsupported');
+        else if (loaded) publish('ready', 'ready');
+        else publish('checking', 'preparing');
       })
-      .catch(() =>
-        publish(
-          'unsupported',
-          `${AR_FALLBACK} The tracking availability check failed.`,
-        ),
-      );
+      .catch(() => publish('unsupported', 'checkFailed'));
   }
 
   return {
@@ -218,7 +179,7 @@ export const createRoomArSession = (
       reset = false;
       placed = false;
       showLogo(false);
-      publish('starting', 'Opening the sky…');
+      publish('starting', 'starting');
       // A-Frame 1.5 enterAR() must be called directly within the click gesture.
       try {
         void scene
@@ -230,20 +191,14 @@ export const createRoomArSession = (
               onEnter();
               if (!owned) {
                 preview();
-                publish(
-                  'error',
-                  'Movement tracking did not start. Please try again.',
-                );
+                publish('error', 'notStarted');
               }
             }
           })
           .catch(() => {
             if (disposed) return;
             preview();
-            publish(
-              'error',
-              'Could not enter the sky. Allow tracking access and try again.',
-            );
+            publish('error', 'entryFailed');
           })
           .finally(() => {
             requesting = false;
@@ -251,10 +206,7 @@ export const createRoomArSession = (
       } catch {
         requesting = false;
         preview();
-        publish(
-          'error',
-          'Could not enter the sky. Allow tracking access and try again.',
-        );
+        publish('error', 'entryFailed');
       }
     },
     exit: end,

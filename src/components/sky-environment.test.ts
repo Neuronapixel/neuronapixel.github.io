@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import SkyWindow from '@/views/SkyWindow.vue';
+import { createAppI18n } from '@/i18n';
 import { createCloudRenderer } from '@/utils/cloudRenderer';
 import type {
   SceneBehavior,
@@ -22,7 +23,9 @@ describe('tracked sky environment', () => {
     const update = vi.fn();
     const dispose = vi.fn();
     vi.mocked(createCloudRenderer).mockReturnValue({ update, dispose });
-    const wrapper = mount(SkyWindow);
+    const wrapper = mount(SkyWindow, {
+      global: { plugins: [createAppI18n()] },
+    });
     const scene = wrapper.find('a-scene').element as SkyScene;
     const behaviors: SceneBehavior[] = [];
     scene.addBehavior = vi.fn((behavior: SceneBehavior) => {
