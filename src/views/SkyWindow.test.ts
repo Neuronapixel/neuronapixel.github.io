@@ -10,12 +10,46 @@ const support = (available: boolean) => {
     xr: { isSessionSupported: () => Promise.resolve(available) },
   });
 };
+const desktopInput = () => {
+  const query = Object.assign(new EventTarget(), { matches: true });
+  vi.stubGlobal('matchMedia', () => query);
+  return query;
+};
 afterEach(() => {
   localStorage.clear();
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
 describe('sky window preview', () => {
+  it('enables desktop navigation, protects focused controls, and follows input capability changes', async () => {
+    support(false);
+    const query = desktopInput();
+    const wrapper = mount(SkyWindow, {
+      global: { plugins: [createAppI18n()] },
+    });
+    await flushPromises();
+    const camera = wrapper.get('#sky-camera');
+    expect(camera.attributes('wasd-controls')).toContain('fly: true');
+    expect(wrapper.get('.navigation-hint').text()).toContain(
+      'WASD or arrow keys',
+    );
+    await wrapper.get('select').trigger('focusin');
+    expect(camera.attributes('wasd-controls')).toBeUndefined();
+    await wrapper.get('select').setValue('es');
+    expect(wrapper.get('.navigation-hint').text()).toContain(
+      'Usa WASD o las flechas',
+    );
+    await wrapper.get('select').trigger('focusout');
+    expect(camera.attributes('wasd-controls')).toBeDefined();
+    query.matches = false;
+    query.dispatchEvent(new Event('change'));
+    await flushPromises();
+    expect(camera.attributes('wasd-controls')).toBeUndefined();
+    expect(wrapper.find('.navigation-hint').exists()).toBe(false);
+    const removeListener = vi.spyOn(query, 'removeEventListener');
+    wrapper.unmount();
+    expect(removeListener).toHaveBeenCalledWith('change', expect.any(Function));
+  });
   it('switches the invitation, fallback guidance and Quick Look action between English and Spanish', async () => {
     support(false);
     const wrapper = mount(SkyWindow, {
@@ -96,6 +130,7 @@ describe('sky window preview', () => {
     'offers session guidance with DOM overlay %s',
     async (overlay) => {
       support(true);
+      desktopInput();
       const wrapper = mount(SkyWindow, {
         global: { plugins: [createAppI18n()] },
       });
@@ -108,14 +143,29 @@ describe('sky window preview', () => {
         }),
       });
       scene.enterAR = () => {
+        expect(wrapper.get('#sky-camera').attributes('position')).toBe('0 0 0');
         scene.xrSession = session;
         scene.dispatchEvent(new Event('enter-vr'));
         return Promise.resolve();
       };
       await wrapper.get('a-scene').trigger('loaded');
       await flushPromises();
+      expect(
+        wrapper.get('#sky-camera').attributes('wasd-controls'),
+      ).toBeDefined();
+      await wrapper.get('button').trigger('focusin');
+      expect(
+        wrapper.get('#sky-camera').attributes('wasd-controls'),
+      ).toBeUndefined();
+      wrapper.get('#sky-camera').element.setAttribute('position', '1 2 3');
       await wrapper.get('button').trigger('click');
       await flushPromises();
+      expect(
+        wrapper.get('#sky-camera').attributes('wasd-controls'),
+      ).toBeUndefined();
+      const trackedLogo = wrapper.get('#sky-logo-placement > a-entity');
+      expect(trackedLogo.attributes('animation')).toBeUndefined();
+      expect(trackedLogo.attributes('position')).toBe('0 0 0');
       if (overlay) {
         expect(wrapper.get('.session-controls').text()).toContain(
           'Move your device gently',
@@ -131,10 +181,16 @@ describe('sky window preview', () => {
         await flushPromises();
       }
       expect(wrapper.get('button').text()).toBe('Enter the sky');
+      expect(
+        wrapper.get('#sky-camera').attributes('wasd-controls'),
+      ).toBeDefined();
+      expect(
+        wrapper.get('#sky-logo-placement > a-entity').attributes('animation'),
+      ).toContain('loop: true');
       wrapper.unmount();
     },
   );
-  it('renders an opaque environment, identity camera, stable logo and fallback link', async () => {
+  it('renders an opaque environment, identity camera, floating preview logo and fallback link', async () => {
     support(false);
     const wrapper = mount(SkyWindow, {
       global: { plugins: [createAppI18n()] },
@@ -151,8 +207,16 @@ describe('sky window preview', () => {
     expect(wrapper.findAll('a-scene')).toHaveLength(1);
     expect(wrapper.findAll('.logo-cube')).toHaveLength(27);
     expect(wrapper.get('#sky-camera').attributes('position')).toBe('0 0 0');
+    expect(wrapper.get('#sky-camera').attributes('look-controls')).toContain(
+      'magicWindowTrackingEnabled: true',
+    );
     expect(wrapper.find('[wasd-controls]').exists()).toBe(false);
-    expect(wrapper.find('[animation]').exists()).toBe(false);
+    expect(
+      wrapper.get('#sky-logo-placement').attributes('animation'),
+    ).toBeUndefined();
+    expect(
+      wrapper.get('#sky-logo-placement > a-entity').attributes('animation'),
+    ).toContain('from: 0 -0.02 0; to: 0 0.02 0');
     expect(wrapper.get('a-scene').attributes('webxr')).toContain(
       'referenceSpaceType: local',
     );

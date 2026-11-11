@@ -10,6 +10,7 @@
     "explore": "Explore the original sky",
     "exit": "Exit sky",
     "language": "Language",
+    "navigation": "WASD or arrow keys to move. Drag to look around.",
     "english": "English",
     "spanish": "Español"
   },

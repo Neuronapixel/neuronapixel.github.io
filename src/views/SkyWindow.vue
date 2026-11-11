@@ -4,6 +4,8 @@
       id="sky-controls"
       class="sky-controls"
       :aria-label="t('ar.controls')"
+      @focusin="controlsFocused = true"
+      @focusout="controlsFocused = false"
     >
       <template v-if="!active">
         <div class="top-bar">
@@ -31,12 +33,13 @@
                 : statusMessage
             }}
           </p>
+          <p v-if="desktop" class="navigation-hint">{{ t('ar.navigation') }}</p>
           <ArQuickLook @support="quickLookSupported = $event" />
           <button
             v-if="status.state !== 'unsupported'"
             :disabled="!canEnter"
             aria-describedby="sky-status"
-            @click="controller?.enter()"
+            @click="enterSky"
           >
             {{ t(status.state === 'error' ? 'ar.retry' : 'ar.enter') }}
           </button>
@@ -63,9 +66,15 @@
     >
       <a-entity
         id="sky-camera"
+        ref="cameraRef"
         camera="fov: 50"
         position="0 0 0"
-        look-controls="pointerLockEnabled: false; magicWindowTrackingEnabled: false"
+        look-controls="pointerLockEnabled: false; magicWindowTrackingEnabled: true"
+        :wasd-controls="
+          desktop && !active && !controlsFocused
+            ? 'fly: true; acceleration: 3'
+            : undefined
+        "
       >
         <a-entity
           v-if="status.state === 'tracking' && !status.overlay"
@@ -96,7 +105,17 @@
       />
       <a-entity light="type: ambient; intensity: 0.35" />
       <a-entity id="sky-logo-placement" ref="logoRef" position="0 0 -1.5">
-        <a-entity rotation="12 -22 0" scale="0.1 0.1 0.1">
+        <a-entity
+          :key="active ? 'tracked' : 'preview'"
+          position="0 0 0"
+          rotation="12 -22 0"
+          scale="0.1 0.1 0.1"
+          :animation="
+            active
+              ? undefined
+              : 'property: position; from: 0 -0.02 0; to: 0 0.02 0; dur: 6000; dir: alternate; loop: true; easing: easeInOutSine'
+          "
+        >
           <LogoMark />
         </a-entity>
       </a-entity>
@@ -123,7 +142,14 @@ const { t, locale } = useI18n();
 watch(locale, saveLocale);
 const inspectorAttribute = import.meta.env.DEV ? '' : null;
 const sceneRef = ref<SkyScene | null>(null);
+const cameraRef = ref<SceneEntity | null>(null);
 const logoRef = ref<SceneEntity | null>(null);
+const desktop = ref(false);
+const controlsFocused = ref(false);
+let desktopQuery: MediaQueryList | undefined;
+const updateDesktop = () => {
+  desktop.value = desktopQuery?.matches ?? false;
+};
 const quickLookSupported = ref(false);
 const status = ref<ArStatus>({
   state: 'checking',
@@ -134,11 +160,23 @@ const statusMessage = computed(() => t(`arStatus.${status.value.messageKey}`));
 const active = computed(() =>
   ['starting', 'tracking', 'placed'].includes(status.value.state),
 );
+watch(active, () => {
+  // Switching overlays can remove a focused control without firing focusout.
+  controlsFocused.value = false;
+});
 const canEnter = computed(() =>
   ['ready', 'error'].includes(status.value.state),
 );
 let controller: ReturnType<typeof createRoomArSession> | undefined;
+const enterSky = () => {
+  // Desktop exploration must not offset the tracked camera's reference space.
+  cameraRef.value?.setAttribute('position', '0 0 0');
+  controller?.enter();
+};
 onMounted(() => {
+  desktopQuery = window.matchMedia?.('(hover: hover) and (pointer: fine)');
+  updateDesktop();
+  desktopQuery?.addEventListener('change', updateDesktop);
   if (!sceneRef.value || !logoRef.value) return;
   const xr = (navigator as Navigator & { xr?: ArCapabilities['xr'] }).xr;
   controller = createRoomArSession(
@@ -153,7 +191,10 @@ onMounted(() => {
     },
   );
 });
-onBeforeUnmount(() => controller?.dispose());
+onBeforeUnmount(() => {
+  desktopQuery?.removeEventListener('change', updateDesktop);
+  controller?.dispose();
+});
 </script>
 
 <style scoped>
@@ -240,6 +281,10 @@ h1 {
   max-width: 400px;
   font-size: 15px;
   line-height: 1.55;
+}
+.navigation-hint {
+  font-size: 13px;
+  line-height: 1.5;
 }
 button {
   border: 1px solid #1f2233;
