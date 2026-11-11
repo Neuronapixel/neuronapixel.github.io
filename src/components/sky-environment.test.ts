@@ -2,6 +2,8 @@ import { mount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import SkyWindow from '@/views/SkyWindow.vue';
 import { createAppI18n } from '@/i18n';
+import { createSkyRenderer } from '@/utils/skyRenderer';
+import { getDayNightFrame } from '@/utils/dayNightCycle';
 import { createCloudRenderer } from '@/utils/cloudRenderer';
 import type {
   SceneBehavior,
@@ -10,6 +12,7 @@ import type {
   ViewerPose,
 } from '@/utils/skyScene';
 
+vi.mock('@/utils/skyRenderer', () => ({ createSkyRenderer: vi.fn() }));
 vi.mock('@/utils/cloudRenderer', () => ({ createCloudRenderer: vi.fn() }));
 
 describe('tracked sky environment', () => {
@@ -22,6 +25,12 @@ describe('tracked sky environment', () => {
     const requestFrame = vi.spyOn(window, 'requestAnimationFrame');
     const update = vi.fn();
     const dispose = vi.fn();
+    const updateSky = vi.fn();
+    const disposeSky = vi.fn();
+    vi.mocked(createSkyRenderer).mockReturnValue({
+      update: updateSky,
+      dispose: disposeSky,
+    });
     vi.mocked(createCloudRenderer).mockReturnValue({ update, dispose });
     const wrapper = mount(SkyWindow, {
       global: { plugins: [createAppI18n()] },
@@ -59,11 +68,12 @@ describe('tracked sky environment', () => {
     expect(sky.object3D.position).toEqual({ x: 12, y: 1.7, z: -4 });
     expect(stars.object3D.position).toEqual(sky.object3D.position);
     expect(sky.getAttribute('rotation')).toBeNull();
-    expect(sky.getAttribute('color')).toBe('#090f23');
-    expect(sky.getAttribute('material')).toContain(
-      'transparent: false; opacity: 1',
+    expect(updateSky).toHaveBeenLastCalledWith(getDayNightFrame(110_000, 128));
+    expect(update).toHaveBeenLastCalledWith(
+      position,
+      110_000,
+      getDayNightFrame(110_000, 0).cloudColor,
     );
-    expect(update).toHaveBeenLastCalledWith(position, 110_000, '#323e5b');
     expect(wrapper.find('#sky-logo-placement').attributes('position')).toBe(
       '0 0 -1.5',
     );
@@ -75,11 +85,16 @@ describe('tracked sky environment', () => {
     });
     clock.mockReturnValue(112_000);
     behaviors.forEach((behavior) => behavior.tick());
-    expect(update).toHaveBeenLastCalledWith(position, 112_000, '#323e5b');
+    expect(update).toHaveBeenLastCalledWith(
+      position,
+      112_000,
+      getDayNightFrame(110_000, 0).cloudColor,
+    );
     expect(scene.addBehavior).toHaveBeenCalledTimes(2);
     expect(wrapper.findAll('[hide-on-enter-ar]')).toHaveLength(0);
     wrapper.unmount();
     expect(dispose).toHaveBeenCalledOnce();
+    expect(disposeSky).toHaveBeenCalledOnce();
     expect(scene.removeBehavior).toHaveBeenCalledTimes(2);
   });
 });

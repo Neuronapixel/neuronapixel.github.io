@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import XRVersionTwo from './XRVersionTwo.vue';
 import type { SceneBehavior, SkyScene } from '@/utils/skyScene';
+import { getDayNightFrame } from '@/utils/dayNightCycle';
 import { createCloudRenderer } from '@/utils/cloudRenderer';
 
 vi.mock('@/utils/cloudRenderer', () => ({ createCloudRenderer: vi.fn() }));
@@ -68,7 +69,7 @@ describe('XRVersionTwo', () => {
     expect(updateClouds).toHaveBeenLastCalledWith(
       viewer,
       expect.any(Number),
-      '#f5f8ff',
+      getDayNightFrame(100, 0).cloudColor,
     );
     expect(wrapper.findAll('.day-cloud-cube')).toHaveLength(0);
     const secondViewer = { x: -4000, y: 2100, z: -3600 };
@@ -79,7 +80,7 @@ describe('XRVersionTwo', () => {
     expect(updateClouds).toHaveBeenLastCalledWith(
       secondViewer,
       expect.any(Number),
-      '#323e5b',
+      getDayNightFrame(110_000, 0).cloudColor,
     );
     expect(stars.every(({ object3D }) => object3D.visible)).toBe(true);
     wrapper.findAll('.night-star').forEach((star, index) => {

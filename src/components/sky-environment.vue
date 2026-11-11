@@ -27,17 +27,14 @@
       </a-entity>
     </a-entity>
 
-    <a-sky
-      id="day-night-sky"
-      color="#a6d0ed"
-      material="shader: flat; side: back; transparent: false; opacity: 1"
-    />
+    <a-entity id="day-night-sky" />
   </a-entity>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { getDayNightFrame } from '@/utils/dayNightCycle';
+import { createSkyRenderer, type SkyRenderer } from '@/utils/skyRenderer';
 import { createCloudRenderer, type CloudRenderer } from '@/utils/cloudRenderer';
 import {
   readViewerPose,
@@ -49,6 +46,13 @@ const props = defineProps<{ cameraId: string }>();
 const hostRef = ref<SceneEntity | null>(null);
 let scene: SkyScene | null = null;
 let cloudRenderer: CloudRenderer | null = null;
+let skyRenderer: SkyRenderer | null = null;
+let sky: SceneEntity | null = null;
+let starField: SceneEntity | null = null;
+let starNodes: {
+  root: SceneEntity;
+  parts: { el: SceneEntity; glow: boolean }[];
+}[] = [];
 let startedAt: number | null = null;
 let attached = false;
 
@@ -132,44 +136,52 @@ const behavior = {
   tick: () => {
     const now = performance.now();
     startedAt ??= now;
-    const frame = getDayNightFrame(now - startedAt, stars.length);
+    const previewTime = import.meta.env.DEV
+      ? new URLSearchParams(location.search).get('skyPreviewMs')
+      : null;
+    const elapsedMs =
+      previewTime === null ? now - startedAt : Number(previewTime);
+    const frame = getDayNightFrame(elapsedMs, stars.length);
     const camera = scene?.querySelector<SceneEntity>(`#${props.cameraId}`);
     // XR poses use the renderer's reference space, including physical translation.
     const viewer = readViewerPose(scene)?.transform.position ??
       camera?.object3D?.position ?? { x: 0, y: 0, z: 0 };
-    const host = hostRef.value;
-    const sky = host?.querySelector<SceneEntity>('#day-night-sky');
-    const starField = host?.querySelector<SceneEntity>('#night-stars');
-    sky?.setAttribute('color', frame.skyColor);
+    skyRenderer?.update(frame);
     // DOMPointReadOnly coordinates are getters, not enumerable properties.
     const center = { x: viewer.x, y: viewer.y, z: viewer.z };
     if (sky?.object3D) Object.assign(sky.object3D.position, center);
     if (starField?.object3D) Object.assign(starField.object3D.position, center);
-    cloudRenderer?.update(viewer, now - startedAt, frame.cloudColor);
-    host
-      ?.querySelectorAll<SceneEntity>('.night-star')
-      .forEach((star, index) => {
-        const opacity = frame.starOpacities[index] ?? 0;
-        if (star.object3D) star.object3D.visible = opacity > 0.001;
-        star
-          .querySelectorAll<SceneEntity>('.star-core, .star-glow')
-          .forEach((part) => {
-            const value =
-              opacity * (part.classList.contains('star-glow') ? 0.45 : 1);
-            if (part.object3D) part.object3D.visible = value > 0.01;
-            const material = part.components?.material?.material;
-            if (material) {
-              material.opacity = value;
-              material.transparent = value < 1;
-            }
-          });
+    cloudRenderer?.update(viewer, elapsedMs, frame.cloudColor);
+    starNodes.forEach(({ root, parts }, index) => {
+      const opacity = frame.starOpacities[index] ?? 0;
+      if (root.object3D) root.object3D.visible = opacity > 0.0001;
+      parts.forEach(({ el, glow }) => {
+        const value = opacity * (glow ? 0.35 : 1);
+        if (el.object3D) el.object3D.visible = value > 0.0001;
+        const material = el.components?.material?.material;
+        if (material) material.opacity = value;
       });
+    });
   },
 };
 
 const start = () => {
   if (attached || !scene) return;
   attached = true;
+  sky = hostRef.value?.querySelector<SceneEntity>('#day-night-sky') ?? null;
+  starField = hostRef.value?.querySelector<SceneEntity>('#night-stars') ?? null;
+  if (sky) skyRenderer = createSkyRenderer(sky);
+  starNodes = Array.from(
+    hostRef.value?.querySelectorAll<SceneEntity>('.night-star') ?? [],
+  ).map((root) => ({
+    root,
+    parts: Array.from(
+      root.querySelectorAll<SceneEntity>('.star-core, .star-glow'),
+    ).map((el) => ({
+      el,
+      glow: el.classList.contains('star-glow'),
+    })),
+  }));
   const cloudField = hostRef.value?.querySelector<SceneEntity>('#cloud-field');
   if (cloudField) cloudRenderer = createCloudRenderer(cloudField);
   startedAt = performance.now();
@@ -184,6 +196,10 @@ onBeforeUnmount(() => {
   scene?.removeEventListener('loaded', start);
   if (attached) scene?.removeBehavior?.(behavior);
   cloudRenderer?.dispose();
+  skyRenderer?.dispose();
+  starNodes = [];
+  sky = null;
+  starField = null;
   scene = null;
 });
 </script>
