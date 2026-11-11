@@ -13,8 +13,12 @@
             :aria-label="t('ar.language')"
             class="language-select"
           >
-            <option value="en" lang="en">{{ t('ar.english') }}</option>
-            <option value="es" lang="es">{{ t('ar.spanish') }}</option>
+            <option value="en" lang="en" :aria-label="t('ar.english')">
+              EN
+            </option>
+            <option value="es" lang="es" :aria-label="t('ar.spanish')">
+              ES
+            </option>
           </select>
         </div>
         <div class="invitation">
@@ -184,13 +188,19 @@ a-scene {
   justify-content: space-between;
   gap: 16px;
 }
+.back-link,
+.language-select,
+.invitation {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(31, 34, 51, 0.14);
+  box-shadow: 0 4px 24px rgba(15, 20, 36, 0.08);
+}
 .language-select {
   color: inherit;
   font: inherit;
   font-size: 14px;
-  background: transparent;
-  border: 1px solid currentColor;
-  border-radius: 20px;
+  min-height: 44px;
+  border-radius: 24px;
   padding: 8px 12px;
 }
 .back-link {
@@ -198,6 +208,8 @@ a-scene {
   text-decoration: none;
   font-size: 15px;
   letter-spacing: 0.06em;
+  padding: 12px 16px;
+  border-radius: 24px;
 }
 .invitation {
   position: absolute;
@@ -205,6 +217,12 @@ a-scene {
   right: 28px;
   bottom: max(40px, env(safe-area-inset-bottom));
   max-width: 480px;
+  max-height: calc(100% - 144px);
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 20px 24px;
+  border-radius: 24px;
+  pointer-events: auto;
 }
 .eyebrow {
   text-transform: uppercase;
@@ -260,6 +278,7 @@ select:focus-visible {
 @media (max-width: 480px) {
   .invitation {
     bottom: max(24px, env(safe-area-inset-bottom));
+    padding: 16px 20px;
   }
   .explore-link {
     display: block;

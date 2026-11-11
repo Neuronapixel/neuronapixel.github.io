@@ -20,7 +20,7 @@ describe('Apple AR Quick Look', () => {
       '/models/neuronapixel-logo.usdz#allowsContentScaling=0',
     );
     expect(link.attributes('download')).toBeUndefined();
-    expect(link.attributes('aria-label')).toBe('Put it on your desk');
+    expect(link.attributes('aria-label')).toBe('Check out');
     expect(link.element.children).toHaveLength(1);
     expect(link.element.firstElementChild?.tagName).toBe('IMG');
     expect(wrapper.get('img').attributes('src')).toBe(
@@ -47,9 +47,7 @@ describe('Apple AR Quick Look', () => {
       expect(wrapper.get('a').attributes('href')).toBe(
         '/models/neuronapixel-logo.usdz',
       );
-      expect(wrapper.get('a').attributes('aria-label')).toBe(
-        'Put it on your desk',
-      );
+      expect(wrapper.get('a').attributes('aria-label')).toBe('Check out');
       expect(wrapper.text()).toContain('Safari on iPhone or iPad');
       expect(wrapper.emitted('support')).toEqual([[false]]);
       wrapper.unmount();

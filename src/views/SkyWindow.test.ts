@@ -23,19 +23,29 @@ describe('sky window preview', () => {
     });
     await flushPromises();
     expect(wrapper.get('.eyebrow').text()).toBe('Small spaces');
-    expect(wrapper.get('h1').text()).toBe('Look to the sky');
+    expect(wrapper.get('h1').text()).toBe('Check in');
+    expect(wrapper.findAll('option').map((option) => option.text())).toEqual([
+      'EN',
+      'ES',
+    ]);
+    expect(wrapper.get('option[value="en"]').attributes('aria-label')).toBe(
+      'English',
+    );
+    expect(wrapper.get('option[value="es"]').attributes('aria-label')).toBe(
+      'Español',
+    );
     expect(wrapper.get('.quick-look-link').attributes('aria-label')).toBe(
-      'Put it on your desk',
+      'Check out',
     );
     await wrapper.get('select').setValue('es');
     expect(wrapper.get('main').attributes('lang')).toBe('es');
-    expect(wrapper.get('h1').text()).toBe('Mira al cielo');
+    expect(wrapper.get('h1').text()).toBe('Entra');
     expect(wrapper.get('.eyebrow').text()).toBe('Pequeños espacios');
     expect(wrapper.get('#sky-status').text()).toContain(
       'El seguimiento de movimiento',
     );
     expect(wrapper.get('.quick-look-link').attributes('data-label')).toBe(
-      'Ponlo en tu escritorio',
+      'Llévalo contigo',
     );
     expect(wrapper.get('#quick-look-description').text()).toContain(
       'Abre esta página en Safari',
@@ -43,7 +53,7 @@ describe('sky window preview', () => {
     expect(wrapper.get('select').attributes('aria-label')).toBe('Idioma');
     expect(localStorage.getItem('neuronapixel.locale')).toBe('es');
     await wrapper.get('select').setValue('en');
-    expect(wrapper.get('h1').text()).toBe('Look to the sky');
+    expect(wrapper.get('h1').text()).toBe('Check in');
     expect(wrapper.get('#sky-status').text()).toContain(
       'Movement tracking is unavailable',
     );
@@ -162,7 +172,7 @@ describe('sky window preview', () => {
     await flushPromises();
     expect(wrapper.get('.quick-look-link').attributes('rel')).toBe('ar');
     expect(wrapper.get('.quick-look-link').attributes('aria-label')).toBe(
-      'Put it on your desk',
+      'Check out',
     );
     expect(wrapper.get('#sky-status').text()).toContain(
       'Bring a little Neuronapixel',

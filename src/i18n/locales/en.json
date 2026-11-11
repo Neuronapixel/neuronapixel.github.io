@@ -3,7 +3,7 @@
     "controls": "Sky controls",
     "brand": "Neuronapixel ↗",
     "eyebrow": "Small spaces",
-    "title": "Look to the sky",
+    "title": "Check in",
     "invitation": "Bring a little Neuronapixel into your world.",
     "retry": "Try again",
     "enter": "Enter the sky",
@@ -14,7 +14,7 @@
     "spanish": "Español"
   },
   "quickLook": {
-    "action": "Put it on your desk",
+    "action": "Check out",
     "supportedDescription": "Place the logo in your room, then walk around it.",
     "unsupportedDescription": "Open in Safari on iPhone or iPad to view the logo in your space."
   },

@@ -3,7 +3,7 @@
     "controls": "Controles del cielo",
     "brand": "Neuronapixel ↗",
     "eyebrow": "Pequeños espacios",
-    "title": "Mira al cielo",
+    "title": "Entra",
     "invitation": "Trae un poco de Neuronapixel a tu mundo.",
     "retry": "Intentar de nuevo",
     "enter": "Entrar al cielo",
@@ -14,7 +14,7 @@
     "spanish": "Español"
   },
   "quickLook": {
-    "action": "Ponlo en tu escritorio",
+    "action": "Llévalo contigo",
     "supportedDescription": "Coloca el logo en tu habitación y camina a su alrededor.",
     "unsupportedDescription": "Abre esta página en Safari en tu iPhone o iPad para ver el logo en tu espacio."
   },
