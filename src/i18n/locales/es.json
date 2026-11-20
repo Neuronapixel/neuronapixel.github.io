@@ -1,13 +1,13 @@
 {
   "ar": {
     "controls": "Controles del cielo",
-    "brand": "Neuronapixel ↗",
+    "brand": "Neuronapixel",
     "eyebrow": "Pequeños espacios",
-    "title": "Entra",
+    "title": "dentro",
     "invitation": "Trae un poco de Neuronapixel a tu mundo.",
     "retry": "Intentar de nuevo",
     "enter": "Entrar al cielo",
-    "explore": "Explora el cielo original",
+    "explore": "solo horizontes",
     "exit": "Salir del cielo",
     "language": "Idioma",
     "navigation": "Usa WASD o las flechas para moverte. Arrastra para mirar alrededor.",
@@ -15,15 +15,15 @@
     "spanish": "Español"
   },
   "quickLook": {
-    "action": "Llévalo contigo",
+    "action": "fuera",
     "supportedDescription": "Coloca el logo en tu habitación y camina a su alrededor.",
     "unsupportedDescription": "Abre esta página en Safari en tu iPhone o iPad para ver el logo en tu espacio."
   },
   "arStatus": {
     "checking": "Comprobando el seguimiento de movimiento…",
-    "unsupported": "El seguimiento de movimiento no está disponible en este navegador. Aún puedes explorar el cielo.",
-    "insecure": "El seguimiento de movimiento no está disponible en este navegador. Aún puedes explorar el cielo. Abre esta página mediante HTTPS para activar el seguimiento.",
-    "checkFailed": "El seguimiento de movimiento no está disponible en este navegador. Aún puedes explorar el cielo. No se pudo comprobar la disponibilidad del seguimiento.",
+    "unsupported": "El seguimiento de movimiento no está disponible en este navegador.",
+    "insecure": "El seguimiento de movimiento no está disponible en este navegador. Abre esta página mediante HTTPS para activar el seguimiento.",
+    "checkFailed": "El seguimiento de movimiento no está disponible en este navegador. No se pudo comprobar la disponibilidad del seguimiento.",
     "reset": "El origen del seguimiento cambió. Vuelve a entrar al cielo para colocar el logo.",
     "ready": "Mueve tu dispositivo para explorar un cielo oculto.",
     "exitFailed": "Usa el control de salida de XR de tu navegador para volver a la vista previa.",

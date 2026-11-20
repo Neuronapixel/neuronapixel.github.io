@@ -1,3 +1,4 @@
+import arrowUpRight from '@/assets/arrow-up-right.svg';
 import { createAppI18n } from '@/i18n';
 import { flushPromises, mount } from '@vue/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -20,12 +21,13 @@ describe('Apple AR Quick Look', () => {
       '/models/neuronapixel-logo.usdz#allowsContentScaling=0',
     );
     expect(link.attributes('download')).toBeUndefined();
-    expect(link.attributes('aria-label')).toBe('Check out');
+    expect(link.attributes('aria-label')).toBe('outside');
     expect(link.element.children).toHaveLength(1);
     expect(link.element.firstElementChild?.tagName).toBe('IMG');
-    expect(wrapper.get('img').attributes('src')).toBe(
-      '/models/neuronapixel-logo.png',
-    );
+    expect(wrapper.get('img').attributes()).toMatchObject({
+      src: arrowUpRight,
+      alt: '',
+    });
     expect(wrapper.emitted('support')).toEqual([[true]]);
     wrapper.unmount();
   });
@@ -47,7 +49,7 @@ describe('Apple AR Quick Look', () => {
       expect(wrapper.get('a').attributes('href')).toBe(
         '/models/neuronapixel-logo.usdz',
       );
-      expect(wrapper.get('a').attributes('aria-label')).toBe('Check out');
+      expect(wrapper.get('a').attributes('aria-label')).toBe('outside');
       expect(wrapper.text()).toContain('Safari on iPhone or iPad');
       expect(wrapper.emitted('support')).toEqual([[false]]);
       wrapper.unmount();

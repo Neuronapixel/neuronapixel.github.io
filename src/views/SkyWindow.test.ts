@@ -57,7 +57,8 @@ describe('sky window preview', () => {
     });
     await flushPromises();
     expect(wrapper.get('.eyebrow').text()).toBe('Small spaces');
-    expect(wrapper.get('h1').text()).toBe('Check in');
+    expect(wrapper.get('h1').text()).toBe('inside');
+    expect(wrapper.get('.explore-link').text()).toBe('only skylines');
     expect(wrapper.findAll('option').map((option) => option.text())).toEqual([
       'EN',
       'ES',
@@ -69,17 +70,18 @@ describe('sky window preview', () => {
       'Español',
     );
     expect(wrapper.get('.quick-look-link').attributes('aria-label')).toBe(
-      'Check out',
+      'outside',
     );
     await wrapper.get('select').setValue('es');
     expect(wrapper.get('main').attributes('lang')).toBe('es');
-    expect(wrapper.get('h1').text()).toBe('Entra');
+    expect(wrapper.get('h1').text()).toBe('dentro');
     expect(wrapper.get('.eyebrow').text()).toBe('Pequeños espacios');
-    expect(wrapper.get('#sky-status').text()).toContain(
-      'El seguimiento de movimiento',
+    expect(wrapper.get('.explore-link').text()).toBe('solo horizontes');
+    expect(wrapper.get('#sky-status').text()).toBe(
+      'El seguimiento de movimiento no está disponible en este navegador.',
     );
     expect(wrapper.get('.quick-look-link').attributes('data-label')).toBe(
-      'Llévalo contigo',
+      'fuera',
     );
     expect(wrapper.get('#quick-look-description').text()).toContain(
       'Abre esta página en Safari',
@@ -87,9 +89,9 @@ describe('sky window preview', () => {
     expect(wrapper.get('select').attributes('aria-label')).toBe('Idioma');
     expect(localStorage.getItem('neuronapixel.locale')).toBe('es');
     await wrapper.get('select').setValue('en');
-    expect(wrapper.get('h1').text()).toBe('Check in');
-    expect(wrapper.get('#sky-status').text()).toContain(
-      'Movement tracking is unavailable',
+    expect(wrapper.get('h1').text()).toBe('inside');
+    expect(wrapper.get('#sky-status').text()).toBe(
+      'Movement tracking is unavailable in this browser.',
     );
     wrapper.unmount();
   });
@@ -204,6 +206,14 @@ describe('sky window preview', () => {
       'neuronapixel-logo.usdz',
     );
     expect(wrapper.get('.explore-link').attributes('href')).toBe('#/');
+    expect(wrapper.get('.back-link').attributes('href')).toBe('#/');
+    expect(wrapper.get('.back-link img').attributes()).toMatchObject({
+      src: '/favicon.ico',
+      alt: 'Neuronapixel',
+    });
+    expect(wrapper.get('.back-link img + [aria-hidden="true"]').text()).toBe(
+      '↗',
+    );
     expect(wrapper.findAll('a-scene')).toHaveLength(1);
     expect(wrapper.findAll('.logo-cube')).toHaveLength(27);
     expect(wrapper.get('#sky-camera').attributes('position')).toBe('0 0 0');
@@ -236,7 +246,7 @@ describe('sky window preview', () => {
     await flushPromises();
     expect(wrapper.get('.quick-look-link').attributes('rel')).toBe('ar');
     expect(wrapper.get('.quick-look-link').attributes('aria-label')).toBe(
-      'Check out',
+      'outside',
     );
     expect(wrapper.get('#sky-status').text()).toContain(
       'Bring a little Neuronapixel',

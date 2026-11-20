@@ -9,7 +9,15 @@
     >
       <template v-if="!active">
         <div class="top-bar">
-          <a class="back-link" href="#/">{{ t('ar.brand') }}</a>
+          <a class="back-link" href="#/">
+            <img
+              src="/favicon.ico"
+              :alt="t('ar.brand')"
+              width="32"
+              height="32"
+            />
+            <span aria-hidden="true">↗</span>
+          </a>
           <select
             v-model="locale"
             :aria-label="t('ar.language')"
@@ -24,16 +32,24 @@
           </select>
         </div>
         <div class="invitation">
-          <p class="eyebrow">{{ t('ar.eyebrow') }}</p>
-          <h1>{{ t('ar.title') }}</h1>
-          <p id="sky-status" role="status" aria-live="polite">
-            {{
-              quickLookSupported && status.state === 'unsupported'
-                ? t('ar.invitation')
-                : statusMessage
-            }}
+          <p class="eyebrow">
+            <span class="text-highlight">{{ t('ar.eyebrow') }}</span>
           </p>
-          <p v-if="desktop" class="navigation-hint">{{ t('ar.navigation') }}</p>
+          <h1>
+            <span class="text-highlight">{{ t('ar.title') }}</span>
+          </h1>
+          <p id="sky-status" role="status" aria-live="polite">
+            <span class="text-highlight">
+              {{
+                quickLookSupported && status.state === 'unsupported'
+                  ? t('ar.invitation')
+                  : statusMessage
+              }}
+            </span>
+          </p>
+          <p v-if="desktop" class="navigation-hint">
+            <span class="text-highlight">{{ t('ar.navigation') }}</span>
+          </p>
           <ArQuickLook @support="quickLookSupported = $event" />
           <button
             v-if="status.state !== 'unsupported'"
@@ -47,8 +63,9 @@
             v-if="status.state === 'unsupported'"
             class="explore-link"
             href="#/"
-            >{{ t('ar.explore') }}</a
           >
+            <span class="text-highlight">{{ t('ar.explore') }}</span>
+          </a>
         </div>
       </template>
       <div v-else-if="status.overlay" class="session-controls">
@@ -230,27 +247,33 @@ a-scene {
   gap: 16px;
 }
 .back-link,
-.language-select,
-.invitation {
+.language-select {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(31, 34, 51, 0.14);
   box-shadow: 0 4px 24px rgba(15, 20, 36, 0.08);
 }
 .language-select {
+  appearance: none;
   color: inherit;
   font: inherit;
   font-size: 14px;
   min-height: 44px;
-  border-radius: 24px;
-  padding: 8px 12px;
+  min-width: 64px;
+  border-radius: 0;
+  padding: 8px 28px 8px 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='m2.5 4.5 3.5 3.5 3.5-3.5' stroke='%231f2233' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-position: right 8px center;
+  background-repeat: no-repeat;
 }
 .back-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 10px 0 8px;
   color: inherit;
   text-decoration: none;
-  font-size: 15px;
-  letter-spacing: 0.06em;
-  padding: 12px 16px;
-  border-radius: 24px;
 }
 .invitation {
   position: absolute;
@@ -262,8 +285,14 @@ a-scene {
   box-sizing: border-box;
   overflow-y: auto;
   padding: 20px 24px;
-  border-radius: 24px;
   pointer-events: auto;
+}
+.text-highlight {
+  background: #000;
+  color: #fff;
+  padding-inline: 0.2em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 .eyebrow {
   text-transform: uppercase;
@@ -299,15 +328,20 @@ button:disabled {
   opacity: 0.5;
   cursor: default;
 }
+.invitation button {
+  border-color: #000;
+  background: #000;
+}
 button:focus-visible,
 a:focus-visible,
 select:focus-visible {
-  outline: 3px solid #ff2f2f;
-  outline-offset: 5px;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #000;
 }
 .explore-link {
   display: inline-block;
-  color: inherit;
+  color: #fff;
   margin: 16px 18px;
   font-size: 14px;
 }
@@ -327,6 +361,7 @@ select:focus-visible {
   }
   .explore-link {
     display: block;
+    width: fit-content;
     margin-left: 0;
   }
 }

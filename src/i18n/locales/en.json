@@ -1,13 +1,13 @@
 {
   "ar": {
     "controls": "Sky controls",
-    "brand": "Neuronapixel ↗",
+    "brand": "Neuronapixel",
     "eyebrow": "Small spaces",
-    "title": "Check in",
+    "title": "inside",
     "invitation": "Bring a little Neuronapixel into your world.",
     "retry": "Try again",
     "enter": "Enter the sky",
-    "explore": "Explore the original sky",
+    "explore": "only skylines",
     "exit": "Exit sky",
     "language": "Language",
     "navigation": "WASD or arrow keys to move. Drag to look around.",
@@ -15,15 +15,15 @@
     "spanish": "Español"
   },
   "quickLook": {
-    "action": "Check out",
+    "action": "outside",
     "supportedDescription": "Place the logo in your room, then walk around it.",
     "unsupportedDescription": "Open in Safari on iPhone or iPad to view the logo in your space."
   },
   "arStatus": {
     "checking": "Checking movement tracking…",
-    "unsupported": "Movement tracking is unavailable in this browser. You can still explore the sky.",
-    "insecure": "Movement tracking is unavailable in this browser. You can still explore the sky. Open this page over HTTPS to enable tracking.",
-    "checkFailed": "Movement tracking is unavailable in this browser. You can still explore the sky. The tracking availability check failed.",
+    "unsupported": "Movement tracking is unavailable in this browser.",
+    "insecure": "Movement tracking is unavailable in this browser. Open this page over HTTPS to enable tracking.",
+    "checkFailed": "Movement tracking is unavailable in this browser. The tracking availability check failed.",
     "reset": "Tracking origin changed. Enter the sky again to place the logo.",
     "ready": "Move your device to explore a hidden sky.",
     "exitFailed": "Use your browser’s XR exit control to return to the preview.",

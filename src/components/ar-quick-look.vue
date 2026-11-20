@@ -10,14 +10,16 @@
       :data-label="label"
       aria-describedby="quick-look-description"
     >
-      <img src="/models/neuronapixel-logo.png" alt="" width="40" height="40" />
+      <img src="@/assets/arrow-up-right.svg" alt="" width="18" height="18" />
     </a>
     <p id="quick-look-description">
-      {{
-        supported
-          ? t('quickLook.supportedDescription')
-          : t('quickLook.unsupportedDescription')
-      }}
+      <span>
+        {{
+          supported
+            ? t('quickLook.supportedDescription')
+            : t('quickLook.unsupportedDescription')
+        }}
+      </span>
     </p>
   </div>
 </template>
@@ -56,9 +58,8 @@ onMounted(() => {
   gap: 10px;
   min-height: 48px;
   box-sizing: border-box;
-  padding: 4px 20px 4px 8px;
-  border-radius: 28px;
-  background: #1f2233;
+  padding: 4px 20px 4px 14px;
+  background: #000;
   color: white;
   text-decoration: none;
   font-size: 15px;
@@ -67,16 +68,21 @@ onMounted(() => {
   content: attr(data-label);
 }
 .quick-look-link:focus-visible {
-  outline: 3px solid #ff2f2f;
-  outline-offset: 5px;
-}
-img {
-  object-fit: contain;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #000;
 }
 p {
   max-width: 360px;
   font-size: 13px;
   line-height: 1.5;
   margin: 10px 0 0;
+}
+p span {
+  background: #000;
+  color: #fff;
+  padding-inline: 0.2em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 </style>

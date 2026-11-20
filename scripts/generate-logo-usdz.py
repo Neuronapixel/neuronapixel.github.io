@@ -6,6 +6,7 @@ Requires usdzip and usdchecker (included in current macOS).
 """
 from pathlib import Path
 import argparse
+import math
 import re
 import subprocess
 import tempfile
@@ -59,7 +60,7 @@ header = '''#usda 1.0
     endTimeCode = 360
     timeCodesPerSecond = 30
     framesPerSecond = 30
-    documentation = "Neuronapixel: 27 red and white cubes, 15 cm wide, with a 12-second rotation. Generated from logo-mark.vue."
+    documentation = "Neuronapixel: 27 red and white cubes, 15 cm wide, with a 12-second floating loop. Generated from logo-mark.vue."
 )
 
 def Xform "Neuronapixel" (
@@ -80,18 +81,21 @@ materials = ''.join(material(name.title(), tuple(bytes.fromhex(colors[name])),
                              0.05 if name == 'primary' else 0,
                              0 if name == 'primary' else 0.4)
                     for name in ('primary', 'secondary'))
-rotor = '''    }
+# Match the web preview's easeInOutSine: six seconds up, six seconds down.
+# The root's 0.5 scale turns 4 cm of local travel into 2 cm in the real world.
+# Starting at the lower endpoint keeps the base at or above the placement surface.
+float_samples = ''.join(
+    f'            {frame}: (0, {0.02 * (1 - math.cos(math.tau * frame / 360)):.8f}, 0),\n'
+    for frame in range(361)
+)
+logo_transform = '''    }
     def Xform "Logo"
     {
+        double3 xformOp:translate = (0, 0, 0)
+        double3 xformOp:translate.timeSamples = {
+''' + float_samples + '''        }
         float xformOp:rotateY = -22
-        float xformOp:rotateY.timeSamples = {
-            0: -22,
-            90: 68,
-            180: 158,
-            270: 248,
-            360: 338,
-        }
-        uniform token[] xformOpOrder = ["xformOp:rotateY"]
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateY"]
 '''
 meshes = []
 for position, color in cubes:
@@ -117,7 +121,7 @@ for position, color in cubes:
 ''')
 source.parent.mkdir(parents=True, exist_ok=True)
 package.parent.mkdir(parents=True, exist_ok=True)
-source.write_text(header + materials + rotor + ''.join(meshes) + '    }\n}\n')
+source.write_text(header + materials + logo_transform + ''.join(meshes) + '    }\n}\n')
 with tempfile.TemporaryDirectory(prefix='neuronapixel-usdz-') as temporary:
     staged_package = Path(temporary) / package.name
     subprocess.run(['usdzip', '--arkitAsset', str(source), str(staged_package)], check=True)

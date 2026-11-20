@@ -23,7 +23,9 @@ describe('AR localization', () => {
     expect(readSavedLocale()).toBe('en');
     saveLocale('es');
     expect(readSavedLocale()).toBe('es');
-    expect(createAppI18n(readSavedLocale()).global.t('ar.title')).toBe('Entra');
+    expect(createAppI18n(readSavedLocale()).global.t('ar.title')).toBe(
+      es.ar.title,
+    );
     saveLocale('fr');
     expect(readSavedLocale()).toBe('en');
   });
@@ -37,7 +39,7 @@ describe('AR localization', () => {
     expect(readSavedLocale()).toBe('en');
     expect(() => saveLocale('es')).not.toThrow();
     expect(createAppI18n('es').global.t('quickLook.action')).toBe(
-      'Llévalo contigo',
+      es.quickLook.action,
     );
   });
 });
