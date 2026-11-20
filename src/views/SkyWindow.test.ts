@@ -58,7 +58,6 @@ describe('sky window preview', () => {
     await flushPromises();
     expect(wrapper.get('.eyebrow').text()).toBe('Small spaces');
     expect(wrapper.get('h1').text()).toBe('inside');
-    expect(wrapper.get('.explore-link').text()).toBe('only skylines');
     expect(wrapper.findAll('option').map((option) => option.text())).toEqual([
       'EN',
       'ES',
@@ -76,7 +75,6 @@ describe('sky window preview', () => {
     expect(wrapper.get('main').attributes('lang')).toBe('es');
     expect(wrapper.get('h1').text()).toBe('dentro');
     expect(wrapper.get('.eyebrow').text()).toBe('Pequeños espacios');
-    expect(wrapper.get('.explore-link').text()).toBe('solo horizontes');
     expect(wrapper.get('#sky-status').text()).toBe(
       'El seguimiento de movimiento no está disponible en este navegador.',
     );
@@ -192,7 +190,7 @@ describe('sky window preview', () => {
       wrapper.unmount();
     },
   );
-  it('renders an opaque environment, identity camera, floating preview logo and fallback link', async () => {
+  it('renders the floating preview with a single return link in the invitation', async () => {
     support(false);
     const wrapper = mount(SkyWindow, {
       global: { plugins: [createAppI18n()] },
@@ -205,15 +203,14 @@ describe('sky window preview', () => {
     expect(wrapper.get('.quick-look-link').attributes('download')).toBe(
       'neuronapixel-logo.usdz',
     );
-    expect(wrapper.get('.explore-link').attributes('href')).toBe('#/');
-    expect(wrapper.get('.back-link').attributes('href')).toBe('#/');
-    expect(wrapper.get('.back-link img').attributes()).toMatchObject({
+    const backLink = wrapper.get('.invitation > .back-link');
+    expect(wrapper.findAll('a[href="#/"]')).toHaveLength(1);
+    expect(backLink.attributes('href')).toBe('#/');
+    expect(backLink.get('img').attributes()).toMatchObject({
       src: '/favicon.ico',
       alt: 'Neuronapixel',
     });
-    expect(wrapper.get('.back-link img + [aria-hidden="true"]').text()).toBe(
-      '↗',
-    );
+    expect(backLink.get('img + [aria-hidden="true"]').text()).toBe('↗');
     expect(wrapper.findAll('a-scene')).toHaveLength(1);
     expect(wrapper.findAll('.logo-cube')).toHaveLength(27);
     expect(wrapper.get('#sky-camera').attributes('position')).toBe('0 0 0');
@@ -252,7 +249,9 @@ describe('sky window preview', () => {
       'Bring a little Neuronapixel',
     );
     expect(wrapper.find('button').exists()).toBe(false);
-    expect(wrapper.get('.explore-link').attributes('href')).toBe('#/');
+    expect(wrapper.get('.invitation > .back-link').attributes('href')).toBe(
+      '#/',
+    );
     wrapper.unmount();
   });
   it('enables explicit entry only after scene readiness and exposes retry after denial', async () => {

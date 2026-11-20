@@ -9,15 +9,6 @@
     >
       <template v-if="!active">
         <div class="top-bar">
-          <a class="back-link" href="#/">
-            <img
-              src="/favicon.ico"
-              :alt="t('ar.brand')"
-              width="32"
-              height="32"
-            />
-            <span aria-hidden="true">↗</span>
-          </a>
           <select
             v-model="locale"
             :aria-label="t('ar.language')"
@@ -59,12 +50,14 @@
           >
             {{ t(status.state === 'error' ? 'ar.retry' : 'ar.enter') }}
           </button>
-          <a
-            v-if="status.state === 'unsupported'"
-            class="explore-link"
-            href="#/"
-          >
-            <span class="text-highlight">{{ t('ar.explore') }}</span>
+          <a class="back-link" href="#/">
+            <img
+              src="/favicon.ico"
+              :alt="t('ar.brand')"
+              width="32"
+              height="32"
+            />
+            <span aria-hidden="true">↗</span>
           </a>
         </div>
       </template>
@@ -243,16 +236,13 @@ a-scene {
 .top-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: flex-end;
+  min-height: 48px;
 }
-.back-link,
 .language-select {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(31, 34, 51, 0.14);
   box-shadow: 0 4px 24px rgba(15, 20, 36, 0.08);
-}
-.language-select {
   appearance: none;
   color: inherit;
   font: inherit;
@@ -270,9 +260,12 @@ a-scene {
   align-items: center;
   gap: 8px;
   box-sizing: border-box;
+  width: fit-content;
   height: 48px;
+  margin: 16px 18px;
   padding: 0 10px 0 8px;
-  color: inherit;
+  background: #000;
+  color: #fff;
   text-decoration: none;
 }
 .invitation {
@@ -339,12 +332,6 @@ select:focus-visible {
   outline-offset: 2px;
   box-shadow: 0 0 0 5px #000;
 }
-.explore-link {
-  display: inline-block;
-  color: #fff;
-  margin: 16px 18px;
-  font-size: 14px;
-}
 .session-controls {
   display: flex;
   align-items: center;
@@ -359,9 +346,7 @@ select:focus-visible {
     bottom: max(24px, env(safe-area-inset-bottom));
     padding: 16px 20px;
   }
-  .explore-link {
-    display: block;
-    width: fit-content;
+  .back-link {
     margin-left: 0;
   }
 }
