@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createCloudRenderer } from './cloudRenderer';
+import { getDayNightFrame } from './dayNightCycle';
 import {
   createCloudField,
   getCloudPlacement,
@@ -67,7 +68,11 @@ const createRuntime = () => {
     dispose = vi.fn();
   }
   const mesh = new Mesh();
-  const material = { color: { set: vi.fn() }, dispose: vi.fn() };
+  const material = {
+    color: { setRGB: vi.fn() },
+    emissive: { setRGB: vi.fn() },
+    dispose: vi.fn(),
+  };
   const geometry = {
     setAttribute: vi.fn<(name: string, attribute: Attribute) => void>(),
     dispose: vi.fn(),
@@ -103,10 +108,20 @@ const createRuntime = () => {
   };
   const renderer = createCloudRenderer(host)!;
   const opacity = geometry.setAttribute.mock.calls[0][1];
-  return { direction, mesh, renderer, opacity };
+  return { direction, mesh, renderer, opacity, material };
 };
 
 describe('cloud renderer depth ordering', () => {
+  it('tints reflected and emitted cloud light together through dusk and night', () => {
+    const { renderer, material } = createRuntime();
+    for (const time of [0, 75_000, 120_000, 168_000]) {
+      const color = getDayNightFrame(time, 0).cloudColor;
+      renderer.update({ x: 0, y: 0, z: 0 }, time, color);
+      expect(material.color.setRGB).toHaveBeenLastCalledWith(...color);
+      expect(material.emissive.setRGB).toHaveBeenLastCalledWith(...color);
+    }
+    renderer.dispose();
+  });
   afterEach(() => vi.unstubAllGlobals());
 
   it('composites clouds after the background stars regardless of scene-tree order', () => {
@@ -131,7 +146,7 @@ describe('cloud renderer depth ordering', () => {
       [0, 1, 0],
     ]) {
       direction.set(facing[0], facing[1], facing[2]);
-      renderer.update(viewer, 0, '#f5f8ff');
+      renderer.update(viewer, 0, getDayNightFrame(0, 0).cloudColor);
       expect(mesh.count).toBe(13);
       const matrices = mesh.matrices.slice(0, mesh.count);
       const depths = matrices.map(
@@ -151,9 +166,13 @@ describe('cloud renderer depth ordering', () => {
 
   it('drops hidden instances after moving without retaining stale sorted cubes', () => {
     const { mesh, renderer, opacity } = createRuntime();
-    renderer.update({ x: 0, y: 0, z: 0 }, 0, '#f5f8ff');
+    renderer.update({ x: 0, y: 0, z: 0 }, 0, getDayNightFrame(0, 0).cloudColor);
     expect(mesh.count).toBe(13);
-    renderer.update({ x: 0, y: 0, z: -100 }, 0, '#323e5b');
+    renderer.update(
+      { x: 0, y: 0, z: -100 },
+      0,
+      getDayNightFrame(120_000, 0).cloudColor,
+    );
     expect(mesh.count).toBe(6);
     expect(
       mesh.matrices
