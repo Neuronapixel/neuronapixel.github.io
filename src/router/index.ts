@@ -14,6 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     component: XRVersionTwo,
   },
   {
+    path: '/ar',
+    name: 'SkyWindow',
+    component: () => import('@/views/SkyWindow.vue'),
+  },
+  {
     path: '/classic',
     name: 'Home',
     component: LegacyHome,

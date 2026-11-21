@@ -129,6 +129,25 @@ If both files exist, Vite serves locally over HTTPS on port `5173`.
 
 Example values live in [`.env.example`](./.env.example).
 
+## Analytics
+
+The site loads Google Tag Manager when `VITE_GTM_ID` is set. The existing container controls GA4 page views. The app queues two additional events in `dataLayer`.
+
+| Event | Data layer variable and GA4 parameter | Values |
+| --- | --- | --- |
+| `ui_click` | `action_name` | `enter_ar`, `retry_ar`, `exit_ar`, `open_quick_look`, `download_model`, `return_to_sky` |
+| `visit_device` | `headset_type` | `meta_quest`, `unclassified` |
+
+`ui_click` measures activation of a Sky Window control or link. Quick Look and the model download share a link and emit the action shown to the visitor. `visit_device` fires once at app startup per full page load. Use GA4's **Operating system** and **Device category** dimensions for Android, iOS and iPadOS, and desktop, mobile, and tablet traffic. Headset classification uses the Meta Quest Browser signal and leaves other browsers as `unclassified`. Use the `ui_click` event count for actions and filter to `visit_device` when analyzing the headset breakdown.
+
+### Tag Manager setup
+
+For local preview, set `VITE_GTM_ID` in `.env.local` to the container you want to test, then start the dev server. Use the HTTPS dev setup above for mobile and headset checks.
+
+1. Create Data Layer Variables for `action_name` and `headset_type`. For each event in the table, create a Custom Event trigger with the matching name and a GA4 Event tag with the mapped parameter. Use the existing web stream and its consent settings. Keep the current page-view tag and triggers. [GTM event setup](https://support.google.com/tagmanager/answer/13034206)
+2. In GA4, register `action_name` and `headset_type` as event-scoped custom dimensions. [GA4 custom dimensions](https://support.google.com/analytics/answer/14240153?hl=en)
+3. In GTM Preview and GA4 DebugView, compare initial and hash-route page views against the current container. Verify a single `ui_click` per activation, a single `visit_device` per full load, and no duplicate action counts from existing automatic click or download tags. Check desktop, Android Chrome, iPhone Safari, and Meta Quest over HTTPS. Verify that navigation, AR entry and exit, and Quick Look or download work as before. Then publish the validated GTM workspace. [GTM Preview](https://support.google.com/tagmanager/answer/6107056?hl=en) · [GA4 DebugView](https://support.google.com/analytics/answer/7201382?hl=en)
+
 ## Available Scripts
 
 - `npm run dev`: start the Vite dev server

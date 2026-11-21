@@ -14,8 +14,24 @@ const httpsOptions =
       }
     : undefined;
 
+// Safari needs this media type to launch AR Quick Look. Keep Vite's normal
+// static-file handling (including range requests) for the model itself.
+const configureUsdzMimeType = ({ middlewares }) => {
+  middlewares.use((request, response, next) => {
+    if (/\.usdz(?:\?|$)/i.test(request.url ?? '')) {
+      response.setHeader('Content-Type', 'model/vnd.usdz+zip');
+    }
+    next();
+  });
+};
+
 export default defineConfig({
   plugins: [
+    {
+      name: 'usdz-mime-type',
+      configureServer: configureUsdzMimeType,
+      configurePreviewServer: configureUsdzMimeType,
+    },
     vue({
       template: {
         compilerOptions: {

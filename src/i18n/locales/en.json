@@ -1,0 +1,39 @@
+{
+  "ar": {
+    "controls": "Sky controls",
+    "brand": "Neuronapixel",
+    "eyebrow": "Small spaces",
+    "title": "inside",
+    "invitation": "Bring a little Neuronapixel into your world.",
+    "retry": "Try again",
+    "enter": "Enter the sky",
+    "exit": "Exit sky",
+    "language": "Language",
+    "navigation": "WASD or arrow keys to move. Drag to look around.",
+    "english": "English",
+    "spanish": "Español"
+  },
+  "quickLook": {
+    "action": "outside",
+    "supportedDescription": "Place the logo in your room, then walk around it.",
+    "unsupportedDescription": "Open in Safari on iPhone or iPad to view the logo in your space."
+  },
+  "arStatus": {
+    "checking": "Checking movement tracking…",
+    "unsupported": "Movement tracking is unavailable in this browser.",
+    "insecure": "Movement tracking is unavailable in this browser. Open this page over HTTPS to enable tracking.",
+    "checkFailed": "Movement tracking is unavailable in this browser. The tracking availability check failed.",
+    "reset": "Tracking origin changed. Enter the sky again to place the logo.",
+    "ready": "Move your device to explore a hidden sky.",
+    "exitFailed": "Use your browser’s XR exit control to return to the preview.",
+    "resetting": "Tracking origin changed. Returning to the preview…",
+    "tracking": "Move your device gently to find tracking.",
+    "paused": "Tracking paused. Move your device gently.",
+    "placed": "Walk around the logo. Use the browser’s XR control to exit.",
+    "lookAhead": "Look ahead to place the logo.",
+    "preparing": "Preparing the sky…",
+    "starting": "Opening the sky…",
+    "notStarted": "Movement tracking did not start. Please try again.",
+    "entryFailed": "Could not enter the sky. Allow tracking access and try again."
+  }
+}
