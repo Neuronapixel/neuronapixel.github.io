@@ -9,6 +9,9 @@
       :aria-label="label"
       :data-label="label"
       aria-describedby="quick-look-description"
+      @click="
+        trackSkyWindowClick(supported ? 'open_quick_look' : 'download_model')
+      "
     >
       <img src="@/assets/arrow-up-right.svg" alt="" width="18" height="18" />
     </a>
@@ -27,6 +30,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { trackSkyWindowClick } from '@/utils/analytics';
 
 const { t } = useI18n();
 const emit = defineEmits<{ support: [supported: boolean] }>();

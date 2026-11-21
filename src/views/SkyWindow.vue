@@ -50,7 +50,11 @@
           >
             {{ t(status.state === 'error' ? 'ar.retry' : 'ar.enter') }}
           </button>
-          <a class="back-link" href="#/">
+          <a
+            class="back-link"
+            href="#/"
+            @click="trackSkyWindowClick('return_to_sky')"
+          >
             <img
               src="/favicon.ico"
               :alt="t('ar.brand')"
@@ -63,7 +67,7 @@
       </template>
       <div v-else-if="status.overlay" class="session-controls">
         <p role="status" aria-live="polite">{{ statusMessage }}</p>
-        <button @click="controller?.exit()">{{ t('ar.exit') }}</button>
+        <button @click="exitSky">{{ t('ar.exit') }}</button>
       </div>
     </section>
     <a-scene
@@ -141,6 +145,7 @@ import { saveLocale } from '@/i18n';
 import LogoMark from '@/components/logo-mark.vue';
 import ArQuickLook from '@/components/ar-quick-look.vue';
 import SkyEnvironment from '@/components/sky-environment.vue';
+import { trackSkyWindowClick } from '@/utils/analytics';
 import {
   createRoomArSession,
   type ArCapabilities,
@@ -179,9 +184,14 @@ const canEnter = computed(() =>
 );
 let controller: ReturnType<typeof createRoomArSession> | undefined;
 const enterSky = () => {
+  trackSkyWindowClick(status.value.state === 'error' ? 'retry_ar' : 'enter_ar');
   // Desktop exploration must not offset the tracked camera's reference space.
   cameraRef.value?.setAttribute('position', '0 0 0');
   controller?.enter();
+};
+const exitSky = () => {
+  trackSkyWindowClick('exit_ar');
+  controller?.exit();
 };
 onMounted(() => {
   desktopQuery = window.matchMedia?.('(hover: hover) and (pointer: fine)');

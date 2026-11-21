@@ -1,10 +1,19 @@
 import arrowUpRight from '@/assets/arrow-up-right.svg';
 import { createAppI18n } from '@/i18n';
 import { flushPromises, mount } from '@vue/test-utils';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import ArQuickLook from './ar-quick-look.vue';
 
-afterEach(() => vi.restoreAllMocks());
+beforeEach(() => {
+  vi.stubEnv('VITE_GTM_ID', 'GTM-TEST123');
+  window.dataLayer = [];
+});
+
+afterEach(() => {
+  delete window.dataLayer;
+  vi.unstubAllEnvs();
+  vi.restoreAllMocks();
+});
 
 describe('Apple AR Quick Look', () => {
   it('offers the native viewer using feature detection and the required single image child', async () => {
@@ -29,6 +38,12 @@ describe('Apple AR Quick Look', () => {
       alt: '',
     });
     expect(wrapper.emitted('support')).toEqual([[true]]);
+    wrapper
+      .get('img')
+      .element.dispatchEvent(new Event('click', { bubbles: true }));
+    expect(window.dataLayer).toEqual([
+      { event: 'ui_click', action_name: 'open_quick_look' },
+    ]);
     wrapper.unmount();
   });
 
@@ -52,6 +67,12 @@ describe('Apple AR Quick Look', () => {
       expect(wrapper.get('a').attributes('aria-label')).toBe('outside');
       expect(wrapper.text()).toContain('Safari on iPhone or iPad');
       expect(wrapper.emitted('support')).toEqual([[false]]);
+      wrapper
+        .get('img')
+        .element.dispatchEvent(new Event('click', { bubbles: true }));
+      expect(window.dataLayer).toEqual([
+        { event: 'ui_click', action_name: 'download_model' },
+      ]);
       wrapper.unmount();
     },
   );

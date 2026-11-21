@@ -1,6 +1,6 @@
 import { createAppI18n } from '@/i18n';
 import { flushPromises, mount } from '@vue/test-utils';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import SkyWindow from './SkyWindow.vue';
 import type { SkyScene } from '@/utils/skyScene';
 
@@ -15,8 +15,14 @@ const desktopInput = () => {
   vi.stubGlobal('matchMedia', () => query);
   return query;
 };
+beforeEach(() => {
+  vi.stubEnv('VITE_GTM_ID', 'GTM-TEST123');
+  window.dataLayer = [];
+});
 afterEach(() => {
+  delete window.dataLayer;
   localStorage.clear();
+  vi.unstubAllEnvs();
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
@@ -124,6 +130,10 @@ describe('sky window preview', () => {
     expect(wrapper.get('a-text').attributes('value')).toContain(
       'Move your device gently',
     );
+    expect(window.dataLayer).toEqual([
+      { event: 'ui_click', action_name: 'enter_ar' },
+      { event: 'ui_click', action_name: 'retry_ar' },
+    ]);
     wrapper.unmount();
   });
   it.each([true, false])(
@@ -172,6 +182,10 @@ describe('sky window preview', () => {
         );
         await wrapper.get('.session-controls button').trigger('click');
         expect(session.end).toHaveBeenCalledOnce();
+        expect(window.dataLayer).toEqual([
+          { event: 'ui_click', action_name: 'enter_ar' },
+          { event: 'ui_click', action_name: 'exit_ar' },
+        ]);
       } else {
         expect(wrapper.find('.session-controls').exists()).toBe(false);
         expect(wrapper.get('a-text').attributes('value')).toContain(
@@ -230,6 +244,15 @@ describe('sky window preview', () => {
     expect(
       wrapper.get('#sky-logo-placement > a-entity').attributes('scale'),
     ).toBe('0.1 0.1 0.1');
+    const activation = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+    });
+    backLink.get('img').element.dispatchEvent(activation);
+    expect(activation.defaultPrevented).toBe(false);
+    expect(window.dataLayer).toEqual([
+      { event: 'ui_click', action_name: 'return_to_sky' },
+    ]);
     wrapper.unmount();
   });
   it('offers native logo AR even when immersive WebXR is unavailable', async () => {
