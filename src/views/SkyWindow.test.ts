@@ -295,21 +295,69 @@ describe('sky window preview', () => {
     );
     wrapper.unmount();
   });
+  it.each(['granted', 'denied'] as const)(
+    'keeps Quick Look available before preview motion permission is %s',
+    async (permission) => {
+      support(false);
+      vi.spyOn(DOMTokenList.prototype, 'supports').mockImplementation(
+        (token) => token === 'ar',
+      );
+      const requestPermission = vi.fn(() => Promise.resolve(permission));
+      vi.stubGlobal('DeviceOrientationEvent', { requestPermission });
+      const wrapper = mount(SkyWindow, {
+        global: { plugins: [createAppI18n()] },
+      });
+      await flushPromises();
+      expect(requestPermission).not.toHaveBeenCalled();
+      expect(
+        wrapper.get('a-scene').attributes('device-orientation-permission-ui'),
+      ).toBe('enabled: false');
+      const camera = wrapper.get('#sky-camera');
+      expect(camera.attributes('look-controls')).toContain(
+        'magicWindowTrackingEnabled: false',
+      );
+      expect(wrapper.get('.quick-look-link').attributes('rel')).toBe('ar');
+      const motionButton = wrapper.get('button');
+      expect(motionButton.text()).toBe('Enable preview motion');
+      await motionButton.trigger('click');
+      await flushPromises();
+      expect(requestPermission).toHaveBeenCalledOnce();
+      expect(camera.attributes('look-controls')).toContain(
+        `magicWindowTrackingEnabled: ${permission === 'granted'}`,
+      );
+      if (permission === 'denied') {
+        expect(wrapper.text()).toContain('Drag to look around.');
+      }
+      expect(wrapper.get('.quick-look-link').attributes('rel')).toBe('ar');
+      wrapper.unmount();
+    },
+  );
   it('enables explicit entry only after scene readiness and exposes retry after denial', async () => {
     support(true);
     const wrapper = mount(SkyWindow, {
       global: { plugins: [createAppI18n()] },
     });
     const scene = wrapper.get('a-scene').element as SkyScene;
-    scene.enterAR = vi.fn().mockRejectedValue(new Error('denied'));
+    const entry = Promise.withResolvers<void>();
+    scene.enterAR = vi.fn(() => entry.promise);
     await flushPromises();
     expect(wrapper.get('button').attributes('disabled')).toBeDefined();
     await wrapper.get('a-scene').trigger('loaded');
     expect(wrapper.get('button').attributes('disabled')).toBeUndefined();
     expect(scene.enterAR).not.toHaveBeenCalled();
+    const liveStatus = wrapper.get('#sky-status').element;
+    await wrapper.get('button').trigger('click');
+    expect(wrapper.get('#sky-status').element).toBe(liveStatus);
+    expect(wrapper.get('#sky-status[role="status"]').text()).toBe(
+      'Opening the sky…',
+    );
+    expect(wrapper.get('.back-link').attributes('href')).toBe('#/');
+    expect(wrapper.get('button').attributes('disabled')).toBeDefined();
     await wrapper.get('button').trigger('click');
     await flushPromises();
     expect(scene.enterAR).toHaveBeenCalledOnce();
+    entry.reject(new Error('denied'));
+    await flushPromises();
     expect(wrapper.get('button').text()).toBe('Try again');
     expect(wrapper.get('[role="status"]').text()).toContain(
       'Allow tracking access',

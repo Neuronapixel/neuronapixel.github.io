@@ -7,7 +7,7 @@
       @focusin="controlsFocused = true"
       @focusout="controlsFocused = false"
     >
-      <template v-if="!active">
+      <template v-if="!immersive">
         <div class="top-bar">
           <select
             v-model="locale"
@@ -50,6 +50,21 @@
           >
             {{ t(status.state === 'error' ? 'ar.retry' : 'ar.enter') }}
           </button>
+          <button
+            v-if="
+              requiresMotionPermission &&
+              !active &&
+              (motionPermission === 'prompt' ||
+                motionPermission === 'requesting')
+            "
+            :disabled="motionPermission === 'requesting'"
+            @click="enablePreviewMotion"
+          >
+            {{ t('ar.enablePreviewMotion') }}
+          </button>
+          <p v-if="motionPermission === 'denied' && !active" role="status">
+            <span class="text-highlight">{{ t('ar.dragPreview') }}</span>
+          </p>
           <a
             class="back-link"
             href="#/"
@@ -73,6 +88,7 @@
     <a-scene
       ref="sceneRef"
       embedded
+      device-orientation-permission-ui="enabled: false"
       xr-mode-ui="enabled: false"
       webxr="referenceSpaceType: local; requiredFeatures: local; optionalFeatures: dom-overlay; overlayElement: #sky-controls"
       renderer="antialias: true; colorManagement: true; alpha: false"
@@ -83,7 +99,7 @@
         ref="cameraRef"
         camera="fov: 50"
         position="0 0 0"
-        look-controls="pointerLockEnabled: false; magicWindowTrackingEnabled: true"
+        :look-controls="`pointerLockEnabled: false; magicWindowTrackingEnabled: ${previewMotionEnabled}`"
         :wasd-controls="
           desktop && !active && !controlsFocused
             ? 'fly: true; acceleration: 3'
@@ -158,6 +174,27 @@ const cameraRef = ref<SceneEntity | null>(null);
 const logoRef = ref<SceneEntity | null>(null);
 const desktop = ref(false);
 const controlsFocused = ref(false);
+const orientation = window.DeviceOrientationEvent as
+  | (typeof DeviceOrientationEvent & {
+      requestPermission?: () => Promise<PermissionState>;
+    })
+  | undefined;
+const requiresMotionPermission =
+  typeof orientation?.requestPermission === 'function';
+const motionPermission = ref<PermissionState | 'requesting'>('prompt');
+const previewMotionEnabled = computed(
+  () => !requiresMotionPermission || motionPermission.value === 'granted',
+);
+const enablePreviewMotion = async () => {
+  if (!orientation?.requestPermission || motionPermission.value !== 'prompt')
+    return;
+  motionPermission.value = 'requesting';
+  try {
+    motionPermission.value = await orientation.requestPermission();
+  } catch {
+    motionPermission.value = 'denied';
+  }
+};
 let desktopQuery: MediaQueryList | undefined;
 const updateDesktop = () => {
   desktop.value = desktopQuery?.matches ?? false;
@@ -175,7 +212,7 @@ const immersive = computed(
 const active = computed(
   () => status.value.state === 'starting' || immersive.value,
 );
-watch(active, () => {
+watch(immersive, () => {
   // Switching overlays can remove a focused control without firing focusout.
   controlsFocused.value = false;
 });

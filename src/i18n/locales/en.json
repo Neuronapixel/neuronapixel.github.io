@@ -7,6 +7,8 @@
     "invitation": "Bring a little Neuronapixel into your world.",
     "retry": "Try again",
     "enter": "Enter the sky",
+    "enablePreviewMotion": "Enable preview motion",
+    "dragPreview": "Drag to look around.",
     "exit": "Exit sky",
     "language": "Language",
     "navigation": "WASD or arrow keys to move. Drag to look around.",
