@@ -37,6 +37,7 @@ const fixture = (
   scene.removeBehavior = vi.fn();
   scene.renderer = { xr: { getReferenceSpace: () => reference } };
   scene.frame = {
+    session,
     getViewerPose: vi.fn((space: EventTarget) => {
       expect(space).toBe(reference);
       return pose;
@@ -155,6 +156,42 @@ describe('room AR lifecycle', () => {
     expect(f.session.end).toHaveBeenCalledOnce();
     expect(f.status().state).toBe('error');
     expect(f.status().messageKey).toBe('reset');
+    f.controller.dispose();
+  });
+  it('waits for a frame from the new session before adopting its reference space', async () => {
+    const f = fixture();
+    f.load();
+    await settle();
+    f.controller.enter();
+    f.setPose(tracked());
+    f.tick();
+    await settle();
+    f.controller.exit();
+
+    const session = Object.assign(new EventTarget(), {
+      end: vi.fn(() => Promise.resolve()),
+    });
+    vi.mocked(f.scene.enterAR).mockImplementationOnce(() => {
+      f.scene.xrSession = session;
+      f.scene.dispatchEvent(new Event('enter-vr'));
+      return Promise.resolve();
+    });
+    f.controller.enter();
+
+    const previousFrame = f.scene.frame;
+    f.scene.frame = undefined;
+    f.tick();
+    f.scene.frame = previousFrame;
+    f.tick();
+
+    const reference = new EventTarget();
+    f.scene.renderer = { xr: { getReferenceSpace: () => reference } };
+    f.scene.frame = { session, getViewerPose: () => tracked(2) };
+    f.tick();
+    expect(session.end).not.toHaveBeenCalled();
+    expect(f.status().state).toBe('placed');
+    expect(f.logo.getAttribute('position')).toBe('2 1.6 -1.5');
+    await settle();
     f.controller.dispose();
   });
   it('restores preview after denial and permits a successful retry', async () => {

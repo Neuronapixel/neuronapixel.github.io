@@ -10,6 +10,7 @@ describe('viewer pose runtime compatibility', () => {
       end: () => Promise.resolve(),
     });
     scene.frame = {
+      session: scene.xrSession,
       getViewerPose: () => {
         throw new Error('Must not query a pose without reference space');
       },

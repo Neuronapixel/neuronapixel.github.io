@@ -102,7 +102,8 @@ export const createRoomArSession = (
   const behavior = {
     el: scene,
     tick: () => {
-      if (!owned || disposed || reset) return;
+      // Renderer setup can still be pending when A-Frame emits enter-vr.
+      if (!owned || disposed || reset || scene.frame?.session !== owned) return;
       const currentReference = scene.renderer?.xr.getReferenceSpace?.();
       if (currentReference !== reference) {
         if (reference) {

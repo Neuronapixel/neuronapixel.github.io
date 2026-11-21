@@ -90,10 +90,7 @@
             : undefined
         "
       >
-        <a-entity
-          v-if="status.state === 'tracking' && !status.overlay"
-          position="0 -0.3 -0.8"
-        >
+        <a-entity v-if="immersive && !status.overlay" position="0 -0.3 -0.8">
           <a-plane
             width="1"
             height="0.16"
@@ -172,8 +169,11 @@ const status = ref<ArStatus>({
   overlay: false,
 });
 const statusMessage = computed(() => t(`arStatus.${status.value.messageKey}`));
-const active = computed(() =>
-  ['starting', 'tracking', 'placed'].includes(status.value.state),
+const immersive = computed(
+  () => status.value.state === 'tracking' || status.value.state === 'placed',
+);
+const active = computed(
+  () => status.value.state === 'starting' || immersive.value,
 );
 watch(active, () => {
   // Switching overlays can remove a focused control without firing focusout.

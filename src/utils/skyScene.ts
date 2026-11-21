@@ -31,7 +31,10 @@ export interface SceneBehavior {
 export interface SkyScene extends SceneEntity {
   hasLoaded?: boolean;
   xrSession?: ArSession;
-  frame?: { getViewerPose: (space: EventTarget) => ViewerPose | null };
+  frame?: {
+    readonly session: ArSession;
+    getViewerPose: (space: EventTarget) => ViewerPose | null;
+  };
   renderer?: { xr: { getReferenceSpace?: () => EventTarget | null } };
   enterAR: () => Promise<void>;
   addBehavior?: (behavior: SceneBehavior) => void;

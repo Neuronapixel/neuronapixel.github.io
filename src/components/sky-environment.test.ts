@@ -52,7 +52,6 @@ describe('tracked sky environment', () => {
       transform: { position, orientation: { x: 0, y: 1, z: 0, w: 0 } },
     };
     scene.renderer = { xr: { getReferenceSpace: () => reference } };
-    scene.frame = { getViewerPose: () => pose };
     const sky = wrapper.find('#day-night-sky').element as SceneEntity;
     const stars = wrapper.find('#night-stars').element as SceneEntity;
     sky.object3D = { position: { x: 0, y: 0, z: 0 }, visible: true };
@@ -63,6 +62,7 @@ describe('tracked sky environment', () => {
     scene.xrSession = Object.assign(new EventTarget(), {
       end: () => Promise.resolve(),
     });
+    scene.frame = { session: scene.xrSession, getViewerPose: () => pose };
     clock.mockReturnValue(110_000);
     behaviors.forEach((behavior) => behavior.tick());
     expect(sky.object3D.position).toEqual({ x: 12, y: 1.7, z: -4 });

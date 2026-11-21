@@ -2,7 +2,7 @@ import { createAppI18n } from '@/i18n';
 import { flushPromises, mount } from '@vue/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import SkyWindow from './SkyWindow.vue';
-import type { SkyScene } from '@/utils/skyScene';
+import type { SceneBehavior, SkyScene, ViewerPose } from '@/utils/skyScene';
 
 const support = (available: boolean) => {
   vi.stubGlobal('isSecureContext', true);
@@ -152,6 +152,17 @@ describe('sky window preview', () => {
           return Promise.resolve();
         }),
       });
+      const behaviors: SceneBehavior[] = [];
+      scene.addBehavior = (behavior) => behaviors.push(behavior);
+      const reference = new EventTarget();
+      let pose: ViewerPose | null = {
+        transform: {
+          position: { x: 0, y: 1.6, z: 0 },
+          orientation: { x: 0, y: 0, z: 0, w: 1 },
+        },
+      };
+      scene.renderer = { xr: { getReferenceSpace: () => reference } };
+      scene.frame = { session, getViewerPose: () => pose };
       scene.enterAR = () => {
         expect(wrapper.get('#sky-camera').attributes('position')).toBe('0 0 0');
         scene.xrSession = session;
@@ -176,10 +187,19 @@ describe('sky window preview', () => {
       const trackedLogo = wrapper.get('#sky-logo-placement > a-entity');
       expect(trackedLogo.attributes('animation')).toBeUndefined();
       expect(trackedLogo.attributes('position')).toBe('0 0 0');
+      const guidance = () =>
+        overlay
+          ? wrapper.get('.session-controls [role="status"]').text()
+          : wrapper.get('#sky-camera a-text').attributes('value');
+      expect(guidance()).toContain('Move your device gently');
+      behaviors.forEach((behavior) => behavior.tick());
+      await flushPromises();
+      expect(guidance()).toContain('Use the browser’s XR control to exit');
+      pose = null;
+      behaviors.forEach((behavior) => behavior.tick());
+      await flushPromises();
+      expect(guidance()).toContain('Tracking paused');
       if (overlay) {
-        expect(wrapper.get('.session-controls').text()).toContain(
-          'Move your device gently',
-        );
         await wrapper.get('.session-controls button').trigger('click');
         expect(session.end).toHaveBeenCalledOnce();
         expect(window.dataLayer).toEqual([
@@ -188,13 +208,11 @@ describe('sky window preview', () => {
         ]);
       } else {
         expect(wrapper.find('.session-controls').exists()).toBe(false);
-        expect(wrapper.get('a-text').attributes('value')).toContain(
-          'Move your device gently',
-        );
         session.dispatchEvent(new Event('end'));
         await flushPromises();
       }
       expect(wrapper.get('button').text()).toBe('Enter the sky');
+      expect(wrapper.find('#sky-camera a-text').exists()).toBe(false);
       expect(
         wrapper.get('#sky-camera').attributes('wasd-controls'),
       ).toBeDefined();
