@@ -1,119 +1,107 @@
 export const DAY_NIGHT_CYCLE_DURATION_MS = 3 * 60 * 1000;
 
-const DAY_END_MS = 60 * 1000;
-const DUSK_END_MS = 90 * 1000;
-const NIGHT_END_MS = 150 * 1000;
-
-export interface CloudPass {
-  endMs: number;
-  startMs: number;
-}
+/** Linear-light RGB, shared by the atmosphere shader and cloud material. */
+export type SkyColor = [number, number, number];
 
 export interface DayNightFrame {
-  cloudOpacities: number[];
-  cloudProgress: number[];
   cycleElapsedMs: number;
-  skyColor: string;
-  cloudColor: string;
+  zenithColor: SkyColor;
+  horizonColor: SkyColor;
+  nadirColor: SkyColor;
+  cloudColor: SkyColor;
+  daylight: number;
   starOpacities: number[];
 }
 
-export const CLOUD_PASSES: CloudPass[] = [
-  { startMs: 4 * 1000, endMs: 28 * 1000 },
-  { startMs: 9 * 1000, endMs: 38 * 1000 },
-  { startMs: 18 * 1000, endMs: 49 * 1000 },
-  { startMs: 26 * 1000, endMs: 59 * 1000 },
-  { startMs: 3 * 1000, endMs: 20 * 1000 },
-  { startMs: 35 * 1000, endMs: 60 * 1000 },
-  { startMs: 5 * 1000, endMs: 33 * 1000 },
-  { startMs: 14 * 1000, endMs: 45 * 1000 },
-  { startMs: 24 * 1000, endMs: 55 * 1000 },
-  { startMs: 31 * 1000, endMs: 60 * 1000 },
-  { startMs: 7 * 1000, endMs: 44 * 1000 },
-  { startMs: 16 * 1000, endMs: 57 * 1000 },
-  { startMs: 10 * 1000, endMs: 36 * 1000 },
-  { startMs: 22 * 1000, endMs: 60 * 1000 },
-  { startMs: 4 * 1000, endMs: 50 * 1000 },
-  { startMs: 28 * 1000, endMs: 59 * 1000 },
-  { startMs: 12 * 1000, endMs: 54 * 1000 },
-  { startMs: 6 * 1000, endMs: 40 * 1000 },
+const linearChannel = (value: number) =>
+  value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+
+const color = (hex: string): SkyColor =>
+  [1, 3, 5].map((start) =>
+    linearChannel(parseInt(hex.slice(start, start + 2), 16) / 255),
+  ) as SkyColor;
+
+const palette = (
+  time: number,
+  zenith: string,
+  horizon: string,
+  nadir: string,
+  cloud: string,
+  daylight: number,
+) => ({
+  time,
+  zenithColor: color(zenith),
+  horizonColor: color(horizon),
+  nadirColor: color(nadir),
+  cloudColor: color(cloud),
+  daylight,
+});
+
+// Golden hour, sunset, blue hour and dawn each get their own palette. The last
+// key matches the first so the sky has no jump when the three-minute loop wraps.
+const keyframes = [
+  palette(0, '#589bd8', '#c4e3ef', '#789fc8', '#f5f8ff', 1),
+  palette(42_000, '#659bd0', '#d3e4ec', '#819dc2', '#f8f4ee', 1),
+  palette(60_000, '#7185ba', '#f1c49d', '#8a87a6', '#f5cfb2', 0.72),
+  palette(75_000, '#373b70', '#de8f85', '#615777', '#bf94ae', 0.28),
+  palette(90_000, '#141e43', '#59618e', '#252b4b', '#6e7b9c', 0.04),
+  palette(104_000, '#050a1c', '#172849', '#090f26', '#485a7d', 0),
+  palette(138_000, '#050a1c', '#172849', '#090f26', '#485a7d', 0),
+  palette(153_000, '#2d3c70', '#9b85a8', '#3e466f', '#989dc2', 0.15),
+  palette(168_000, '#7d9aca', '#f4cbb6', '#939ebd', '#edd6d1', 0.65),
+  palette(180_000, '#589bd8', '#c4e3ef', '#789fc8', '#f5f8ff', 1),
 ];
 
-const clamp = (value: number, minimum = 0, maximum = 1) =>
-  Math.min(maximum, Math.max(minimum, value));
+const clamp = (value: number) => Math.min(1, Math.max(0, value));
 
-const wrapCycleTime = (elapsedMs: number) =>
-  ((elapsedMs % DAY_NIGHT_CYCLE_DURATION_MS) + DAY_NIGHT_CYCLE_DURATION_MS) %
-  DAY_NIGHT_CYCLE_DURATION_MS;
-
-const smoothstep = (value: number) => {
+// Zero velocity and acceleration at each key prevents a hitch at phase changes.
+const smootherstep = (value: number) => {
   const t = clamp(value);
-  return t * t * (3 - 2 * t);
+  return t * t * t * (t * (t * 6 - 15) + 10);
 };
 
-const getSkyLuminance = (time: number) => {
-  if (time < DAY_END_MS) return 1;
-  if (time < DUSK_END_MS) {
-    return 1 - smoothstep((time - DAY_END_MS) / (DUSK_END_MS - DAY_END_MS));
-  }
-  if (time < NIGHT_END_MS) return 0;
-  return smoothstep(
-    (time - NIGHT_END_MS) / (DAY_NIGHT_CYCLE_DURATION_MS - NIGHT_END_MS),
-  );
-};
-
-const mixColor = (from: number[], to: number[], amount: number) =>
-  `#${from
-    .map((channel, index) =>
-      Math.round(channel + (to[index] - channel) * amount)
-        .toString(16)
-        .padStart(2, '0'),
-    )
-    .join('')}`;
-
-const getSkyColor = (daylight: number) => {
-  const night = [9, 15, 35];
-  const twilight = [111, 112, 157];
-  const day = [166, 208, 237];
-  return daylight < 0.5
-    ? mixColor(night, twilight, smoothstep(daylight * 2))
-    : mixColor(twilight, day, smoothstep((daylight - 0.5) * 2));
-};
-
-const getCloudState = (time: number, pass: CloudPass) => {
-  // A continuous orbit-like drift avoids disappearing or teleporting at night.
-  const phase =
-    (time / DAY_NIGHT_CYCLE_DURATION_MS + pass.startMs / DAY_END_MS) *
-    Math.PI *
-    2;
-  return { opacity: 0.86, progress: (1 - Math.cos(phase)) / 2 };
-};
-
-const getStarOpacity = (time: number, index: number, daylight: number) => {
-  const phase =
-    (time / DAY_NIGHT_CYCLE_DURATION_MS) * Math.PI * 2 * (24 + (index % 4));
-  const twinkle = 0.82 + 0.18 * Math.sin(phase + index * 1.71);
-  return twinkle * smoothstep(1 - daylight);
-};
+const mix = (from: number, to: number, amount: number) =>
+  from + (to - from) * amount;
+const mixColor = (from: SkyColor, to: SkyColor, amount: number): SkyColor => [
+  mix(from[0], to[0], amount),
+  mix(from[1], to[1], amount),
+  mix(from[2], to[2], amount),
+];
 
 export const getDayNightFrame = (
   elapsedMs: number,
   starCount: number,
 ): DayNightFrame => {
-  const cycleElapsedMs = wrapCycleTime(elapsedMs);
-  const skyLuminance = getSkyLuminance(cycleElapsedMs);
-  const cloudStates = CLOUD_PASSES.map((pass) =>
-    getCloudState(cycleElapsedMs, pass),
+  const cycleElapsedMs =
+    ((elapsedMs % DAY_NIGHT_CYCLE_DURATION_MS) + DAY_NIGHT_CYCLE_DURATION_MS) %
+    DAY_NIGHT_CYCLE_DURATION_MS;
+  const nextIndex = keyframes.findIndex((key) => key.time > cycleElapsedMs);
+  const from = keyframes[nextIndex - 1];
+  const to = keyframes[nextIndex];
+  const blend = smootherstep(
+    (cycleElapsedMs - from.time) / (to.time - from.time),
   );
+  const daylight = mix(from.daylight, to.daylight, blend);
+  const phase = (cycleElapsedMs / DAY_NIGHT_CYCLE_DURATION_MS) * Math.PI * 2;
 
   return {
     cycleElapsedMs,
-    skyColor: getSkyColor(skyLuminance),
-    cloudColor: mixColor([50, 62, 91], [245, 248, 255], skyLuminance),
-    cloudOpacities: cloudStates.map(({ opacity }) => opacity),
-    cloudProgress: cloudStates.map(({ progress }) => progress),
-    starOpacities: Array.from({ length: starCount }, (_, index) =>
-      getStarOpacity(cycleElapsedMs, index, skyLuminance),
-    ),
+    zenithColor: mixColor(from.zenithColor, to.zenithColor, blend),
+    horizonColor: mixColor(from.horizonColor, to.horizonColor, blend),
+    nadirColor: mixColor(from.nadirColor, to.nadirColor, blend),
+    cloudColor: mixColor(from.cloudColor, to.cloudColor, blend),
+    daylight,
+    starOpacities: Array.from({ length: starCount }, (_, index) => {
+      // Bright stars emerge first; small, independent oscillations avoid blinking.
+      const brightness = 0.55 + 0.45 * ((index * 0.61803398875) % 1);
+      const visibility = smootherstep(
+        (0.52 - daylight) / (0.3 + brightness * 0.22),
+      );
+      const twinkle =
+        0.92 +
+        0.05 * Math.sin(phase * (17 + (index % 5)) + index * 1.71) +
+        0.03 * Math.sin(phase * (29 + (index % 7)) + index * 2.31);
+      return brightness * visibility * twinkle;
+    }),
   };
 };

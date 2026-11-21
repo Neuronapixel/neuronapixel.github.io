@@ -1,0 +1,41 @@
+{
+  "ar": {
+    "controls": "Controles del cielo",
+    "brand": "Neuronapixel",
+    "eyebrow": "Pequeños espacios",
+    "title": "dentro",
+    "invitation": "Trae un poco de Neuronapixel a tu mundo.",
+    "retry": "Intentar de nuevo",
+    "enter": "Entrar al cielo",
+    "enablePreviewMotion": "Activar movimiento en la vista previa",
+    "dragPreview": "Arrastra para mirar alrededor.",
+    "exit": "Salir del cielo",
+    "language": "Idioma",
+    "navigation": "Usa WASD o las flechas para moverte. Arrastra para mirar alrededor.",
+    "english": "English",
+    "spanish": "Español"
+  },
+  "quickLook": {
+    "action": "fuera",
+    "supportedDescription": "Coloca el logo en tu habitación y camina a su alrededor.",
+    "unsupportedDescription": "Abre esta página en Safari en tu iPhone o iPad para ver el logo en tu espacio."
+  },
+  "arStatus": {
+    "checking": "Comprobando el seguimiento de movimiento…",
+    "unsupported": "El seguimiento de movimiento no está disponible en este navegador.",
+    "insecure": "El seguimiento de movimiento no está disponible en este navegador. Abre esta página mediante HTTPS para activar el seguimiento.",
+    "checkFailed": "El seguimiento de movimiento no está disponible en este navegador. No se pudo comprobar la disponibilidad del seguimiento.",
+    "reset": "El origen del seguimiento cambió. Vuelve a entrar al cielo para colocar el logo.",
+    "ready": "Mueve tu dispositivo para explorar un cielo oculto.",
+    "exitFailed": "Usa el control de salida de XR de tu navegador para volver a la vista previa.",
+    "resetting": "El origen del seguimiento cambió. Volviendo a la vista previa…",
+    "tracking": "Mueve tu dispositivo suavemente para iniciar el seguimiento.",
+    "paused": "Seguimiento en pausa. Mueve tu dispositivo suavemente.",
+    "placed": "Camina alrededor del logo. Usa el control XR del navegador para salir.",
+    "lookAhead": "Mira al frente para colocar el logo.",
+    "preparing": "Preparando el cielo…",
+    "starting": "Abriendo el cielo…",
+    "notStarted": "El seguimiento de movimiento no se inició. Inténtalo de nuevo.",
+    "entryFailed": "No se pudo entrar al cielo. Permite el acceso al seguimiento e inténtalo de nuevo."
+  }
+}

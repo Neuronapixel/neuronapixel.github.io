@@ -1,3 +1,4 @@
+import type { SkyColor } from './dayNightCycle';
 import {
   createCloudField,
   getCloudPlacement,
@@ -35,7 +36,8 @@ interface CloudShader {
 }
 
 interface CloudMaterial {
-  color: { set: (color: string) => void };
+  color: { setRGB: (red: number, green: number, blue: number) => void };
+  emissive: { setRGB: (red: number, green: number, blue: number) => void };
   onBeforeCompile: (shader: CloudShader) => void;
   dispose: () => void;
 }
@@ -81,7 +83,7 @@ interface CubeDefinition {
 }
 
 export interface CloudRenderer {
-  update: (viewer: SkyPosition, elapsedMs: number, color: string) => void;
+  update: (viewer: SkyPosition, elapsedMs: number, color: SkyColor) => void;
   dispose: () => void;
 }
 
@@ -212,7 +214,8 @@ export const createCloudRenderer = (host: CloudHost): CloudRenderer | null => {
     update(viewer, elapsedMs, color) {
       // Keep GPU coordinates close to the camera even after long-distance flight.
       mesh.position.set(viewer.x, viewer.y, viewer.z);
-      material.color.set(color);
+      material.color.setRGB(...color);
+      material.emissive.setRGB(...color);
       host.sceneEl?.camera?.getWorldDirection(viewDirection);
       visibleInstances.length = 0;
       clouds.forEach((cloud, index) => {
