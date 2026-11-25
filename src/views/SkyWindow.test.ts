@@ -236,8 +236,8 @@ describe('sky window preview', () => {
       'neuronapixel-logo.usdz',
     );
     const backLink = wrapper.get('.invitation > .back-link');
-    expect(wrapper.findAll('a[href="#/"]')).toHaveLength(1);
-    expect(backLink.attributes('href')).toBe('#/');
+    expect(wrapper.findAll('a[href="#/xr"]')).toHaveLength(1);
+    expect(backLink.attributes('href')).toBe('#/xr');
     expect(backLink.get('img').attributes()).toMatchObject({
       src: '/favicon.ico',
       alt: 'Neuronapixel',
@@ -291,7 +291,7 @@ describe('sky window preview', () => {
     );
     expect(wrapper.find('button').exists()).toBe(false);
     expect(wrapper.get('.invitation > .back-link').attributes('href')).toBe(
-      '#/',
+      '#/xr',
     );
     wrapper.unmount();
   });
@@ -351,7 +351,7 @@ describe('sky window preview', () => {
     expect(wrapper.get('#sky-status[role="status"]').text()).toBe(
       'Opening the sky…',
     );
-    expect(wrapper.get('.back-link').attributes('href')).toBe('#/');
+    expect(wrapper.get('.back-link').attributes('href')).toBe('#/xr');
     expect(wrapper.get('button').attributes('disabled')).toBeDefined();
     await wrapper.get('button').trigger('click');
     await flushPromises();

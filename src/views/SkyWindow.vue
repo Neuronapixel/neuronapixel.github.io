@@ -67,7 +67,7 @@
           </p>
           <a
             class="back-link"
-            href="#/"
+            href="#/xr"
             @click="trackSkyWindowClick('return_to_sky')"
           >
             <img
