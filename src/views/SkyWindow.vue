@@ -57,14 +57,33 @@
               (motionPermission === 'prompt' ||
                 motionPermission === 'requesting')
             "
-            :disabled="motionPermission === 'requesting'"
+            :aria-disabled="motionPermission === 'requesting'"
             @click="enablePreviewMotion"
           >
             {{ t('ar.enablePreviewMotion') }}
           </button>
-          <p v-if="motionPermission === 'denied' && !active" role="status">
-            <span class="text-highlight">{{ t('ar.dragPreview') }}</span>
-          </p>
+          <div v-if="requiresMotionPermission" role="status" aria-live="polite">
+            <p
+              v-if="
+                !active &&
+                (motionPermission === 'granted' ||
+                  motionPermission === 'denied')
+              "
+              ref="motionResultRef"
+              class="motion-result"
+              tabindex="-1"
+            >
+              <span class="text-highlight">
+                {{
+                  t(
+                    motionPermission === 'granted'
+                      ? 'ar.previewMotionEnabled'
+                      : 'ar.dragPreview',
+                  )
+                }}
+              </span>
+            </p>
+          </div>
           <a
             class="back-link"
             href="#/xr"
@@ -152,7 +171,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import {
+  computed,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import { saveLocale } from '@/i18n';
 import LogoMark from '@/components/logo-mark.vue';
@@ -172,6 +198,7 @@ const inspectorAttribute = import.meta.env.DEV ? '' : null;
 const sceneRef = ref<SkyScene | null>(null);
 const cameraRef = ref<SceneEntity | null>(null);
 const logoRef = ref<SceneEntity | null>(null);
+const motionResultRef = ref<HTMLParagraphElement | null>(null);
 const desktop = ref(false);
 const controlsFocused = ref(false);
 const orientation = window.DeviceOrientationEvent as
@@ -185,14 +212,24 @@ const motionPermission = ref<PermissionState | 'requesting'>('prompt');
 const previewMotionEnabled = computed(
   () => !requiresMotionPermission || motionPermission.value === 'granted',
 );
-const enablePreviewMotion = async () => {
+const enablePreviewMotion = async (event: MouseEvent) => {
   if (!orientation?.requestPermission || motionPermission.value !== 'prompt')
     return;
+  const button = event.currentTarget;
+  const startedWithFocus = document.activeElement === button;
   motionPermission.value = 'requesting';
   try {
     motionPermission.value = await orientation.requestPermission();
   } catch {
     motionPermission.value = 'denied';
+  }
+  const focused = document.activeElement;
+  const shouldMoveFocus =
+    focused === button || (startedWithFocus && focused === document.body);
+  if (!shouldMoveFocus) return;
+  await nextTick();
+  if (document.activeElement === document.body) {
+    motionResultRef.value?.focus();
   }
 };
 let desktopQuery: MediaQueryList | undefined;
@@ -364,7 +401,8 @@ button {
   font: inherit;
   cursor: pointer;
 }
-button:disabled {
+button:disabled,
+button[aria-disabled='true'] {
   opacity: 0.5;
   cursor: default;
 }
@@ -374,7 +412,8 @@ button:disabled {
 }
 button:focus-visible,
 a:focus-visible,
-select:focus-visible {
+select:focus-visible,
+.motion-result:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
   box-shadow: 0 0 0 5px #000;

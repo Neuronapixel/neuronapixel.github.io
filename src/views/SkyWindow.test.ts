@@ -295,16 +295,22 @@ describe('sky window preview', () => {
     );
     wrapper.unmount();
   });
-  it.each(['granted', 'denied'] as const)(
-    'keeps Quick Look available before preview motion permission is %s',
-    async (permission) => {
+  it.each([
+    { permission: 'granted', moveFocus: false },
+    { permission: 'denied', moveFocus: false },
+    { permission: 'denied', moveFocus: true },
+  ] as const)(
+    'handles $permission preview motion permission with focus moved: $moveFocus',
+    async ({ permission, moveFocus }) => {
       support(false);
       vi.spyOn(DOMTokenList.prototype, 'supports').mockImplementation(
         (token) => token === 'ar',
       );
-      const requestPermission = vi.fn(() => Promise.resolve(permission));
+      const request = Promise.withResolvers<typeof permission>();
+      const requestPermission = vi.fn(() => request.promise);
       vi.stubGlobal('DeviceOrientationEvent', { requestPermission });
       const wrapper = mount(SkyWindow, {
+        attachTo: document.body,
         global: { plugins: [createAppI18n()] },
       });
       await flushPromises();
@@ -316,19 +322,37 @@ describe('sky window preview', () => {
       expect(camera.attributes('look-controls')).toContain(
         'magicWindowTrackingEnabled: false',
       );
-      expect(wrapper.get('.quick-look-link').attributes('rel')).toBe('ar');
+      const quickLook = wrapper.get<HTMLAnchorElement>('.quick-look-link');
+      expect(quickLook.attributes('rel')).toBe('ar');
+      const liveRegion = wrapper.get('.invitation div[role="status"]');
       const motionButton = wrapper.get('button');
       expect(motionButton.text()).toBe('Enable preview motion');
+      motionButton.element.focus();
       await motionButton.trigger('click');
-      await flushPromises();
+      expect(document.activeElement).toBe(motionButton.element);
+      expect(motionButton.attributes('aria-disabled')).toBe('true');
+      expect(motionButton.element.disabled).toBe(false);
+      await motionButton.trigger('click');
       expect(requestPermission).toHaveBeenCalledOnce();
+      if (moveFocus) quickLook.element.focus();
+      request.resolve(permission);
+      await flushPromises();
       expect(camera.attributes('look-controls')).toContain(
         `magicWindowTrackingEnabled: ${permission === 'granted'}`,
       );
-      if (permission === 'denied') {
-        expect(wrapper.text()).toContain('Drag to look around.');
-      }
-      expect(wrapper.get('.quick-look-link').attributes('rel')).toBe('ar');
+      expect(wrapper.get('.invitation div[role="status"]').element).toBe(
+        liveRegion.element,
+      );
+      const result = liveRegion.get('p');
+      expect(result.text()).toBe(
+        permission === 'granted'
+          ? 'Preview motion enabled.'
+          : 'Drag to look around.',
+      );
+      expect(document.activeElement).toBe(
+        moveFocus ? quickLook.element : result.element,
+      );
+      expect(quickLook.attributes('rel')).toBe('ar');
       wrapper.unmount();
     },
   );
