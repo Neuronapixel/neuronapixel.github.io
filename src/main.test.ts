@@ -1,24 +1,35 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import router from './router';
 
 describe('Main entry file', () => {
-  // Before each test, ensure the DOM contains a target element for mounting.
   beforeEach(() => {
     document.body.innerHTML = '<div id="app"></div>';
+    vi.stubEnv('VITE_GTM_ID', 'GTM-TEST123');
   });
 
-  it('mounts the app on the #app element', async () => {
-    // Dynamically import the main file so that it executes its side effects.
-    // Adjust the path to your main file as needed.
+  afterEach(() => {
+    document.getElementById('gtm-script')?.remove();
+    delete window.dataLayer;
+    vi.unstubAllEnvs();
+  });
+
+  it('mounts the app and queues one device event for the full page load', async () => {
     await import('@/main');
+    await router.isReady();
 
-    // Now, get the element with id "app".
-    const appContainer = document.getElementById('app');
+    expect(document.querySelector('#app .sky-window')).toBeTruthy();
+    expect(window.dataLayer?.map(({ event }) => event)).toEqual([
+      'gtm.js',
+      'visit_device',
+    ]);
+    expect(window.dataLayer?.[1]).toEqual({
+      event: 'visit_device',
+      headset_type: 'unclassified',
+    });
 
-    // Verify that the app container exists.
-    expect(appContainer).toBeTruthy();
-
-    // Optionally, check that the container's innerHTML is non-empty,
-    // indicating that something was rendered.
-    expect(appContainer!.innerHTML).not.toBe('');
+    await router.push('/xr');
+    expect(document.querySelector('#app .xr-experience')).toBeTruthy();
+    await router.push('/');
+    expect(window.dataLayer).toHaveLength(2);
   });
 });

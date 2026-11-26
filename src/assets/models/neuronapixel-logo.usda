@@ -1,0 +1,881 @@
+#usda 1.0
+(
+    defaultPrim = "Neuronapixel"
+    metersPerUnit = 1
+    upAxis = "Y"
+    startTimeCode = 0
+    endTimeCode = 360
+    timeCodesPerSecond = 30
+    framesPerSecond = 30
+    documentation = "Neuronapixel: 27 red and white cubes, 15 cm wide, with a 12-second floating loop. Generated from logo-mark.vue."
+)
+
+def Xform "Neuronapixel" (
+    kind = "component"
+)
+{
+    double3 xformOp:translate = (0, 0.075, 0)
+    double3 xformOp:scale = (0.5, 0.5, 0.5)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    def Scope "Materials"
+    {
+
+        def Material "Primary"
+        {
+            token outputs:surface.connect = </Neuronapixel/Materials/Primary/Surface.outputs:surface>
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1.00000000, 0.02842604, 0.02842604)
+                color3f inputs:emissiveColor = (0, 0, 0)
+                float inputs:metallic = 0.05
+                float inputs:roughness = 0.4
+                float inputs:opacity = 1
+                token outputs:surface
+            }
+        }
+
+        def Material "Secondary"
+        {
+            token outputs:surface.connect = </Neuronapixel/Materials/Secondary/Surface.outputs:surface>
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1.00000000, 1.00000000, 1.00000000)
+                color3f inputs:emissiveColor = (0.4, 0.4, 0.4)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.4
+                float inputs:opacity = 1
+                token outputs:surface
+            }
+        }
+    }
+    def Xform "Logo"
+    {
+        double3 xformOp:translate = (0, 0, 0)
+        double3 xformOp:translate.timeSamples = {
+            0: (0, 0.00000000, 0),
+            1: (0, 0.00000305, 0),
+            2: (0, 0.00001218, 0),
+            3: (0, 0.00002741, 0),
+            4: (0, 0.00004872, 0),
+            5: (0, 0.00007611, 0),
+            6: (0, 0.00010956, 0),
+            7: (0, 0.00014908, 0),
+            8: (0, 0.00019464, 0),
+            9: (0, 0.00024623, 0),
+            10: (0, 0.00030384, 0),
+            11: (0, 0.00036746, 0),
+            12: (0, 0.00043705, 0),
+            13: (0, 0.00051260, 0),
+            14: (0, 0.00059409, 0),
+            15: (0, 0.00068148, 0),
+            16: (0, 0.00077477, 0),
+            17: (0, 0.00087390, 0),
+            18: (0, 0.00097887, 0),
+            19: (0, 0.00108963, 0),
+            20: (0, 0.00120615, 0),
+            21: (0, 0.00132839, 0),
+            22: (0, 0.00145632, 0),
+            23: (0, 0.00158990, 0),
+            24: (0, 0.00172909, 0),
+            25: (0, 0.00187384, 0),
+            26: (0, 0.00202412, 0),
+            27: (0, 0.00217987, 0),
+            28: (0, 0.00234105, 0),
+            29: (0, 0.00250761, 0),
+            30: (0, 0.00267949, 0),
+            31: (0, 0.00285665, 0),
+            32: (0, 0.00303904, 0),
+            33: (0, 0.00322659, 0),
+            34: (0, 0.00341925, 0),
+            35: (0, 0.00361696, 0),
+            36: (0, 0.00381966, 0),
+            37: (0, 0.00402729, 0),
+            38: (0, 0.00423978, 0),
+            39: (0, 0.00445708, 0),
+            40: (0, 0.00467911, 0),
+            41: (0, 0.00490581, 0),
+            42: (0, 0.00513710, 0),
+            43: (0, 0.00537293, 0),
+            44: (0, 0.00561320, 0),
+            45: (0, 0.00585786, 0),
+            46: (0, 0.00610683, 0),
+            47: (0, 0.00636003, 0),
+            48: (0, 0.00661739, 0),
+            49: (0, 0.00687882, 0),
+            50: (0, 0.00714425, 0),
+            51: (0, 0.00741359, 0),
+            52: (0, 0.00768677, 0),
+            53: (0, 0.00796370, 0),
+            54: (0, 0.00824429, 0),
+            55: (0, 0.00852847, 0),
+            56: (0, 0.00881614, 0),
+            57: (0, 0.00910722, 0),
+            58: (0, 0.00940161, 0),
+            59: (0, 0.00969924, 0),
+            60: (0, 0.01000000, 0),
+            61: (0, 0.01030381, 0),
+            62: (0, 0.01061057, 0),
+            63: (0, 0.01092019, 0),
+            64: (0, 0.01123258, 0),
+            65: (0, 0.01154763, 0),
+            66: (0, 0.01186527, 0),
+            67: (0, 0.01218538, 0),
+            68: (0, 0.01250787, 0),
+            69: (0, 0.01283264, 0),
+            70: (0, 0.01315960, 0),
+            71: (0, 0.01348864, 0),
+            72: (0, 0.01381966, 0),
+            73: (0, 0.01415257, 0),
+            74: (0, 0.01448725, 0),
+            75: (0, 0.01482362, 0),
+            76: (0, 0.01516156, 0),
+            77: (0, 0.01550098, 0),
+            78: (0, 0.01584177, 0),
+            79: (0, 0.01618382, 0),
+            80: (0, 0.01652704, 0),
+            81: (0, 0.01687131, 0),
+            82: (0, 0.01721654, 0),
+            83: (0, 0.01756261, 0),
+            84: (0, 0.01790943, 0),
+            85: (0, 0.01825689, 0),
+            86: (0, 0.01860487, 0),
+            87: (0, 0.01895328, 0),
+            88: (0, 0.01930201, 0),
+            89: (0, 0.01965095, 0),
+            90: (0, 0.02000000, 0),
+            91: (0, 0.02034905, 0),
+            92: (0, 0.02069799, 0),
+            93: (0, 0.02104672, 0),
+            94: (0, 0.02139513, 0),
+            95: (0, 0.02174311, 0),
+            96: (0, 0.02209057, 0),
+            97: (0, 0.02243739, 0),
+            98: (0, 0.02278346, 0),
+            99: (0, 0.02312869, 0),
+            100: (0, 0.02347296, 0),
+            101: (0, 0.02381618, 0),
+            102: (0, 0.02415823, 0),
+            103: (0, 0.02449902, 0),
+            104: (0, 0.02483844, 0),
+            105: (0, 0.02517638, 0),
+            106: (0, 0.02551275, 0),
+            107: (0, 0.02584743, 0),
+            108: (0, 0.02618034, 0),
+            109: (0, 0.02651136, 0),
+            110: (0, 0.02684040, 0),
+            111: (0, 0.02716736, 0),
+            112: (0, 0.02749213, 0),
+            113: (0, 0.02781462, 0),
+            114: (0, 0.02813473, 0),
+            115: (0, 0.02845237, 0),
+            116: (0, 0.02876742, 0),
+            117: (0, 0.02907981, 0),
+            118: (0, 0.02938943, 0),
+            119: (0, 0.02969619, 0),
+            120: (0, 0.03000000, 0),
+            121: (0, 0.03030076, 0),
+            122: (0, 0.03059839, 0),
+            123: (0, 0.03089278, 0),
+            124: (0, 0.03118386, 0),
+            125: (0, 0.03147153, 0),
+            126: (0, 0.03175571, 0),
+            127: (0, 0.03203630, 0),
+            128: (0, 0.03231323, 0),
+            129: (0, 0.03258641, 0),
+            130: (0, 0.03285575, 0),
+            131: (0, 0.03312118, 0),
+            132: (0, 0.03338261, 0),
+            133: (0, 0.03363997, 0),
+            134: (0, 0.03389317, 0),
+            135: (0, 0.03414214, 0),
+            136: (0, 0.03438680, 0),
+            137: (0, 0.03462707, 0),
+            138: (0, 0.03486290, 0),
+            139: (0, 0.03509419, 0),
+            140: (0, 0.03532089, 0),
+            141: (0, 0.03554292, 0),
+            142: (0, 0.03576022, 0),
+            143: (0, 0.03597271, 0),
+            144: (0, 0.03618034, 0),
+            145: (0, 0.03638304, 0),
+            146: (0, 0.03658075, 0),
+            147: (0, 0.03677341, 0),
+            148: (0, 0.03696096, 0),
+            149: (0, 0.03714335, 0),
+            150: (0, 0.03732051, 0),
+            151: (0, 0.03749239, 0),
+            152: (0, 0.03765895, 0),
+            153: (0, 0.03782013, 0),
+            154: (0, 0.03797588, 0),
+            155: (0, 0.03812616, 0),
+            156: (0, 0.03827091, 0),
+            157: (0, 0.03841010, 0),
+            158: (0, 0.03854368, 0),
+            159: (0, 0.03867161, 0),
+            160: (0, 0.03879385, 0),
+            161: (0, 0.03891037, 0),
+            162: (0, 0.03902113, 0),
+            163: (0, 0.03912610, 0),
+            164: (0, 0.03922523, 0),
+            165: (0, 0.03931852, 0),
+            166: (0, 0.03940591, 0),
+            167: (0, 0.03948740, 0),
+            168: (0, 0.03956295, 0),
+            169: (0, 0.03963254, 0),
+            170: (0, 0.03969616, 0),
+            171: (0, 0.03975377, 0),
+            172: (0, 0.03980536, 0),
+            173: (0, 0.03985092, 0),
+            174: (0, 0.03989044, 0),
+            175: (0, 0.03992389, 0),
+            176: (0, 0.03995128, 0),
+            177: (0, 0.03997259, 0),
+            178: (0, 0.03998782, 0),
+            179: (0, 0.03999695, 0),
+            180: (0, 0.04000000, 0),
+            181: (0, 0.03999695, 0),
+            182: (0, 0.03998782, 0),
+            183: (0, 0.03997259, 0),
+            184: (0, 0.03995128, 0),
+            185: (0, 0.03992389, 0),
+            186: (0, 0.03989044, 0),
+            187: (0, 0.03985092, 0),
+            188: (0, 0.03980536, 0),
+            189: (0, 0.03975377, 0),
+            190: (0, 0.03969616, 0),
+            191: (0, 0.03963254, 0),
+            192: (0, 0.03956295, 0),
+            193: (0, 0.03948740, 0),
+            194: (0, 0.03940591, 0),
+            195: (0, 0.03931852, 0),
+            196: (0, 0.03922523, 0),
+            197: (0, 0.03912610, 0),
+            198: (0, 0.03902113, 0),
+            199: (0, 0.03891037, 0),
+            200: (0, 0.03879385, 0),
+            201: (0, 0.03867161, 0),
+            202: (0, 0.03854368, 0),
+            203: (0, 0.03841010, 0),
+            204: (0, 0.03827091, 0),
+            205: (0, 0.03812616, 0),
+            206: (0, 0.03797588, 0),
+            207: (0, 0.03782013, 0),
+            208: (0, 0.03765895, 0),
+            209: (0, 0.03749239, 0),
+            210: (0, 0.03732051, 0),
+            211: (0, 0.03714335, 0),
+            212: (0, 0.03696096, 0),
+            213: (0, 0.03677341, 0),
+            214: (0, 0.03658075, 0),
+            215: (0, 0.03638304, 0),
+            216: (0, 0.03618034, 0),
+            217: (0, 0.03597271, 0),
+            218: (0, 0.03576022, 0),
+            219: (0, 0.03554292, 0),
+            220: (0, 0.03532089, 0),
+            221: (0, 0.03509419, 0),
+            222: (0, 0.03486290, 0),
+            223: (0, 0.03462707, 0),
+            224: (0, 0.03438680, 0),
+            225: (0, 0.03414214, 0),
+            226: (0, 0.03389317, 0),
+            227: (0, 0.03363997, 0),
+            228: (0, 0.03338261, 0),
+            229: (0, 0.03312118, 0),
+            230: (0, 0.03285575, 0),
+            231: (0, 0.03258641, 0),
+            232: (0, 0.03231323, 0),
+            233: (0, 0.03203630, 0),
+            234: (0, 0.03175571, 0),
+            235: (0, 0.03147153, 0),
+            236: (0, 0.03118386, 0),
+            237: (0, 0.03089278, 0),
+            238: (0, 0.03059839, 0),
+            239: (0, 0.03030076, 0),
+            240: (0, 0.03000000, 0),
+            241: (0, 0.02969619, 0),
+            242: (0, 0.02938943, 0),
+            243: (0, 0.02907981, 0),
+            244: (0, 0.02876742, 0),
+            245: (0, 0.02845237, 0),
+            246: (0, 0.02813473, 0),
+            247: (0, 0.02781462, 0),
+            248: (0, 0.02749213, 0),
+            249: (0, 0.02716736, 0),
+            250: (0, 0.02684040, 0),
+            251: (0, 0.02651136, 0),
+            252: (0, 0.02618034, 0),
+            253: (0, 0.02584743, 0),
+            254: (0, 0.02551275, 0),
+            255: (0, 0.02517638, 0),
+            256: (0, 0.02483844, 0),
+            257: (0, 0.02449902, 0),
+            258: (0, 0.02415823, 0),
+            259: (0, 0.02381618, 0),
+            260: (0, 0.02347296, 0),
+            261: (0, 0.02312869, 0),
+            262: (0, 0.02278346, 0),
+            263: (0, 0.02243739, 0),
+            264: (0, 0.02209057, 0),
+            265: (0, 0.02174311, 0),
+            266: (0, 0.02139513, 0),
+            267: (0, 0.02104672, 0),
+            268: (0, 0.02069799, 0),
+            269: (0, 0.02034905, 0),
+            270: (0, 0.02000000, 0),
+            271: (0, 0.01965095, 0),
+            272: (0, 0.01930201, 0),
+            273: (0, 0.01895328, 0),
+            274: (0, 0.01860487, 0),
+            275: (0, 0.01825689, 0),
+            276: (0, 0.01790943, 0),
+            277: (0, 0.01756261, 0),
+            278: (0, 0.01721654, 0),
+            279: (0, 0.01687131, 0),
+            280: (0, 0.01652704, 0),
+            281: (0, 0.01618382, 0),
+            282: (0, 0.01584177, 0),
+            283: (0, 0.01550098, 0),
+            284: (0, 0.01516156, 0),
+            285: (0, 0.01482362, 0),
+            286: (0, 0.01448725, 0),
+            287: (0, 0.01415257, 0),
+            288: (0, 0.01381966, 0),
+            289: (0, 0.01348864, 0),
+            290: (0, 0.01315960, 0),
+            291: (0, 0.01283264, 0),
+            292: (0, 0.01250787, 0),
+            293: (0, 0.01218538, 0),
+            294: (0, 0.01186527, 0),
+            295: (0, 0.01154763, 0),
+            296: (0, 0.01123258, 0),
+            297: (0, 0.01092019, 0),
+            298: (0, 0.01061057, 0),
+            299: (0, 0.01030381, 0),
+            300: (0, 0.01000000, 0),
+            301: (0, 0.00969924, 0),
+            302: (0, 0.00940161, 0),
+            303: (0, 0.00910722, 0),
+            304: (0, 0.00881614, 0),
+            305: (0, 0.00852847, 0),
+            306: (0, 0.00824429, 0),
+            307: (0, 0.00796370, 0),
+            308: (0, 0.00768677, 0),
+            309: (0, 0.00741359, 0),
+            310: (0, 0.00714425, 0),
+            311: (0, 0.00687882, 0),
+            312: (0, 0.00661739, 0),
+            313: (0, 0.00636003, 0),
+            314: (0, 0.00610683, 0),
+            315: (0, 0.00585786, 0),
+            316: (0, 0.00561320, 0),
+            317: (0, 0.00537293, 0),
+            318: (0, 0.00513710, 0),
+            319: (0, 0.00490581, 0),
+            320: (0, 0.00467911, 0),
+            321: (0, 0.00445708, 0),
+            322: (0, 0.00423978, 0),
+            323: (0, 0.00402729, 0),
+            324: (0, 0.00381966, 0),
+            325: (0, 0.00361696, 0),
+            326: (0, 0.00341925, 0),
+            327: (0, 0.00322659, 0),
+            328: (0, 0.00303904, 0),
+            329: (0, 0.00285665, 0),
+            330: (0, 0.00267949, 0),
+            331: (0, 0.00250761, 0),
+            332: (0, 0.00234105, 0),
+            333: (0, 0.00217987, 0),
+            334: (0, 0.00202412, 0),
+            335: (0, 0.00187384, 0),
+            336: (0, 0.00172909, 0),
+            337: (0, 0.00158990, 0),
+            338: (0, 0.00145632, 0),
+            339: (0, 0.00132839, 0),
+            340: (0, 0.00120615, 0),
+            341: (0, 0.00108963, 0),
+            342: (0, 0.00097887, 0),
+            343: (0, 0.00087390, 0),
+            344: (0, 0.00077477, 0),
+            345: (0, 0.00068148, 0),
+            346: (0, 0.00059409, 0),
+            347: (0, 0.00051260, 0),
+            348: (0, 0.00043705, 0),
+            349: (0, 0.00036746, 0),
+            350: (0, 0.00030384, 0),
+            351: (0, 0.00024623, 0),
+            352: (0, 0.00019464, 0),
+            353: (0, 0.00014908, 0),
+            354: (0, 0.00010956, 0),
+            355: (0, 0.00007611, 0),
+            356: (0, 0.00004872, 0),
+            357: (0, 0.00002741, 0),
+            358: (0, 0.00001218, 0),
+            359: (0, 0.00000305, 0),
+            360: (0, 0.00000000, 0),
+        }
+        float xformOp:rotateY = -22
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateY"]
+
+        def Mesh "Cube_0_0_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, -0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_0_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, -0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_0_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, -0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_1_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.00, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_1_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.00, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_1_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.00, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_2_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_2_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_2_2_0" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.10, -0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_0_0_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, -0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_0_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, -0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_0_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, -0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_1_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.00, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_1_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.00, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_1_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.00, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_2_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_2_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_2_2_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.10, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_0_0_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, -0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_0_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, -0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_0_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, -0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_1_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.00, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_1_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.00, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+
+        def Mesh "Cube_2_1_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.00, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_0_2_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.10, 0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_1_2_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.00, 0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Primary>
+        }
+
+        def Mesh "Cube_2_2_2" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            double3 xformOp:translate = (0.10, 0.10, 0.10)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+            uniform token subdivisionScheme = "none"
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 3, 2, 1, 4, 5, 6, 7, 0, 1, 5, 4, 3, 7, 6, 2, 0, 4, 7, 3, 1, 2, 6, 5]
+            point3f[] points = [(-0.05, -0.05, -0.05), (0.05, -0.05, -0.05), (0.05, 0.05, -0.05), (-0.05, 0.05, -0.05), (-0.05, -0.05, 0.05), (0.05, -0.05, 0.05), (0.05, 0.05, 0.05), (-0.05, 0.05, 0.05)]
+            normal3f[] normals = [(0, 0, -1), (0, 0, 1), (0, -1, 0), (0, 1, 0), (-1, 0, 0), (1, 0, 0)] (
+                interpolation = "uniform"
+            )
+            float3[] extent = [(-0.05, -0.05, -0.05), (0.05, 0.05, 0.05)]
+            rel material:binding = </Neuronapixel/Materials/Secondary>
+        }
+    }
+}

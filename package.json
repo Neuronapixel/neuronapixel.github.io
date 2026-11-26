@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "vue": "^3.5.42",
+    "vue-i18n": "^11.4.16",
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
@@ -41,25 +42,31 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^12.0.9",
     "@semantic-release/release-notes-generator": "^14.1.1",
-    "@typescript-eslint/eslint-plugin": "^8.62.1",
-    "@typescript-eslint/parser": "^8.64.0",
-    "@vitest/coverage-v8": "^4.1.11",
-    "@vitest/ui": "^4.1.11",
+    "@typescript-eslint/eslint-plugin": "^8.74.0",
+    "@typescript-eslint/parser": "^8.74.0",
+    "@vitest/coverage-v8": "^4.1.12",
+    "@vitest/ui": "^4.1.12",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "eslint": "^10.7.0",
+    "eslint": "^10.15.0",
     "eslint-plugin-vue": "^10.9.2",
     "globals": "^17.7.0",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "sass-embedded": "^1.100.0",
     "semantic-release": "^25.0.7",
-    "vite": "^8.1.4",
-    "vitest": "^4.1.11",
+    "vite": "^8.1.6",
+    "vitest": "^4.1.12",
     "vue-eslint-parser": "^10.4.1",
     "vue-tsc": "^3.3.7"
   },
   "overrides": {
-    "js-yaml": "^4.3.2"
+    "js-yaml": "^4.3.2",
+    "js-beautify": {
+      "glob": "^14.0.2"
+    },
+    "editorconfig": {
+      "minimatch": "^11.0.1"
+    }
   },
   "browserslist": [
     "> 1%",
