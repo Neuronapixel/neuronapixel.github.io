@@ -10,6 +10,10 @@ import NotFoundView from '@/views/not-found-view.vue';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    redirect: { name: 'SkyWindow' },
+  },
+  {
+    path: '/xr',
     name: 'XRHome',
     component: XRVersionTwo,
   },

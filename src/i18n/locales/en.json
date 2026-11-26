@@ -1,12 +1,15 @@
 {
   "ar": {
-    "controls": "Sky controls",
+    "controls": "Flight controls",
     "brand": "Neuronapixel",
-    "eyebrow": "Small spaces",
+    "eyebrow": "inspect",
     "title": "inside",
-    "invitation": "Bring a little Neuronapixel into your world.",
+    "invitation": "bring Neuronapixel to your world",
     "retry": "Try again",
     "enter": "Enter the sky",
+    "enablePreviewMotion": "enable motion preview",
+    "previewMotionEnabled": "Preview motion enabled.",
+    "dragPreview": "Drag to look around.",
     "exit": "Exit sky",
     "language": "Language",
     "navigation": "WASD or arrow keys to move. Drag to look around.",

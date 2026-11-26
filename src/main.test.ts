@@ -17,7 +17,7 @@ describe('Main entry file', () => {
     await import('@/main');
     await router.isReady();
 
-    expect(document.querySelector('#app .xr-experience')).toBeTruthy();
+    expect(document.querySelector('#app .sky-window')).toBeTruthy();
     expect(window.dataLayer?.map(({ event }) => event)).toEqual([
       'gtm.js',
       'visit_device',
@@ -27,7 +27,8 @@ describe('Main entry file', () => {
       headset_type: 'unclassified',
     });
 
-    await router.push('/ar');
+    await router.push('/xr');
+    expect(document.querySelector('#app .xr-experience')).toBeTruthy();
     await router.push('/');
     expect(window.dataLayer).toHaveLength(2);
   });
