@@ -1,13 +1,13 @@
 {
   "ar": {
-    "controls": "Controles del cielo",
+    "controls": "Controles de vuelo",
     "brand": "Neuronapixel",
-    "eyebrow": "Pequeños espacios",
+    "eyebrow": "inspecciona",
     "title": "dentro",
     "invitation": "Trae un poco de Neuronapixel a tu mundo.",
     "retry": "Intentar de nuevo",
     "enter": "Entrar al cielo",
-    "enablePreviewMotion": "Activar movimiento en la vista previa",
+    "enablePreviewMotion": "preview con movimiento",
     "previewMotionEnabled": "Movimiento activado en la vista previa.",
     "dragPreview": "Arrastra para mirar alrededor.",
     "exit": "Salir del cielo",
